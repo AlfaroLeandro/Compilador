@@ -95,7 +95,6 @@ grammar:   dec_var                    {printf("\n Regla --> dec_var \n");}
        |   asig                       {printf("\n Regla --> asig \n");}
        |   display                    {printf("\n Regla --> display \n");}
        |   get                        {printf("\n Regla --> get \n");}
-       |   ciclo_especial             {printf("\n Regla --> ciclo_especial \n");}
        |   while                      {printf("\n Regla --> while \n");}
        |   if                         {printf("\n Regla --> if \n");}
        ;
@@ -106,9 +105,6 @@ asig: variable OP_ASIG_T expr {
     | variable OP_ASIG_T const_string_r   {
                                               printf("\n Regla --> variable OP_ASIG_T const_string_r \n");
                                               }
-    | variable OP_ASIG_T longitud         {
-                                            printf("\n Regla --> variable OP_ASIG_T longitud \n");
-                                          }
     ;
 
 variable: VARIABLE {  
@@ -157,11 +153,13 @@ termino: termino OP_MULT_T factor     {
 
                     
 factor: PARENT_A expr PARENT_C    {printf("\n Regla --> PARENT_A expr PARENT_C  \n");}
-      | NUMERO                    {printf("\n Regla --> NUMERO  \n");}
-	    | VARIABLE                  {
-                                  printf("\n Regla --> NUMERO  \n");
+       | NUMERO                    {printf("\n Regla --> NUMERO  \n");}
+	   | VARIABLE                  {
+                                  printf("\n Regla --> VARIABLE  \n");
                                   }
       ;
+
+///////// ENTRADA Y SALIDA ///////////////
 
 display: DISPLAY_T const_string_r   {
                                     printf("\n Regla -->  DISPLAY_T const_string_r  \n");
@@ -176,6 +174,8 @@ get: GET_T VARIABLE {
                     }
                     ;
 
+///////// ESTRUCTURAS DE CONTROL ///////////
+
 while: init_while cond_completa sentencia ENDWHILE_T {
                           printf("\n Regla -->  init_while cond_completa sentencia ENDWHILE_T \n");
                         }
@@ -186,7 +186,7 @@ init_while: WHILE_T {
                 }
                 ;
 
-if: condicion_if ELSE_T {
+if: condicion_if ELSE_T sentencia ENDIF_T {
       printf("\n Regla --> condicion_if ELSE_T sentencia ENDIF_T  \n");
     }
     | condicion_if ENDIF_T {
@@ -255,6 +255,8 @@ cond: expr OP_COMP expr    {
     }
     ;
 
+////////// DECLARACION DE VARIABLES //////////
+
 dec_var: DIM_T OP_MEN dupla_asig OP_MAY {
 	                                    char dataType[100];
                                         char variable[100];
@@ -321,33 +323,12 @@ int main(int argc, char* argv[])
     yyparse();
 
     deleteTable(&symbolTable);
-    vaciar_polaca(&listaPolaca);
-
-    generateAssembler(&listaPolaca, &symbolTable);
     
     printf("\n Compilacion exitosa \n");
     fclose(yyin);
     return 0;
 }
 
-/*
-int desapilar_en(t_pila* p,char* d)
-{
-    t_nodo* viejo;
-    if(!*p)
-        return 0;
-    viejo=(t_nodo*)malloc(sizeof(t_nodo));
-    viejo=*p;
-
-    char num[10];
-    itoa(viejo->info,num,10);
-    strcpy(d,num);
-    *p=viejo->sig;
-    free(viejo);
-    return 1;
-}*/
-
-////// 
 int verifyVariable( char *dato , tList *symb){
 
     while(*symb) {

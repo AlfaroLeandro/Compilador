@@ -1,0 +1,36 @@
+DIM < a, b, z, var2, h> AS < integer, real, string, string, Int >;
+DIM < r, A, B, v2ar> AS < string, real, string, String >;
+
+*/ Asignacion de variable no declarada /*
+*/ var = 100; /*
+
+*/ rango /*
+*/ var2 = 100000000; /*
+*/ var2 = 1000000000000000000000.1; /*
+
+*/ selecciones /*
+IF (a <= 30)
+    a = 30;
+    if(a > 10 && a < 20)
+        a = 2900;
+    endif;
+endif;
+
+if (var2 < 0)
+    b = a;
+else 
+    var2 = a;
+endif;
+
+*/while normal /*
+while( b > 10 && b < 20)
+	a = 5 + 3;
+endwhile;
+
+if(!(a>b))
+	display "entre al if";
+endif;
+
+*/ impresion /*
+display "hola mundo";
+
