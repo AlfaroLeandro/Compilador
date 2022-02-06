@@ -1,0 +1,5 @@
+if(3>4)
+	display "entre al if";
+endif;
+
+display "hola mundo";

@@ -81,30 +81,30 @@ int verifyVariable( char *dato , tList *symb);
 
 %%
 
-programa:   prog             {printf("\n Regla --> prog \n");}
+programa:   prog             {printf("\n Regla: programa --> prog \n");}
         ;
 
-prog: sentencia                 {printf("\n Regla --> sentencia \n");}
+prog: sentencia                 {printf("\n Regla: prog --> sentencia \n");}
   ;
 
-sentencia: sentencia grammar DOT_COM_T  {printf("\n Regla --> sentencia grammar DOT_COM_T	\n");}
-        | grammar DOT_COM_T             {printf("\n Regla --> grammar DOT_COM_T	\n");}
+sentencia: sentencia grammar DOT_COM_T  {printf("\n Regla: sentencia --> sentencia grammar DOT_COM_T	\n");}
+        | grammar DOT_COM_T             {printf("\n Regla: sentencia --> grammar DOT_COM_T	\n");}
         ;
 
-grammar:   dec_var                    {printf("\n Regla --> dec_var \n");}
-       |   asig                       {printf("\n Regla --> asig \n");}
-       |   display                    {printf("\n Regla --> display \n");}
-       |   get                        {printf("\n Regla --> get \n");}
-       |   while                      {printf("\n Regla --> while \n");}
-       |   if                         {printf("\n Regla --> if \n");}
+grammar:   dec_var                    {printf("\n Regla: grammar --> dec_var \n");}
+       |   asig                       {printf("\n Regla: grammar --> asig \n");}
+       |   display                    {printf("\n Regla: grammar --> display \n");}
+       |   get                        {printf("\n Regla: grammar --> get \n");}
+       |   while                      {printf("\n Regla: grammar --> while \n");}
+       |   if                         {printf("\n Regla: grammar --> if \n");}
        ;
 
 asig: variable OP_ASIG_T expr {
-                                  printf("\n Regla --> variable OP_ASIG_T exp \n");
+                                  printf("\n Regla: asig --> variable OP_ASIG_T exp \n");
                               }
     | variable OP_ASIG_T const_string_r   {
-                                              printf("\n Regla --> variable OP_ASIG_T const_string_r \n");
-                                              }
+                                              printf("\n Regla: asig --> variable OP_ASIG_T const_string_r \n");
+                                          }
     ;
 
 variable: VARIABLE {  
@@ -117,141 +117,149 @@ variable: VARIABLE {
 
 const_string_r: CONST_STRING {
 		insertString(&symbolTable, $1);
-		printf("\n Regla --> CONST_STRING \n");
+		printf("\n (%s) Regla: const_string_r --> CONST_STRING \n", $1);
 	};
 
 NUMERO: CONST_INT{
         insertNumber(&symbolTable,$1,TIPO_INTEGER);
-        printf("\n Regla --> CONST_INT \n");
-      }    
+        printf("\n Regla: NUMERO --> CONST_INT \n", $1);
+      }
+		CONST_INT_BIN{
+        insertNumber(&symbolTable,$1,TIPO_INTEGER);
+        printf("\n Regla: NUMERO --> CONST_INT_BIN \n", $1);
+      }
+	  CONST_INT_HEXA{
+        insertNumber(&symbolTable,$1,TIPO_INTEGER);
+        printf("\n Regla: NUMERO --> CONST_INT_HEXA \n", $1);
+      }
       | CONST_REAL {
         insertNumber(&symbolTable,$1,TIPO_FLOAT);
-        printf("\n Regla --> CONST_REAL \n");
+        printf("\n Regla: CONST_REAL --> CONST_REAL \n");
       }
       ;
 
 ///////////// ARITMETICA /////////////
         
 expr: expr OP_SUM_T termino         {
-                                    printf("\n Regla --> expr OP_SUM_T termino \n");
+                                    printf("\n Regla: expr --> expr OP_SUM_T termino \n");
                                     }
 	|   expr OP_REST_T termino        {
-                                    printf("\n Regla --> expr OP_SUM_T termino \n");
+                                    printf("\n Regla: expr --> expr OP_SUM_T termino \n");
                                     } 
-	|   termino                       {printf("\n Regla --> termino \n");}
+	|   termino                       {printf("\n Regla: expr --> termino \n");}
   ;
 
 termino: termino OP_MULT_T factor     {
-                                        printf("\n Regla --> termino OP_MULT_T factor \n");
+                                        printf("\n Regla: termino --> termino OP_MULT_T factor \n");
                                       }
 	   |   termino OP_DIV_T factor      {
-                                       printf("\n Regla --> termino OP_MULT_T factor \n");
+                                       printf("\n Regla: termino --> termino OP_MULT_T factor \n");
                                        }
-       |   '-' termino %prec MENOS_UNARIO    {printf("\n '-' termino '%'prec MENOS_UNARIO \n");}
-	   |   factor                       {printf("\n Regla --> factor \n");}
+       |   '-' termino %prec MENOS_UNARIO    {printf("\n Regla: termino --> '-' termino '%'prec MENOS_UNARIO \n");}
+	   |   factor                       {printf("\n Regla: termino --> factor \n");}
      ;
 
                     
-factor: PARENT_A expr PARENT_C    {printf("\n Regla --> PARENT_A expr PARENT_C  \n");}
-       | NUMERO                    {printf("\n Regla --> NUMERO  \n");}
+factor: PARENT_A expr PARENT_C    {printf("\n Regla: factor --> PARENT_A expr PARENT_C  \n");}
+       | NUMERO                    {printf("\n Regla: factor --> NUMERO  \n");}
 	   | VARIABLE                  {
-                                  printf("\n Regla --> VARIABLE  \n");
+                                  printf("\n Regla: factor --> VARIABLE  \n");
                                   }
       ;
 
 ///////// ENTRADA Y SALIDA ///////////////
 
 display: DISPLAY_T const_string_r   {
-                                    printf("\n Regla -->  DISPLAY_T const_string_r  \n");
+                                    printf("\n Regla: display -->  DISPLAY_T const_string_r  \n");
                                     }
        | DISPLAY_T expr             {
-                                    printf("\n Regla -->  DISPLAY_T expr   \n");
+                                    printf("\n Regla: display -->  DISPLAY_T expr   \n");
                                     }
        ;
 
 get: GET_T VARIABLE {
-                    printf("\n Regla -->  GET_T VARIABLE \n");
+                    printf("\n Regla: get -->  GET_T VARIABLE \n");
                     }
                     ;
 
 ///////// ESTRUCTURAS DE CONTROL ///////////
 
 while: init_while cond_completa sentencia ENDWHILE_T {
-                          printf("\n Regla -->  init_while cond_completa sentencia ENDWHILE_T \n");
+                          printf("\n Regla: while -->  init_while cond_completa sentencia ENDWHILE_T \n");
                         }
 						;
 						
 init_while: WHILE_T {
-					printf("\n Regla -->  WHILE_T \n");
+					printf("\n Regla: init_while -->  WHILE_T \n");
                 }
                 ;
-
+			
 if: condicion_if ELSE_T sentencia ENDIF_T {
-      printf("\n Regla --> condicion_if ELSE_T sentencia ENDIF_T  \n");
+      printf("\n Regla: if --> condicion_if ELSE_T sentencia ENDIF_T  \n");
     }
     | condicion_if ENDIF_T {
-      printf("\n Regla --> condicion_if ENDIF_T \n");
+      printf("\n Regla: if --> condicion_if ENDIF_T \n");
     }
     ;
 
 condicion_if: sentencia_if cond_completa sentencia {
-		printf("\n Regla --> sentencia_if cond_completa sentencia  \n");
+		printf("\n Regla: condicion_if --> sentencia_if cond_completa sentencia  \n");
 	}
     ;
 
 sentencia_if: IF_T {
-            printf("\n Regla --> IF_T \n");
+            printf("\n Regla: sentencia_if --> IF_T \n");
             }
             ;
 
-cond_completa: PARENT_A cond_tipo_1 cond_completa PARENT_C  {printf("\n Regla --> PARENT_A cond_tipo_1 cond_completa PARENT_C \n");}
-             | PARENT_A cond_tipo_3 cond_completa PARENT_C  {printf("\n Regla --> PARENT_A cond_tipo_3 cond_completa PARENT_C \n");}
-             | PARENT_A cond_tipo_1 cond PARENT_C           {printf("\n Regla --> PARENT_A cond_tipo_1 cond PARENT_C \n");}
-             | PARENT_A cond_tipo_2 cond_completa PARENT_C  {printf("\n Regla --> PARENT_A cond_tipo_2 cond_completa PARENT_C \n");}
-             | PARENT_A cond_tipo_4 cond_completa PARENT_C  {printf("\n Regla --> PARENT_A cond_tipo_4 cond_completa PARENT_C \n");}
-             | PARENT_A cond_tipo_2 cond PARENT_C           {printf("\n Regla --> PARENT_A cond_tipo_2 cond PARENT_C  \n");}
-             | PARENT_A cond_tipo_3 cond PARENT_C           {printf("\n Regla --> PARENT_A cond_tipo_3 cond PARENT_C  \n");}
-             | PARENT_A cond_tipo_4 cond PARENT_C           {printf("\n Regla --> PARENT_A cond_tipo_4 cond PARENT_C  \n");}
-             | PARENT_A cond PARENT_C                       {printf("\n Regla --> PARENT_A cond PARENT_C   \n");}
-             | OP_NOT cond_completa                         {printf("\n Regla --> OP_NOT cond_completa   \n");}
-             | PARENT_A cond_completa PARENT_C              {printf("\n Regla --> PARENT_A cond_completa PARENT_C    \n");}             
+cond_completa: PARENT_A cond_tipo_1 cond_completa PARENT_C  {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_1 cond_completa PARENT_C \n");}
+             | PARENT_A cond_tipo_3 cond_completa PARENT_C  {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_3 cond_completa PARENT_C \n");}
+             | PARENT_A cond_tipo_1 cond PARENT_C           {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_1 cond PARENT_C \n");}
+             | PARENT_A cond_tipo_2 cond_completa PARENT_C  {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_2 cond_completa PARENT_C \n");}
+             | PARENT_A cond_tipo_4 cond_completa PARENT_C  {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_4 cond_completa PARENT_C \n");}
+             | PARENT_A cond_tipo_2 cond PARENT_C           {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_2 cond PARENT_C  \n");}
+             | PARENT_A cond_tipo_3 cond PARENT_C           {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_3 cond PARENT_C  \n");}
+             | PARENT_A cond_tipo_4 cond PARENT_C           {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_4 cond PARENT_C  \n");}
+             | PARENT_A cond PARENT_C                       {printf("\n Regla: cond_completa --> PARENT_A cond PARENT_C   \n");}
+             | OP_NOT cond_completa                         {printf("\n Regla: cond_completa --> OP_NOT cond_completa   \n");}
+             | PARENT_A cond_completa PARENT_C              {printf("\n Regla: cond_completa --> PARENT_A cond_completa PARENT_C    \n");}             
              ;
 
 cond_tipo_1: cond_completa OP_AND {
-      printf("\n Regla -->  cond_completa OP_AND  \n");
+      printf("\n Regla: cond_tipo_1 -->  cond_completa OP_AND  \n");
       }
       ;
 
 cond_tipo_2: cond_completa OP_OR {
-      printf("\n Regla -->   cond_completa OP_OR  \n");
+      printf("\n Regla: cond_tipo_2 -->   cond_completa OP_OR  \n");
      }
      ;
 
 cond_tipo_3: cond OP_AND {
-      printf("\n Regla -->  cond OP_AND  \n");
+      printf("\n Regla: cond_tipo_3 -->  cond OP_AND  \n");
       }
       ;
 
 cond_tipo_4: cond OP_OR {
-      printf("\n Regla -->  cond OP_OR   \n");
+      printf("\n Regla: cond_tipo_4 -->  cond OP_OR   \n");
       }
       ;
 
 
 cond: expr OP_COMP expr    {
-      printf("\n Regla --> expr OP_COMP expr   \n");
+      printf("\n Regla: cond --> expr OP_COMP expr   \n");
     }
     | expr OP_MAY_IGU expr {
-      printf("\n Regla --> expr OP_MAY_IGU expr   \n");
+      printf("\n Regla: cond --> expr OP_MAY_IGU expr   \n");
     }
     | expr OP_MEN_IGU expr {
-      printf("\n Regla --> expr OP_MEN_IGU expr   \n");
+      printf("\n Regla: cond --> expr OP_MEN_IGU expr   \n");
     }
     | expr OP_MEN expr     {
-      printf("\n Regla --> expr OP_MEN expr   \n");
+      printf("\n Regla: cond --> expr OP_MEN expr   \n");
     }
     | expr OP_MAY expr     {
-      printf("\n Regla --> expr OP_MAY expr   \n");
+      printf("\n Regla: cond --> expr OP_MAY expr   \n");
     }
     ;
 
@@ -269,15 +277,15 @@ dec_var: DIM_T OP_MEN dupla_asig OP_MAY {
                                             popStack(&stackVar,variable);
                                             insertVariable(&symbolTable,variable,dataType);
                                         }
-                                         printf("\n Regla --> DIM_T OP_MEN dupla_asig OP_MAY  \n");
+                                         printf("\n Regla: dec_var --> DIM_T OP_MEN dupla_asig OP_MAY  \n");
 };
 
 
 dupla_asig:  vasAsig COMA_T dupla_asig COMA_T tipo             {
-                                                                printf("\n Regla --> VARIABLE COMA_T dupla_asig COMA_T tipo   \n");
+                                                                printf("\n Regla: dupla_asig --> VARIABLE COMA_T dupla_asig COMA_T tipo   \n");
                                                                 }
           |  vasAsig OP_MAY AS_T OP_MEN tipo                   {
-                                                                printf("\n Regla -->  VARIABLE OP_MAY AS_T OP_MEN tipo   \n");
+                                                                printf("\n Regla: dupla_asig -->  VARIABLE OP_MAY AS_T OP_MEN tipo   \n");
                                                                 }
           ;
 
@@ -292,13 +300,13 @@ vasAsig: VARIABLE {
         ;
  
 tipo: 	INT_T 	    {pushStack(&stackDataTypeDecVar,"INTEGER");
-                    printf("\n Regla -->  INT_T   \n");
+                    printf("\n Regla: tipo -->  INT_T   \n");
                     }
       | REAL_T      {pushStack(&stackDataTypeDecVar,"FLOAT");
-                    printf("\n Regla -->  REAL_T   \n");
+                    printf("\n Regla: tipo -->  REAL_T   \n");
                     }	
       | STRING_T  	{pushStack(&stackDataTypeDecVar,"STRING");
-                    printf("\n Regla -->  STRING_T   \n");
+                    printf("\n Regla: tipo -->  STRING_T   \n");
                     }
       ;
 
@@ -329,24 +337,6 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-/*
-int desapilar_en(t_pila* p,char* d)
-{
-    t_nodo* viejo;
-    if(!*p)
-        return 0;
-    viejo=(t_nodo*)malloc(sizeof(t_nodo));
-    viejo=*p;
-
-    char num[10];
-    itoa(viejo->info,num,10);
-    strcpy(d,num);
-    *p=viejo->sig;
-    free(viejo);
-    return 1;
-}*/
-
-////// 
 int verifyVariable( char *dato , tList *symb){
 
     while(*symb) {

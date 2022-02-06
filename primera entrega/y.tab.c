@@ -560,11 +560,11 @@ static const yytype_uint16 yyrline[] =
 {
        0,    84,    84,    87,    90,    91,    94,    95,    96,    97,
       98,    99,   102,   105,   110,   118,   123,   127,   135,   138,
-     141,   144,   147,   150,   151,   155,   156,   157,   162,   165,
-     170,   175,   180,   185,   188,   193,   198,   203,   204,   205,
-     206,   207,   208,   209,   210,   211,   212,   213,   216,   221,
-     226,   231,   237,   240,   243,   246,   249,   254,   270,   273,
-     278,   288,   291,   294
+     141,   144,   147,   150,   151,   155,   156,   157,   164,   167,
+     172,   179,   184,   189,   192,   197,   202,   207,   208,   209,
+     210,   211,   212,   213,   214,   215,   216,   217,   220,   225,
+     230,   235,   241,   244,   247,   250,   253,   260,   276,   279,
+     284,   294,   297,   300
 };
 #endif
 
@@ -1553,70 +1553,70 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 84 "Sintactico.y"
-    {printf("\n Regla --> prog \n");}
+    {printf("\n Regla: programa --> prog \n");}
     break;
 
   case 3:
 
 /* Line 1455 of yacc.c  */
 #line 87 "Sintactico.y"
-    {printf("\n Regla --> sentencia \n");}
+    {printf("\n Regla: prog --> sentencia \n");}
     break;
 
   case 4:
 
 /* Line 1455 of yacc.c  */
 #line 90 "Sintactico.y"
-    {printf("\n Regla --> sentencia grammar DOT_COM_T	\n");}
+    {printf("\n Regla: sentencia --> sentencia grammar DOT_COM_T	\n");}
     break;
 
   case 5:
 
 /* Line 1455 of yacc.c  */
 #line 91 "Sintactico.y"
-    {printf("\n Regla --> grammar DOT_COM_T	\n");}
+    {printf("\n Regla: sentencia --> grammar DOT_COM_T	\n");}
     break;
 
   case 6:
 
 /* Line 1455 of yacc.c  */
 #line 94 "Sintactico.y"
-    {printf("\n Regla --> dec_var \n");}
+    {printf("\n Regla: grammar --> dec_var \n");}
     break;
 
   case 7:
 
 /* Line 1455 of yacc.c  */
 #line 95 "Sintactico.y"
-    {printf("\n Regla --> asig \n");}
+    {printf("\n Regla: grammar --> asig \n");}
     break;
 
   case 8:
 
 /* Line 1455 of yacc.c  */
 #line 96 "Sintactico.y"
-    {printf("\n Regla --> display \n");}
+    {printf("\n Regla: grammar --> display \n");}
     break;
 
   case 9:
 
 /* Line 1455 of yacc.c  */
 #line 97 "Sintactico.y"
-    {printf("\n Regla --> get \n");}
+    {printf("\n Regla: grammar --> get \n");}
     break;
 
   case 10:
 
 /* Line 1455 of yacc.c  */
 #line 98 "Sintactico.y"
-    {printf("\n Regla --> while \n");}
+    {printf("\n Regla: grammar --> while \n");}
     break;
 
   case 11:
 
 /* Line 1455 of yacc.c  */
 #line 99 "Sintactico.y"
-    {printf("\n Regla --> if \n");}
+    {printf("\n Regla: grammar --> if \n");}
     break;
 
   case 12:
@@ -1624,7 +1624,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 102 "Sintactico.y"
     {
-                                  printf("\n Regla --> variable OP_ASIG_T exp \n");
+                                  printf("\n Regla: asig --> variable OP_ASIG_T exp \n");
                               }
     break;
 
@@ -1633,8 +1633,8 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 105 "Sintactico.y"
     {
-                                              printf("\n Regla --> variable OP_ASIG_T const_string_r \n");
-                                              }
+                                              printf("\n Regla: asig --> variable OP_ASIG_T const_string_r \n");
+                                          }
     break;
 
   case 14:
@@ -1655,7 +1655,7 @@ yyreduce:
 #line 118 "Sintactico.y"
     {
 		insertString(&symbolTable, (yyvsp[(1) - (1)].strVal));
-		printf("\n Regla --> CONST_STRING \n");
+		printf("\n (%s) Regla: const_string_r --> CONST_STRING \n", (yyvsp[(1) - (1)].strVal));
 	}
     break;
 
@@ -1665,7 +1665,7 @@ yyreduce:
 #line 123 "Sintactico.y"
     {
         insertNumber(&symbolTable,(yyvsp[(1) - (1)].strVal),TIPO_INTEGER);
-        printf("\n Regla --> CONST_INT \n");
+        printf("\n (%s) Regla: NUMERO --> CONST_INT \n", (yyvsp[(1) - (1)].strVal));
       }
     break;
 
@@ -1675,7 +1675,7 @@ yyreduce:
 #line 127 "Sintactico.y"
     {
         insertNumber(&symbolTable,(yyvsp[(1) - (1)].strVal),TIPO_FLOAT);
-        printf("\n Regla --> CONST_REAL \n");
+        printf("\n Regla: CONST_REAL --> CONST_REAL \n");
       }
     break;
 
@@ -1684,7 +1684,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 135 "Sintactico.y"
     {
-                                    printf("\n Regla --> expr OP_SUM_T termino \n");
+                                    printf("\n Regla: expr --> expr OP_SUM_T termino \n");
                                     }
     break;
 
@@ -1693,7 +1693,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 138 "Sintactico.y"
     {
-                                    printf("\n Regla --> expr OP_SUM_T termino \n");
+                                    printf("\n Regla: expr --> expr OP_SUM_T termino \n");
                                     }
     break;
 
@@ -1701,7 +1701,7 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 141 "Sintactico.y"
-    {printf("\n Regla --> termino \n");}
+    {printf("\n Regla: expr --> termino \n");}
     break;
 
   case 21:
@@ -1709,7 +1709,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 144 "Sintactico.y"
     {
-                                        printf("\n Regla --> termino OP_MULT_T factor \n");
+                                        printf("\n Regla: termino --> termino OP_MULT_T factor \n");
                                       }
     break;
 
@@ -1718,7 +1718,7 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 147 "Sintactico.y"
     {
-                                       printf("\n Regla --> termino OP_MULT_T factor \n");
+                                       printf("\n Regla: termino --> termino OP_MULT_T factor \n");
                                        }
     break;
 
@@ -1726,28 +1726,28 @@ yyreduce:
 
 /* Line 1455 of yacc.c  */
 #line 150 "Sintactico.y"
-    {printf("\n '-' termino '%'prec MENOS_UNARIO \n");}
+    {printf("\n Regla: termino --> '-' termino '%'prec MENOS_UNARIO \n");}
     break;
 
   case 24:
 
 /* Line 1455 of yacc.c  */
 #line 151 "Sintactico.y"
-    {printf("\n Regla --> factor \n");}
+    {printf("\n Regla: termino --> factor \n");}
     break;
 
   case 25:
 
 /* Line 1455 of yacc.c  */
 #line 155 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A expr PARENT_C  \n");}
+    {printf("\n Regla: factor --> PARENT_A expr PARENT_C  \n");}
     break;
 
   case 26:
 
 /* Line 1455 of yacc.c  */
 #line 156 "Sintactico.y"
-    {printf("\n Regla --> NUMERO  \n");}
+    {printf("\n Regla: factor --> NUMERO  \n");}
     break;
 
   case 27:
@@ -1755,253 +1755,253 @@ yyreduce:
 /* Line 1455 of yacc.c  */
 #line 157 "Sintactico.y"
     {
-                                  printf("\n Regla --> VARIABLE  \n");
+                                  printf("\n Regla: factor --> VARIABLE  \n");
                                   }
     break;
 
   case 28:
 
 /* Line 1455 of yacc.c  */
-#line 162 "Sintactico.y"
+#line 164 "Sintactico.y"
     {
-                                    printf("\n Regla -->  DISPLAY_T const_string_r  \n");
+                                    printf("\n Regla: display -->  DISPLAY_T const_string_r  \n");
                                     }
     break;
 
   case 29:
 
 /* Line 1455 of yacc.c  */
-#line 165 "Sintactico.y"
+#line 167 "Sintactico.y"
     {
-                                    printf("\n Regla -->  DISPLAY_T expr   \n");
+                                    printf("\n Regla: display -->  DISPLAY_T expr   \n");
                                     }
     break;
 
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 170 "Sintactico.y"
+#line 172 "Sintactico.y"
     {
-                    printf("\n Regla -->  GET_T VARIABLE \n");
+                    printf("\n Regla: get -->  GET_T VARIABLE \n");
                     }
     break;
 
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 175 "Sintactico.y"
+#line 179 "Sintactico.y"
     {
-                          printf("\n Regla -->  init_while cond_completa sentencia ENDWHILE_T \n");
+                          printf("\n Regla: while -->  init_while cond_completa sentencia ENDWHILE_T \n");
                         }
     break;
 
   case 32:
 
 /* Line 1455 of yacc.c  */
-#line 180 "Sintactico.y"
+#line 184 "Sintactico.y"
     {
-					printf("\n Regla -->  WHILE_T \n");
+					printf("\n Regla: init_while -->  WHILE_T \n");
                 }
     break;
 
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 185 "Sintactico.y"
+#line 189 "Sintactico.y"
     {
-      printf("\n Regla --> condicion_if ELSE_T sentencia ENDIF_T  \n");
+      printf("\n Regla: if --> condicion_if ELSE_T sentencia ENDIF_T  \n");
     }
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 188 "Sintactico.y"
+#line 192 "Sintactico.y"
     {
-      printf("\n Regla --> condicion_if ENDIF_T \n");
+      printf("\n Regla: if --> condicion_if ENDIF_T \n");
     }
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 193 "Sintactico.y"
+#line 197 "Sintactico.y"
     {
-		printf("\n Regla --> sentencia_if cond_completa sentencia  \n");
+		printf("\n Regla: condicion_if --> sentencia_if cond_completa sentencia  \n");
 	}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 198 "Sintactico.y"
+#line 202 "Sintactico.y"
     {
-            printf("\n Regla --> IF_T \n");
+            printf("\n Regla: sentencia_if --> IF_T \n");
             }
     break;
 
   case 37:
 
 /* Line 1455 of yacc.c  */
-#line 203 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_tipo_1 cond_completa PARENT_C \n");}
+#line 207 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_1 cond_completa PARENT_C \n");}
     break;
 
   case 38:
 
 /* Line 1455 of yacc.c  */
-#line 204 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_tipo_3 cond_completa PARENT_C \n");}
+#line 208 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_3 cond_completa PARENT_C \n");}
     break;
 
   case 39:
 
 /* Line 1455 of yacc.c  */
-#line 205 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_tipo_1 cond PARENT_C \n");}
+#line 209 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_1 cond PARENT_C \n");}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 206 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_tipo_2 cond_completa PARENT_C \n");}
+#line 210 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_2 cond_completa PARENT_C \n");}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 207 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_tipo_4 cond_completa PARENT_C \n");}
+#line 211 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_4 cond_completa PARENT_C \n");}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 208 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_tipo_2 cond PARENT_C  \n");}
+#line 212 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_2 cond PARENT_C  \n");}
     break;
 
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 209 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_tipo_3 cond PARENT_C  \n");}
+#line 213 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_3 cond PARENT_C  \n");}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 210 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_tipo_4 cond PARENT_C  \n");}
+#line 214 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_4 cond PARENT_C  \n");}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 211 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond PARENT_C   \n");}
+#line 215 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond PARENT_C   \n");}
     break;
 
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 212 "Sintactico.y"
-    {printf("\n Regla --> OP_NOT cond_completa   \n");}
+#line 216 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> OP_NOT cond_completa   \n");}
     break;
 
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 213 "Sintactico.y"
-    {printf("\n Regla --> PARENT_A cond_completa PARENT_C    \n");}
+#line 217 "Sintactico.y"
+    {printf("\n Regla: cond_completa --> PARENT_A cond_completa PARENT_C    \n");}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 216 "Sintactico.y"
+#line 220 "Sintactico.y"
     {
-      printf("\n Regla -->  cond_completa OP_AND  \n");
+      printf("\n Regla: cond_tipo_1 -->  cond_completa OP_AND  \n");
       }
     break;
 
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 221 "Sintactico.y"
+#line 225 "Sintactico.y"
     {
-      printf("\n Regla -->   cond_completa OP_OR  \n");
+      printf("\n Regla: cond_tipo_2 -->   cond_completa OP_OR  \n");
      }
     break;
 
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 226 "Sintactico.y"
+#line 230 "Sintactico.y"
     {
-      printf("\n Regla -->  cond OP_AND  \n");
+      printf("\n Regla: cond_tipo_3 -->  cond OP_AND  \n");
       }
     break;
 
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 231 "Sintactico.y"
+#line 235 "Sintactico.y"
     {
-      printf("\n Regla -->  cond OP_OR   \n");
+      printf("\n Regla: cond_tipo_4 -->  cond OP_OR   \n");
       }
     break;
 
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 237 "Sintactico.y"
+#line 241 "Sintactico.y"
     {
-      printf("\n Regla --> expr OP_COMP expr   \n");
+      printf("\n Regla: cond --> expr OP_COMP expr   \n");
     }
     break;
 
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 240 "Sintactico.y"
+#line 244 "Sintactico.y"
     {
-      printf("\n Regla --> expr OP_MAY_IGU expr   \n");
+      printf("\n Regla: cond --> expr OP_MAY_IGU expr   \n");
     }
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 243 "Sintactico.y"
+#line 247 "Sintactico.y"
     {
-      printf("\n Regla --> expr OP_MEN_IGU expr   \n");
+      printf("\n Regla: cond --> expr OP_MEN_IGU expr   \n");
     }
     break;
 
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 246 "Sintactico.y"
+#line 250 "Sintactico.y"
     {
-      printf("\n Regla --> expr OP_MEN expr   \n");
+      printf("\n Regla: cond --> expr OP_MEN expr   \n");
     }
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 249 "Sintactico.y"
+#line 253 "Sintactico.y"
     {
-      printf("\n Regla --> expr OP_MAY expr   \n");
+      printf("\n Regla: cond --> expr OP_MAY expr   \n");
     }
     break;
 
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 254 "Sintactico.y"
+#line 260 "Sintactico.y"
     {
 	                                    char dataType[100];
                                         char variable[100];
@@ -2014,32 +2014,32 @@ yyreduce:
                                             popStack(&stackVar,variable);
                                             insertVariable(&symbolTable,variable,dataType);
                                         }
-                                         printf("\n Regla --> DIM_T OP_MEN dupla_asig OP_MAY  \n");
+                                         printf("\n Regla: dec_var --> DIM_T OP_MEN dupla_asig OP_MAY  \n");
 }
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 270 "Sintactico.y"
+#line 276 "Sintactico.y"
     {
-                                                                printf("\n Regla --> VARIABLE COMA_T dupla_asig COMA_T tipo   \n");
+                                                                printf("\n Regla: dupla_asig --> VARIABLE COMA_T dupla_asig COMA_T tipo   \n");
                                                                 }
     break;
 
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 273 "Sintactico.y"
+#line 279 "Sintactico.y"
     {
-                                                                printf("\n Regla -->  VARIABLE OP_MAY AS_T OP_MEN tipo   \n");
+                                                                printf("\n Regla: dupla_asig -->  VARIABLE OP_MAY AS_T OP_MEN tipo   \n");
                                                                 }
     break;
 
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 278 "Sintactico.y"
+#line 284 "Sintactico.y"
     { 
                     if( (verifyVariable((yyvsp[(1) - (1)].strVal), &symbolTable)) == 1) {
                       pushStack(&stackVar,(yyvsp[(1) - (1)].strVal));
@@ -2053,27 +2053,27 @@ yyreduce:
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 288 "Sintactico.y"
+#line 294 "Sintactico.y"
     {pushStack(&stackDataTypeDecVar,"INTEGER");
-                    printf("\n Regla -->  INT_T   \n");
+                    printf("\n Regla: tipo -->  INT_T   \n");
                     }
     break;
 
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 291 "Sintactico.y"
+#line 297 "Sintactico.y"
     {pushStack(&stackDataTypeDecVar,"FLOAT");
-                    printf("\n Regla -->  REAL_T   \n");
+                    printf("\n Regla: tipo -->  REAL_T   \n");
                     }
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 294 "Sintactico.y"
+#line 300 "Sintactico.y"
     {pushStack(&stackDataTypeDecVar,"STRING");
-                    printf("\n Regla -->  STRING_T   \n");
+                    printf("\n Regla: tipo -->  STRING_T   \n");
                     }
     break;
 
@@ -2292,7 +2292,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 299 "Sintactico.y"
+#line 305 "Sintactico.y"
 
 
 
@@ -2320,24 +2320,6 @@ int main(int argc, char* argv[])
     return 0;
 }
 
-/*
-int desapilar_en(t_pila* p,char* d)
-{
-    t_nodo* viejo;
-    if(!*p)
-        return 0;
-    viejo=(t_nodo*)malloc(sizeof(t_nodo));
-    viejo=*p;
-
-    char num[10];
-    itoa(viejo->info,num,10);
-    strcpy(d,num);
-    *p=viejo->sig;
-    free(viejo);
-    return 1;
-}*/
-
-////// 
 int verifyVariable( char *dato , tList *symb){
 
     while(*symb) {

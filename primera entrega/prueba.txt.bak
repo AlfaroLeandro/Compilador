@@ -1,36 +1,25 @@
 DIM < a, b, z, var2, h> AS < integer, real, string, string, Int >;
-DIM < r, A, B, v2ar> AS < string, real, string, String >;
+DIM < pivot, contador, promedio, actual, suma> AS < integer, integer, real, real, real >;
+DISPLAY "Prueba.txt LyC Tema 2!";
+DISPLAY "Ingrese un valor entero para actual: ";
 
-*/ Asignacion de variable no declarada /*
-*/ var = 100; /*
-
-*/ rango /*
-*/ var2 = 100000000; /*
-*/ var2 = 1000000000000000000000.1; /*
-
-*/ selecciones /*
-IF (a <= 30)
-    a = 30;
-    if(a > 10 && a < 20)
-        a = 2900;
-    endif;
-endif;
-
-if (var2 < 0)
-    b = a;
-else 
-    var2 = a;
-endif;
-
-*/while normal /*
-while( b > 10 && b < 20)
-	a = 5 + 3;
+pivot := 0b11110;
+GET actual;
+contador := 0;
+suma := 02.5+pivot;
+while (contador <= 92) 
+	contador := contador + 1;
+	actual := (contador/0.342) + (contador* 0xFF);
+	suma := suma + actual;
 endwhile;
 
-if(!(a>b))
-	display "entre al if";
+DISPLAY "La suma es: ";
+DISPLAY suma;
+
+if (actual > 2 && !(actual == 0)){
+	DISPLAY "actual es mayor que 2 y distinto de cero";
+else
+	if (actual < 2)
+	DISPLAY “no es mayor que 2”
+	endif;
 endif;
-
-*/ impresion /*
-display "hola mundo";
-

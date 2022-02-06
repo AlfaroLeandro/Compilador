@@ -46,7 +46,7 @@ CONST_INT_HEXA  "0x"([0-9]|[a-f]|[A-F])+
 COMILLA_D       ["]
 COMILLA_D_2_A   [“]
 COMILLA_D_2_C   [”]
-CONST_STRING    ({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}{CARACTERCOM}*({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}
+CONST_STRING    ({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}(.)*({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}
 AS_T            "AS"|"As"|"as"
 INT_T           "INT"|"int"|"Int"|"Integer"|"INTEGER"|"integer"
 REAL_T          "REAL"|"Real"|"real"

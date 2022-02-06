@@ -82,16 +82,11 @@ VARIABLE        {LETRA}({LETRA}|{NUMERO}|"_")*
 {ELSE_T}                    {return ELSE_T;}      
 {ENDIF_T}                   {return ENDIF_T;} 
 {WHILE_T}                   {return WHILE_T;}     
-{DO_T}                      {return DO_T;}        
-{IN_T}                      {return IN_T;}        
 {ENDWHILE_T}                {return ENDWHILE_T;}  
 {REAL_T}                    {return REAL_T;}      
 {INT_T}                     {return INT_T;}    
-{LONGITUD_T}                {return LONGITUD_T;}    
 {GET_T}                     {return GET_T;}       
 {DISPLAY_T}                 {return DISPLAY_T;}   
-{CORCHETE_A}                {return CORCHETE_A;}  
-{CORCHETE_C}                {return CORCHETE_C;}  
 {STRING_T}                  {return STRING_T;}    
 {COMENTARIO_C_T}            {;}
 {CONST_STRING}              {
