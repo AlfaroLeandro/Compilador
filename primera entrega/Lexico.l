@@ -9,6 +9,7 @@
 #define MAX_INTEGER 65535
 #define MAX_CHARACTERS 100
 #define MAX_FLOAT INT_MAX
+#define MAX_CHARACTERS_VAR 30
 
 
 
@@ -26,6 +27,7 @@ LETRA           [a-zA-Z]
 ESPACIO         [" "]
 CARACTERCOM		@|\(|\)|\<|\>|\]|\[|\=|\?|\"|\.|\,|\+|\t|\n|\/|\_|\:|\;|¿|\*|{LETRA}|{NUMERO}|{ESPACIO} 
 COMENTARIO_C_T  ("*")(\/)({CARACTERCOM})*(("*")(\/)({CARACTERCOM})*(\/)("*"))?({CARACTERCOM})*(\/)("*")
+COMENTARIO_ERR	\*\/ 
 OP_AND          "&&"
 OP_OR           "||"
 WHITESPACES     [ \t\r\v\f]
@@ -80,6 +82,7 @@ VARIABLE        {LETRA}({LETRA}|{NUMERO}|"_")*
 {DISPLAY_T}                 {return DISPLAY_T;}   
 {STRING_T}                  {return STRING_T;}    
 {COMENTARIO_C_T}            {;}
+{COMENTARIO_ERR}			{informeDeError("COMENTARIO SIN CERRAR");}
 {CONST_STRING}              {
                                 if(strlen(yytext) > MAX_CHARACTERS){
                                     informeDeError("STRING SUPERA EL MAXIMO DE CARACTERES PERMITIDO");
@@ -112,7 +115,14 @@ VARIABLE        {LETRA}({LETRA}|{NUMERO}|"_")*
                                 }
                             }   
     
-{VARIABLE}                  {yylval.strVal = strdup(yytext); return VARIABLE;}    
+{VARIABLE}                  {
+								if(strlen(yytext) > MAX_CHARACTERS_VAR){
+									informeDeError("NOMBRE DE VARIABLE SUPERA EL MAXIMO PERMITIDO");
+								} else {
+									yylval.strVal = strdup(yytext); 
+									return VARIABLE;	
+								}								
+							}    
 {OP_ASIG_T}                 {yylval.strVal = strdup(yytext); return OP_ASIG_T;}   
 {OP_SUM_T}                  {yylval.strVal = strdup(yytext); return OP_SUM_T;}    
 {OP_REST_T}                 {yylval.strVal = strdup(yytext); return OP_REST_T;}   
