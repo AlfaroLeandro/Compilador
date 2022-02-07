@@ -71,20 +71,18 @@
      OP_NOT = 287,
      LONGITUD_T = 288,
      CONST_INT = 289,
-     CONST_INT_BIN = 290,
-     CONST_INT_HEXA = 291,
-     CONST_REAL = 292,
-     VARIABLE = 293,
-     CONST_STRING = 294,
-     OP_ASIG_T = 295,
-     OP_REST_T = 296,
-     OP_SUM_T = 297,
-     OP_MULT_T = 298,
-     OP_DIV_T = 299,
-     COMENTARIO_A_T = 300,
-     COMENTARIO_B_T = 301,
-     COMENTARIO_C_T = 302,
-     MENOS_UNARIO = 304
+     CONST_REAL = 290,
+     VARIABLE = 291,
+     CONST_STRING = 292,
+     OP_ASIG_T = 293,
+     OP_REST_T = 294,
+     OP_SUM_T = 295,
+     OP_MULT_T = 296,
+     OP_DIV_T = 297,
+     COMENTARIO_A_T = 298,
+     COMENTARIO_B_T = 299,
+     COMENTARIO_C_T = 300,
+     MENOS_UNARIO = 302
    };
 #endif
 /* Tokens.  */
@@ -120,20 +118,18 @@
 #define OP_NOT 287
 #define LONGITUD_T 288
 #define CONST_INT 289
-#define CONST_INT_BIN 290
-#define CONST_INT_HEXA 291
-#define CONST_REAL 292
-#define VARIABLE 293
-#define CONST_STRING 294
-#define OP_ASIG_T 295
-#define OP_REST_T 296
-#define OP_SUM_T 297
-#define OP_MULT_T 298
-#define OP_DIV_T 299
-#define COMENTARIO_A_T 300
-#define COMENTARIO_B_T 301
-#define COMENTARIO_C_T 302
-#define MENOS_UNARIO 304
+#define CONST_REAL 290
+#define VARIABLE 291
+#define CONST_STRING 292
+#define OP_ASIG_T 293
+#define OP_REST_T 294
+#define OP_SUM_T 295
+#define OP_MULT_T 296
+#define OP_DIV_T 297
+#define COMENTARIO_A_T 298
+#define COMENTARIO_B_T 299
+#define COMENTARIO_C_T 300
+#define MENOS_UNARIO 302
 
 
 
@@ -143,14 +139,14 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 26 "Sintactico.y"
+#line 28 "Sintactico.y"
 
     char* strVal;
 
 
 
 /* Line 1676 of yacc.c  */
-#line 154 "y.tab.h"
+#line 150 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

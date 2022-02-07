@@ -7,8 +7,6 @@ Terminals unused in grammar
    CORCHETE_A
    CORCHETE_C
    LONGITUD_T
-   CONST_INT_BIN
-   CONST_INT_HEXA
    COMENTARIO_A_T
    COMENTARIO_B_T
    COMENTARIO_C_T
@@ -147,85 +145,83 @@ OP_COMP (286) 51
 OP_NOT (287) 45
 LONGITUD_T (288)
 CONST_INT (289) 15
-CONST_INT_BIN (290)
-CONST_INT_HEXA (291)
-CONST_REAL (292) 16
-VARIABLE (293) 13 26 29 59
-CONST_STRING (294) 14
-OP_ASIG_T (295) 11 12
-OP_REST_T (296) 18
-OP_SUM_T (297) 17
-OP_MULT_T (298) 20
-OP_DIV_T (299) 21
-COMENTARIO_A_T (300)
-COMENTARIO_B_T (301)
-COMENTARIO_C_T (302)
-. (303)
-MENOS_UNARIO (304)
+CONST_REAL (290) 16
+VARIABLE (291) 13 26 29 59
+CONST_STRING (292) 14
+OP_ASIG_T (293) 11 12
+OP_REST_T (294) 18
+OP_SUM_T (295) 17
+OP_MULT_T (296) 20
+OP_DIV_T (297) 21
+COMENTARIO_A_T (298)
+COMENTARIO_B_T (299)
+COMENTARIO_C_T (300)
+. (301)
+MENOS_UNARIO (302)
 
 
 No terminales con las reglas donde aparecen
 
-$accept (51)
+$accept (49)
     en la izquierda: 0
-programa (52)
+programa (50)
     en la izquierda: 1, en la derecha: 0
-prog (53)
+prog (51)
     en la izquierda: 2, en la derecha: 1
-sentencia (54)
+sentencia (52)
     en la izquierda: 3 4, en la derecha: 2 3 30 32 34
-grammar (55)
+grammar (53)
     en la izquierda: 5 6 7 8 9 10, en la derecha: 3 4
-asig (56)
+asig (54)
     en la izquierda: 11 12, en la derecha: 6
-variable (57)
+variable (55)
     en la izquierda: 13, en la derecha: 11 12
-const_string_r (58)
+const_string_r (56)
     en la izquierda: 14, en la derecha: 12 27
-NUMERO (59)
+NUMERO (57)
     en la izquierda: 15 16, en la derecha: 25
-expr (60)
+expr (58)
     en la izquierda: 17 18 19, en la derecha: 11 17 18 24 28 51 52
     53 54 55
-termino (61)
+termino (59)
     en la izquierda: 20 21 22 23, en la derecha: 17 18 19 20 21 22
-factor (62)
+factor (60)
     en la izquierda: 24 25 26, en la derecha: 20 21 23
-display (63)
+display (61)
     en la izquierda: 27 28, en la derecha: 7
-get (64)
+get (62)
     en la izquierda: 29, en la derecha: 8
-while (65)
+while (63)
     en la izquierda: 30, en la derecha: 9
-init_while (66)
+init_while (64)
     en la izquierda: 31, en la derecha: 30
-if (67)
+if (65)
     en la izquierda: 32 33, en la derecha: 10
-condicion_if (68)
+condicion_if (66)
     en la izquierda: 34, en la derecha: 32 33
-sentencia_if (69)
+sentencia_if (67)
     en la izquierda: 35, en la derecha: 34
-cond_completa (70)
+cond_completa (68)
     en la izquierda: 36 37 38 39 40 41 42 43 44 45 46, en la derecha:
     30 34 36 37 39 40 45 46 47 48
-cond_tipo_1 (71)
+cond_tipo_1 (69)
     en la izquierda: 47, en la derecha: 36 38
-cond_tipo_2 (72)
+cond_tipo_2 (70)
     en la izquierda: 48, en la derecha: 39 41
-cond_tipo_3 (73)
+cond_tipo_3 (71)
     en la izquierda: 49, en la derecha: 37 42
-cond_tipo_4 (74)
+cond_tipo_4 (72)
     en la izquierda: 50, en la derecha: 40 43
-cond (75)
+cond (73)
     en la izquierda: 51 52 53 54 55, en la derecha: 38 41 42 43 44
     49 50
-dec_var (76)
+dec_var (74)
     en la izquierda: 56, en la derecha: 5
-dupla_asig (77)
+dupla_asig (75)
     en la izquierda: 57 58, en la derecha: 56 57
-vasAsig (78)
+vasAsig (76)
     en la izquierda: 59, en la derecha: 57 58
-tipo (79)
+tipo (77)
     en la izquierda: 60 61 62, en la derecha: 57 58
 
 

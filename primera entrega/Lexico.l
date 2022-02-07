@@ -3,19 +3,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include <math.h>
+#include "miscelaneo.h"
 #include "y.tab.h"
 
 #define MAX_INTEGER 65535
-#define BASE_BINARIA 2
-#define BASE_HEXADECIMAL 16
 #define MAX_CHARACTERS 100
-#define VALOR_MIN_LETRA 10
 #define MAX_FLOAT INT_MAX
 
-#define ES_CARACTER_NUMERO(C) 	   ((C>='0' && C<='9')? 1:0)
-#define CARACTER_NUM_A_ENTERO(C)   (C-'0')
-#define CARACTER_LETRA_A_ENTERO(C) (C<='Z'? (C-'A'):(C-'a'))
 
 
 FILE *yyin;
@@ -23,7 +17,6 @@ FILE *ptTxt;
 
 int yyerror(void);
 void informeDeError(char* msg);
-int base_a_decimal(char* numero, int longitud, int base);
 %}
 
 %option noyywrap
@@ -40,9 +33,7 @@ BREAK_LINE      [\n]
 COMA_T          ","
 DOT_COM_T       ";"
 CONST_REAL      {NUMERO}+"."{NUMERO}+|{NUMERO}+"."|"."{NUMERO}+
-CONST_INT       {NUMERO}+
-CONST_INT_BIN	"0b"([0-1])+
-CONST_INT_HEXA  "0x"([0-9]|[a-f]|[A-F])+
+CONST_INT       {NUMERO}+|"0b"([0-1])+|"0x"([0-9]|[a-f]|[A-F])+
 COMILLA_D       ["]
 COMILLA_D_2_A   [“]
 COMILLA_D_2_C   [”]
@@ -99,8 +90,9 @@ VARIABLE        {LETRA}({LETRA}|{NUMERO}|"_")*
 
                             }
 
-{CONST_INT}                 {   
-                                int value = atoi(strdup(yytext));
+{CONST_INT}                 {
+								int value = detectar_base_devolver_valor(yytext);
+								
                                 if( value > MAX_INTEGER ) {
                                     informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
                                 } else {
@@ -108,27 +100,6 @@ VARIABLE        {LETRA}({LETRA}|{NUMERO}|"_")*
                                     return CONST_INT;
                                 }
                             } 
-
-
-{CONST_INT_BIN}				{   
-                                int value = base_a_decimal(yytext+2,strlen(yytext+2),BASE_BINARIA);
-                                if( value > MAX_INTEGER ) {
-                                    informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
-                                } else {
-                                    yylval.strVal = strdup(yytext);
-                                    return CONST_INT_BIN;
-                                }
-                            }
-					
-{CONST_INT_HEXA}				{   
-                                int value = base_a_decimal(yytext+2,strlen(yytext+2),BASE_HEXADECIMAL);
-                                if( value > MAX_INTEGER ) {
-                                    informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
-                                } else {
-                                    yylval.strVal = strdup(yytext);
-                                    return CONST_INT_HEXA;
-                                }
-                            }
 					
 
 {CONST_REAL}                 {  
@@ -178,20 +149,4 @@ int yyerror(void){
 	printf("ERROR SINTACTICO EN LA LINEA: %d\n", yylineno);
 	system("Pause");
 	exit(1);
-}
-
-int base_a_decimal(char* numero, int longitud, int base)
-{
-	int i,
-		numero_decimal = 0;
-	for(i = 0; i<=longitud-1; i++)
-	{
-		if(ES_CARACTER_NUMERO(*numero))
-			numero_decimal += CARACTER_NUM_A_ENTERO(*numero)*pow((double)base, (double)(longitud-1-i));
-		else
-			numero_decimal += (CARACTER_LETRA_A_ENTERO(*numero)+VALOR_MIN_LETRA)*pow((double)base, (double)(longitud-1-i));
-		numero++;
-	}
-	
-	return numero_decimal;
 }

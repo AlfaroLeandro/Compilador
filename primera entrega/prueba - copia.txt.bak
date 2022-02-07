@@ -1,5 +1,0 @@
-if(3>4)
-	display "entrealif";
-endif;
-
-display "holamundo";

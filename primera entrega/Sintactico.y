@@ -1,6 +1,8 @@
 %{
+#include <stdio.h>
 #include "lista.h"
 #include "y.tab.h"
+#include "miscelaneo.h"
 #define COND_AND 2
 #define COND_OR 1
 #define COND_NORMAL 0
@@ -59,8 +61,6 @@ int verifyVariable( char *dato , tList *symb);
 %token OP_NOT   
 %token LONGITUD_T
 %token <strVal> CONST_INT
-%token <strVal> CONST_INT_BIN
-%token <strVal> CONST_INT_HEXA
 %token <strVal> CONST_REAL
 %token <strVal> VARIABLE    
 %token <strVal> CONST_STRING 
@@ -120,20 +120,15 @@ const_string_r: CONST_STRING {
 		printf("\n Regla: const_string_r --> CONST_STRING \n", $1);
 	};
 
-NUMERO: CONST_INT{
-        insertNumber(&symbolTable,$1,TIPO_INTEGER);
+NUMERO: CONST_INT{	
+		char valor[100];
+		sprintf(valor,"%d",detectar_base_devolver_valor($1));
+		
+        insertNumber(&symbolTable,$1, valor ,TIPO_INTEGER);
         printf("\n Regla: NUMERO --> CONST_INT \n", $1);
       }
-		CONST_INT_BIN{
-        insertNumber(&symbolTable,$1,TIPO_INTEGER);
-        printf("\n Regla: NUMERO --> CONST_INT_BIN \n", $1);
-      }
-	  CONST_INT_HEXA{
-        insertNumber(&symbolTable,$1,TIPO_INTEGER);
-        printf("\n Regla: NUMERO --> CONST_INT_HEXA \n", $1);
-      }
       | CONST_REAL {
-        insertNumber(&symbolTable,$1,TIPO_FLOAT);
+        insertNumber(&symbolTable, $1, $1, TIPO_FLOAT);
         printf("\n Regla: CONST_REAL --> CONST_REAL \n");
       }
       ;

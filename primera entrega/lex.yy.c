@@ -289,37 +289,37 @@ static void yy_fatal_error YY_PROTO(( yyconst char msg[] ));
 	*yy_cp = '\0'; \
 	yy_c_buf_p = yy_cp;
 
-#define YY_NUM_RULES 40
-#define YY_END_OF_BUFFER 41
+#define YY_NUM_RULES 38
+#define YY_END_OF_BUFFER 39
 static yyconst short int yy_acclist[250] =
     {   0,
-       41,   39,   40,   37,   39,   40,   38,   40,   32,   39,
-       40,   39,   40,   39,   40,   35,   39,   40,   36,   39,
-       40,   23,   39,   40,   21,   39,   40,   33,   39,   40,
-       22,   39,   40,   39,   40,   24,   39,   40,   15,   39,
-       40,   15,   39,   40,   39,   40,   34,   39,   40,   25,
-       39,   40,   20,   39,   40,   26,   39,   40,   19,   39,
-       40,   19,   39,   40,   19,   39,   40,   19,   39,   40,
-       19,   39,   40,   19,   39,   40,   19,   39,   40,   19,
-       39,   40,   19,   39,   40,   19,   39,   40,   19,   39,
-       40,   19,   39,   40,   19,   39,   40,   19,   39,   40,
+       39,   37,   38,   35,   37,   38,   36,   38,   30,   37,
+       38,   37,   38,   37,   38,   33,   37,   38,   34,   37,
+       38,   21,   37,   38,   19,   37,   38,   31,   37,   38,
+       20,   37,   38,   37,   38,   22,   37,   38,   15,   37,
+       38,   15,   37,   38,   37,   38,   32,   37,   38,   23,
+       37,   38,   18,   37,   38,   24,   37,   38,   17,   37,
+       38,   17,   37,   38,   17,   37,   38,   17,   37,   38,
+       17,   37,   38,   17,   37,   38,   17,   37,   38,   17,
+       37,   38,   17,   37,   38,   17,   37,   38,   17,   37,
+       38,   17,   37,   38,   17,   37,   38,   17,   37,   38,
 
-       19,   39,   40,   19,   39,   40,   19,   39,   40,   39,
-       40,   39,   40,   14,   14,   29,   18,   18,   15,   20,
-       27,   31,   28,   19,    2,   19,   19,   19,   19,   19,
-       19,   19,   19,   19,    3,   19,   19,   19,   19,   19,
-       19,   19,   19,   19,   19,   19,   19,   19,   19,   19,
-       19,   19,   30,   18,   16,   17,    1,   19,   19,   19,
-       19,   19,   19,   19,   10,   19,    9,   19,    9,   19,
-       19,   19,   19,   19,   19,   19,   19,   19,   19,    9,
-       19,   19,   19,   19,   13,   19,   19,    4,   19,   19,
-       19,   19,   19,   19,   19,   19,    8,   19,   19,   19,
+       17,   37,   38,   17,   37,   38,   17,   37,   38,   37,
+       38,   37,   38,   14,   14,   27,   16,   16,   15,   18,
+       25,   29,   26,   17,    2,   17,   17,   17,   17,   17,
+       17,   17,   17,   17,    3,   17,   17,   17,   17,   17,
+       17,   17,   17,   17,   17,   17,   17,   17,   17,   17,
+       17,   17,   28,   16,   15,   15,    1,   17,   17,   17,
+       17,   17,   17,   17,   10,   17,    9,   17,    9,   17,
+       17,   17,   17,   17,   17,   17,   17,   17,   17,    9,
+       17,   17,   17,   17,   13,   17,   17,    4,   17,   17,
+       17,   17,   17,   17,   17,   17,    8,   17,   17,   17,
 
-       19,   19,   19,   19,   19,   19,   19,   19,   13,   19,
-       19,    5,   19,   19,   19,   19,   19,   19,   19,   19,
-        6,   19,   19,   19,   19,   19,   13,   19,   19,   19,
-       19,   19,   19,   19,   12,   19,   19,   19,   19,   11,
-       19,   19,   19,   19,    9,   19,   19,    7,   19
+       17,   17,   17,   17,   17,   17,   17,   17,   13,   17,
+       17,    5,   17,   17,   17,   17,   17,   17,   17,   17,
+        6,   17,   17,   17,   17,   17,   13,   17,   17,   17,
+       17,   17,   17,   17,   12,   17,   17,   17,   17,   11,
+       17,   17,   17,   17,    9,   17,   17,    7,   17
     } ;
 
 static yyconst short int yy_accept[185] =
@@ -557,19 +557,13 @@ char *yytext;
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
-#include <math.h>
+#include "miscelaneo.h"
 #include "y.tab.h"
 
 #define MAX_INTEGER 65535
-#define BASE_BINARIA 2
-#define BASE_HEXADECIMAL 16
 #define MAX_CHARACTERS 100
-#define VALOR_MIN_LETRA 10
 #define MAX_FLOAT INT_MAX
 
-#define ES_CARACTER_NUMERO(C) 	   ((C>='0' && C<='9')? 1:0)
-#define CARACTER_NUM_A_ENTERO(C)   (C-'0')
-#define CARACTER_LETRA_A_ENTERO(C) (C<='Z'? (C-'A'):(C-'a'))
 
 
 FILE *yyin;
@@ -577,8 +571,7 @@ FILE *ptTxt;
 
 int yyerror(void);
 void informeDeError(char* msg);
-int base_a_decimal(char* numero, int longitud, int base);
-#line 582 "lex.yy.c"
+#line 575 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -729,10 +722,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 77 "Lexico.l"
+#line 68 "Lexico.l"
 
 
-#line 736 "lex.yy.c"
+#line 729 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -825,72 +818,72 @@ do_action:	/* This label is used only to access EOF actions. */
 	{ /* beginning of action switch */
 case 1:
 YY_RULE_SETUP
-#line 79 "Lexico.l"
+#line 70 "Lexico.l"
 {return DIM_T;}    
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 80 "Lexico.l"
+#line 71 "Lexico.l"
 {return AS_T;}        
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 81 "Lexico.l"
+#line 72 "Lexico.l"
 {return IF_T;}        
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 82 "Lexico.l"
+#line 73 "Lexico.l"
 {return ELSE_T;}      
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 83 "Lexico.l"
+#line 74 "Lexico.l"
 {return ENDIF_T;} 
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 84 "Lexico.l"
+#line 75 "Lexico.l"
 {return WHILE_T;}     
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 85 "Lexico.l"
+#line 76 "Lexico.l"
 {return ENDWHILE_T;}  
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 86 "Lexico.l"
+#line 77 "Lexico.l"
 {return REAL_T;}      
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 87 "Lexico.l"
+#line 78 "Lexico.l"
 {return INT_T;}    
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 88 "Lexico.l"
+#line 79 "Lexico.l"
 {return GET_T;}       
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 89 "Lexico.l"
+#line 80 "Lexico.l"
 {return DISPLAY_T;}   
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 90 "Lexico.l"
+#line 81 "Lexico.l"
 {return STRING_T;}    
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 91 "Lexico.l"
+#line 82 "Lexico.l"
 {;}
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 92 "Lexico.l"
+#line 83 "Lexico.l"
 {
                                 if(strlen(yytext) > MAX_CHARACTERS){
                                     informeDeError("STRING SUPERA EL MAXIMO DE CARACTERES PERMITIDO");
@@ -903,9 +896,10 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 102 "Lexico.l"
-{   
-                                int value = atoi(strdup(yytext));
+#line 93 "Lexico.l"
+{
+								int value = detectar_base_devolver_valor(yytext);
+								
                                 if( value > MAX_INTEGER ) {
                                     informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
                                 } else {
@@ -916,33 +910,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 113 "Lexico.l"
-{   
-                                int value = base_a_decimal(yytext+2,strlen(yytext+2),BASE_BINARIA);
-                                if( value > MAX_INTEGER ) {
-                                    informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
-                                } else {
-                                    yylval.strVal = strdup(yytext);
-                                    return CONST_INT_BIN;
-                                }
-                            }
-	YY_BREAK
-case 17:
-YY_RULE_SETUP
-#line 123 "Lexico.l"
-{   
-                                int value = base_a_decimal(yytext+2,strlen(yytext+2),BASE_HEXADECIMAL);
-                                if( value > MAX_INTEGER ) {
-                                    informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
-                                } else {
-                                    yylval.strVal = strdup(yytext);
-                                    return CONST_INT_HEXA;
-                                }
-                            }
-	YY_BREAK
-case 18:
-YY_RULE_SETUP
-#line 134 "Lexico.l"
+#line 105 "Lexico.l"
 {  
                                 float value = atof(strdup(yytext));
                                 if( value > MAX_FLOAT ) {
@@ -953,117 +921,117 @@ YY_RULE_SETUP
                                 }
                             }   
 	YY_BREAK
+case 17:
+YY_RULE_SETUP
+#line 115 "Lexico.l"
+{yylval.strVal = strdup(yytext); return VARIABLE;}    
+	YY_BREAK
+case 18:
+YY_RULE_SETUP
+#line 116 "Lexico.l"
+{yylval.strVal = strdup(yytext); return OP_ASIG_T;}   
+	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 144 "Lexico.l"
-{yylval.strVal = strdup(yytext); return VARIABLE;}    
+#line 117 "Lexico.l"
+{yylval.strVal = strdup(yytext); return OP_SUM_T;}    
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 145 "Lexico.l"
-{yylval.strVal = strdup(yytext); return OP_ASIG_T;}   
+#line 118 "Lexico.l"
+{yylval.strVal = strdup(yytext); return OP_REST_T;}   
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 146 "Lexico.l"
-{yylval.strVal = strdup(yytext); return OP_SUM_T;}    
+#line 119 "Lexico.l"
+{yylval.strVal = strdup(yytext); return OP_MULT_T;}   
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 147 "Lexico.l"
-{yylval.strVal = strdup(yytext); return OP_REST_T;}   
+#line 120 "Lexico.l"
+{yylval.strVal = strdup(yytext); return OP_DIV_T;}    
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 148 "Lexico.l"
-{yylval.strVal = strdup(yytext); return OP_MULT_T;}   
+#line 121 "Lexico.l"
+{return OP_MEN;}      
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 149 "Lexico.l"
-{yylval.strVal = strdup(yytext); return OP_DIV_T;}    
+#line 122 "Lexico.l"
+{return OP_MAY;}      
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 150 "Lexico.l"
-{return OP_MEN;}      
+#line 123 "Lexico.l"
+{return OP_MEN_IGU;}  
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 151 "Lexico.l"
-{return OP_MAY;}      
+#line 124 "Lexico.l"
+{return OP_MAY_IGU;}      
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 152 "Lexico.l"
-{return OP_MEN_IGU;}  
+#line 125 "Lexico.l"
+{return OP_AND;}      
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 153 "Lexico.l"
-{return OP_MAY_IGU;}      
+#line 126 "Lexico.l"
+{return OP_OR;}            
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 154 "Lexico.l"
-{return OP_AND;}      
+#line 127 "Lexico.l"
+{return OP_COMP;}
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 155 "Lexico.l"
-{return OP_OR;}            
+#line 128 "Lexico.l"
+{return OP_NOT;} 
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 156 "Lexico.l"
-{return OP_COMP;}
+#line 129 "Lexico.l"
+{return COMA_T;}      
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 157 "Lexico.l"
-{return OP_NOT;} 
+#line 130 "Lexico.l"
+{return DOT_COM_T;}   
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 158 "Lexico.l"
-{return COMA_T;}      
+#line 131 "Lexico.l"
+{return PARENT_A;}    
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 159 "Lexico.l"
-{return DOT_COM_T;}   
+#line 132 "Lexico.l"
+{return PARENT_C;}    
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 160 "Lexico.l"
-{return PARENT_A;}    
+#line 133 "Lexico.l"
+{;} 
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 161 "Lexico.l"
-{return PARENT_C;}    
+#line 134 "Lexico.l"
+{;}  
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 162 "Lexico.l"
-{;} 
+#line 135 "Lexico.l"
+{informeDeError("CARACTER NO RECONOCIDO");} 
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 163 "Lexico.l"
-{;}  
-	YY_BREAK
-case 39:
-YY_RULE_SETUP
-#line 164 "Lexico.l"
-{informeDeError("CARACTER NO RECONOCIDO");} 
-	YY_BREAK
-case 40:
-YY_RULE_SETUP
-#line 166 "Lexico.l"
+#line 137 "Lexico.l"
 ECHO;
 	YY_BREAK
-#line 1067 "lex.yy.c"
+#line 1035 "lex.yy.c"
 			case YY_STATE_EOF(INITIAL):
 				yyterminate();
 
@@ -1947,7 +1915,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 166 "Lexico.l"
+#line 137 "Lexico.l"
 
 
 
@@ -1963,20 +1931,4 @@ int yyerror(void){
 	printf("ERROR SINTACTICO EN LA LINEA: %d\n", yylineno);
 	system("Pause");
 	exit(1);
-}
-
-int base_a_decimal(char* numero, int longitud, int base)
-{
-	int i,
-		numero_decimal = 0;
-	for(i = 0; i<=longitud-1; i++)
-	{
-		if(ES_CARACTER_NUMERO(*numero))
-			numero_decimal += CARACTER_NUM_A_ENTERO(*numero)*pow((double)base, (double)(longitud-1-i));
-		else
-			numero_decimal += (CARACTER_LETRA_A_ENTERO(*numero)+VALOR_MIN_LETRA)*pow((double)base, (double)(longitud-1-i));
-		numero++;
-	}
-	
-	return numero_decimal;
 }

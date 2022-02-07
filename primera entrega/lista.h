@@ -18,7 +18,7 @@ void createList(tList *p);
 int insertOrder(tList *p, char* name, char* dataType, char* value, int length);
 int insertVariable(tList *p, char* name, char* dataType); 
 int insertString(tList *p, char* name);
-int insertNumber(tList *p, char* lex, char* type);
+int insertNumber(tList *p, char* lex, char* value, char* type);
 void deleteTable(tList *p);
 char* deleteCharacter(char* lex);
 int validar_id (tList* tabla_p, char* lexema_p);
@@ -54,7 +54,7 @@ int insertOrder(tList *p, char* name, char* dataType, char* value, int length)
     return SUCCESS;
 }
 
-int insertNumber(tList *p, char* lex, char* type) 
+int insertNumber(tList *p, char* lex, char* value, char* type) 
 {
     int result = -1;
     char name[100];
@@ -62,7 +62,7 @@ int insertNumber(tList *p, char* lex, char* type)
     strcpy(name, "_");
     strcat(name, lex); 
 
-    result = insertOrder(p, name,type, lex, 0);
+    result = insertOrder(p, name,type, value, 0);
 
     if(result == DUPLICATE){
         //printf("Lexema %s ya se ingreso en la tabla de simbolos\n",lex);
