@@ -23,18 +23,3 @@ else
 	DISPLAY “no es mayor que 2”;
 	endif;
 endif;
-
-/* Error rango de variables*/
-/* a = 0xFFFFFF; */
-/* a = 0b1111111111111111111; */
-/* a = 1000000; */
-
-/* Error nombre de variable */
-/* aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa = 0;
-
-/* Error longitud de cadena */
-/* DISLPLAY "1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890";
-
-/* Error de comentario sin cerrar */
-/* */
-
