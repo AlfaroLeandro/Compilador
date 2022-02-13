@@ -143,8 +143,8 @@ void deleteTable(tList *p)
 
     while(*p)
     {
-        printf("|%-30s|%-14s|%-30s|%-10d|\n", (*p)->name, (*p)->dataType, (*p)->value, (*p)->length);
-        fprintf(pTable, "|%-30s|%-14s|%-30s|%-10d|\n", (*p)->name, (*p)->dataType, (*p)->value, (*p)->length);
+        printf("|%-25s|%-14s|%-25s|%-10d|\n", (*p)->name, (*p)->dataType, (*p)->value, (*p)->length);
+        fprintf(pTable, "|%-25s|%-14s|%-25s|%-10d|\n", (*p)->name, (*p)->dataType, (*p)->value, (*p)->length);
         p = &(*p)->next;
     }
 
