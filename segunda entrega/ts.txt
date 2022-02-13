@@ -1,0 +1,24 @@
+
+______________________________TABLA DE SIMBOLOS_______________________________
+_______________________________________________________________________________
+|NOMBRE                   |TIPODATO      |VALOR                    |LONGITUD  |
+_______________________________________________________________________________
+|_0                       |INTEGER       |0                        |0         |
+|_0.342                   |FLOAT         |0.342                    |0         |
+|_02.5                    |FLOAT         |02.5                     |0         |
+|_0b11110                 |INTEGER       |30                       |0         |
+|_0xFF                    |INTEGER       |255                      |0         |
+|_1                       |INTEGER       |1                        |0         |
+|_2                       |INTEGER       |2                        |0         |
+|_92                      |INTEGER       |92                       |0         |
+|_La suma es:             |STRING        |La suma es:              |12        |
+|_Prueba.txt LyC Tema 2!  |STRING        |Prueba.txt LyC Tema 2!   |22        |
+|_actual es > que 2 y != de 0|STRING        |actual es > que 2 y != de 0|27        |
+|_ingrese un val int:     |STRING        |ingrese un val int:      |20        |
+|_“no es mayor que 2” |STRING        |“no es mayor que 2”  |23        |
+|actual                   |INTEGER       |                         |0         |
+|contador                 |FLOAT         |                         |0         |
+|pivot                    |FLOAT         |                         |0         |
+|promedio                 |FLOAT         |                         |0         |
+|suma                     |INTEGER       |                         |0         |
+_______________________________________________________________________________

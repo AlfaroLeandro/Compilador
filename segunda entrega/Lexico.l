@@ -7,7 +7,8 @@
 #include "y.tab.h"
 
 #define MAX_INTEGER 65535
-#define MAX_CHARACTERS 100
+#define MAX_CHARACTERS 32
+#define MAX_CHARACTERS_INT_REAL 30
 #define MAX_FLOAT INT_MAX
 #define MAX_CHARACTERS_VAR 30
 
@@ -25,8 +26,8 @@ void informeDeError(char* msg);
 NUMERO          [0-9]
 LETRA           [a-zA-Z]
 ESPACIO         [" "]
-CARACTERCOM		@|\(|\)|\<|\>|\]|\[|\=|\?|\"|\.|\,|\+|\t|\n|\/|\_|\:|\;|¿|\*|{LETRA}|{NUMERO}|{ESPACIO} 
-COMENTARIO_C_T  ("*")(\/)({CARACTERCOM})*(("*")(\/)({CARACTERCOM})*(\/)("*"))?({CARACTERCOM})*(\/)("*")
+SIMBOLO_COM_STR	[" "|'\t'|"#"|"%"|"?"|"¿"|"°"|","|";"|"!"|"¡"|"\\"|"@"|"."|":"|"_"|'\-'|'+'|'*'|'/'|"["|'\]'|'{'|'}'|"="|">"|"<"|"^"|"“"|"”"|"("|")"]
+COMENTARIO_C_T	\*\/({LETRA}|{NUMERO}|{SIMBOLO_COM_STR})*\/\*
 COMENTARIO_ERR	\*\/ 
 OP_AND          "&&"
 OP_OR           "||"
@@ -39,7 +40,7 @@ CONST_INT       {NUMERO}+|"0b"([0-1])+|"0x"([0-9]|[a-f]|[A-F])+
 COMILLA_D       ["]
 COMILLA_D_2_A   [“]
 COMILLA_D_2_C   [”]
-CONST_STRING    ({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}(.)*({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}
+CONST_STRING    ({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}({LETRA}|{NUMERO}|{SIMBOLO_COM_STR})*({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}
 AS_T            "AS"|"As"|"as"
 INT_T           "INT"|"int"|"Int"|"Integer"|"INTEGER"|"integer"
 REAL_T          "REAL"|"Real"|"real"
@@ -94,11 +95,16 @@ VARIABLE        {LETRA}({LETRA}|{NUMERO}|"_")*
                             }
 
 {CONST_INT}                 {
+								if(strlen(yytext) > MAX_CHARACTERS_INT_REAL){
+									informeDeError("CONSTANTE ENTERA SUPERA EL MAXIMO DE CARACTERES PERMITIDO");
+								}
 								int value = detectar_base_devolver_valor(yytext);
 								
                                 if( value > MAX_INTEGER ) {
                                     informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
-                                } else {
+                                } else if (value < 0) {
+									informeDeError("NUMERO POR DEBAJO DEL MINIMO PERMITIDO");
+								} else {
                                     yylval.strVal = strdup(yytext);
                                     return CONST_INT;
                                 }
@@ -106,14 +112,19 @@ VARIABLE        {LETRA}({LETRA}|{NUMERO}|"_")*
 					
 
 {CONST_REAL}                 {  
+								if(strlen(yytext) > MAX_CHARACTERS_INT_REAL){
+                                    informeDeError("CONSTANTE ENTERA SUPERA EL MAXIMO DE CARACTERES PERMITIDO");
+                                }
                                 float value = atof(strdup(yytext));
                                 if( value > MAX_FLOAT ) {
                                     informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
-                                } else {
+                                } else if ( value < 0) {
+									informeDeError("NUMERO POR DEBAJO DEL MINIMO PERMITIDO");
+								} else {
                                     yylval.strVal = strdup(yytext);
                                     return CONST_REAL;
                                 }
-                            }   
+                            }
     
 {VARIABLE}                  {
 								if(strlen(yytext) > MAX_CHARACTERS_VAR){
