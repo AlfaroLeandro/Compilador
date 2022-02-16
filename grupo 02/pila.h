@@ -1,101 +1,132 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#define SUCCESS 1
-#define NO_MEMORY 0
-
-typedef struct sNodeS {
-    struct sNodeS* ant;
-    char info[200];
-    int number;
-}tNodeS;
-
-typedef tNodeS* tStack;
 
 
-void createStack(tStack*p);
-int pushStack(tStack*p,char*d);
-int popStack(tStack* p,char* d);
-int emptyStack(tStack* p);
-void seeTop2(const tStack *p, char *d);
-int pushStack2(tStack*p, char*d, int number);
-int popStack2(tStack* p, char* d, int *number);
+typedef struct f_nodo
+{
+    struct f_nodo* ant;
+    char dato[200];
+    int nro;
+}r_nodo;
 
-void createStack(tStack* p)
+typedef r_nodo* t_pila;
+
+
+////////// PILA //////////
+void crear_pila(t_pila*);
+int apilar(t_pila*,char*);
+int desapilar(t_pila*,char*);
+int pila_vacia(t_pila*);
+void vaciar_pila(t_pila*);
+int apilarTODO(t_pila*, char*, int);
+int verTope(t_pila *, char *);
+int verTopeEntero(t_pila* );
+//////////////////////////
+
+
+void crear_pila(t_pila* p)
 {
     *p=NULL;
 }
 
-void seeTop2(const tStack *p, char *d)
+int apilar(t_pila* p,char* d)
 {
+
+    r_nodo* nuevo=(r_nodo*)malloc(sizeof(r_nodo));
+
+    if(!nuevo){
+    	printf("No se pudo reservar memoria\n");
+        return 0;
+    }
+
+    strcpy(nuevo->dato,d);
+
+    nuevo->ant=*p;
+    *p=nuevo;
+
+    return 1;
+}
+
+
+int apilarTODO(t_pila* p, char* d, int nro){
+
+ r_nodo* nuevo=(r_nodo*)malloc(sizeof(r_nodo));
+
+    if(!nuevo){
+        printf("No se pudo reservar memoria\n");
+        return 0;
+    }
+    strcpy(nuevo->dato,d);
+    nuevo->nro = nro;
+    nuevo->ant=*p;
+    *p=nuevo;
+
+    return 1;
+
+
+}
+
+int apilarEntero(t_pila* p,int d)
+{
+
+    r_nodo* nuevo=(r_nodo*)malloc(sizeof(r_nodo));
+    if(!nuevo){
+        printf("No se pudo reservar memoria\n");
+        return 0;
+    }
+    nuevo->nro = d;
+    nuevo->ant=*p;
+    *p=nuevo;
+
+    return 1;
+}
+
+
+int verTopeEntero(t_pila* p){
+    if(!*p){
+        return -1;
+    }
+    return (*p)->nro;
+}
+
+int desapilar(t_pila* p,char* d)
+{
+    r_nodo* viejo;
     if(!*p)
-        return;
-
-    strcpy(d,(*p)->info);
+        return 0;
+    viejo=(r_nodo*)malloc(sizeof(r_nodo));
+    viejo=*p;
+    strcpy(d,viejo->dato);
+    *p=viejo->ant;
+    free(viejo);
+    return 1;
 }
 
-int pushStack(tStack* p,char* d)
+int desapilarEntero(t_pila* p)
 {
-    tNodeS* newNode=(tNodeS*)malloc(sizeof(tNodeS));
-    
-    if(!newNode)
-        return NO_MEMORY;
-
-    strcpy(newNode->info,d);
-
-    newNode->ant=*p;
-    *p=newNode;
-
-    return SUCCESS;
-}
-
-int popStack(tStack* p,char* d)
-{
-    tNodeS* oldNode;
+    r_nodo* viejo;
+    int retorno = 0;
     if(!*p)
-        return NO_MEMORY;
-    oldNode=(tNodeS*)malloc(sizeof(tNodeS));
-    oldNode=*p;
-    strcpy(d,oldNode->info);
-    *p=oldNode->ant;
-    free(oldNode);
-    return SUCCESS;
+        return 0;
+    viejo=(r_nodo*)malloc(sizeof(r_nodo));
+    viejo=*p;
+    retorno = viejo->nro;
+    *p=viejo->ant;
+    free(viejo);
+    return retorno;
 }
 
-int emptyStack(tStack* p)
+int pila_vacia(t_pila* p)
 {
     return !*p;
 }
 
-//////
 
-
-int pushStack2(tStack* p,char* d, int number)
-{
-    tNodeS* newNode=(tNodeS*)malloc(sizeof(tNodeS));
-    
-    if(!newNode)
-        return NO_MEMORY;
-
-    strcpy(newNode->info,d);
-    newNode->number = number;
-
-    newNode->ant=*p;
-    *p=newNode;
-
-    return SUCCESS;
-}
-
-int popStack2(tStack* p,char* d, int *number)
-{
-    tNodeS* oldNode;
-    if(!*p)
-        return NO_MEMORY;
-    oldNode=(tNodeS*)malloc(sizeof(tNodeS));
-    oldNode=*p;
-    strcpy(d,oldNode->info);
-    *number = oldNode->number;
-    *p=oldNode->ant;
-    free(oldNode);
-    return SUCCESS;
+int verTope(t_pila *p, char *d){
+    if(!*p){
+        return 0;
+    }
+    strcpy(((*p)->dato), d);
+    return 1;
 }

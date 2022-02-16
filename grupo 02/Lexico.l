@@ -3,160 +3,211 @@
 #include <stdlib.h>
 #include <string.h>
 #include <limits.h>
+#include <math.h>
 #include "miscelaneo.h"
 #include "y.tab.h"
 
-#define MAX_INTEGER 65535
-#define MAX_CHARACTERS 100
-#define MAX_FLOAT INT_MAX
-#define MAX_CHARACTERS_VAR 30
-
-
+#define MAX_CHARACTERS 32
+#define MAX_CHARACTERS_INT_REAL 30
+#define MAX_VALUE_STRING 30
+#define MAX_VALUE_INTEGER 65535
+#define MAX_VALUE_FLOAT INT_MAX
 
 FILE *yyin;
-FILE *ptTxt;
+FILE *archSal;
 
-int yyerror(void);
-void informeDeError(char* msg);
+int tokenInvalido(void);
+int errorLexico(void);
+void yyerror(char* mensaje);
 %}
 
 %option noyywrap
 %option yylineno
-NUMERO          [0-9]
-LETRA           [a-zA-Z]
-ESPACIO         [" "]
-CARACTERCOM		@|\(|\)|\<|\>|\]|\[|\=|\?|\"|\.|\,|\+|\t|\n|\/|\_|\:|\;|¿|\*|{LETRA}|{NUMERO}|{ESPACIO} 
-COMENTARIO_C_T  ("*")(\/)({CARACTERCOM})*(("*")(\/)({CARACTERCOM})*(\/)("*"))?({CARACTERCOM})*(\/)("*")
-COMENTARIO_ERR	\*\/ 
-OP_AND          "&&"
-OP_OR           "||"
-WHITESPACES     [ \t\r\v\f]
-BREAK_LINE      [\n]
-COMA_T          ","
-DOT_COM_T       ";"
-CONST_REAL      {NUMERO}+"."{NUMERO}+|{NUMERO}+"."|"."{NUMERO}+
-CONST_INT       {NUMERO}+|"0b"([0-1])+|"0x"([0-9]|[a-f]|[A-F])+
-COMILLA_D       ["]
-COMILLA_D_2_A   [“]
-COMILLA_D_2_C   [”]
-CONST_STRING    ({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}(.)*({COMILLA_D}|{COMILLA_D_2_A}|{COMILLA_D_2_C}){1}
-AS_T            "AS"|"As"|"as"
-INT_T           "INT"|"int"|"Int"|"Integer"|"INTEGER"|"integer"
-REAL_T          "REAL"|"Real"|"real"
-STRING_T        "STRING"|"String"|"string"
-DIM_T           "DIM"|"Dim"|"dim"
-WHILE_T         "while"|"WHILE"|"While"
-ENDWHILE_T      "endwhile"|"ENDWHILE"|"EndWhile"|"Endwhile"
-IF_T            "IF"|"If"|"if"
-ELSE_T          "else"|"ELSE"|"Else"
-ENDIF_T         "endif"|"ENDIF"|"EndIf"
-GET_T           "GET"|"Get"|"get"
-DISPLAY_T       "DISPLAY"|"Display"|"display"
-PARENT_A        "("
-PARENT_C        ")"
-OP_ASIG_T       ":="|"="
-OP_SUM_T        "+"
-OP_REST_T       "-"
-OP_MEN          "<"
-OP_MAY          ">"
-OP_COMP         "=="
-OP_MULT_T       "*"
-OP_DIV_T        "/"
-OP_NOT          "!"
-OP_MEN_IGU      {OP_MEN}{OP_ASIG_T}
-OP_MAY_IGU      {OP_MAY}{OP_ASIG_T}
-VARIABLE        {LETRA}({LETRA}|{NUMERO}|"_")*
 
-%%
 
-{DIM_T}                     {return DIM_T;}    
-{AS_T}                      {return AS_T;}        
-{IF_T}                      {return IF_T;}        
-{ELSE_T}                    {return ELSE_T;}      
-{ENDIF_T}                   {return ENDIF_T;} 
-{WHILE_T}                   {return WHILE_T;}     
-{ENDWHILE_T}                {return ENDWHILE_T;}  
-{REAL_T}                    {return REAL_T;}      
-{INT_T}                     {return INT_T;}    
-{GET_T}                     {return GET_T;}       
-{DISPLAY_T}                 {return DISPLAY_T;}   
-{STRING_T}                  {return STRING_T;}    
-{COMENTARIO_C_T}            {;}
-{COMENTARIO_ERR}			{informeDeError("COMENTARIO SIN CERRAR");}
-{CONST_STRING}              {
-                                if(strlen(yytext) > MAX_CHARACTERS){
-                                    informeDeError("STRING SUPERA EL MAXIMO DE CARACTERES PERMITIDO");
-                                } else {
-                                   yylval.strVal = strdup(yytext);
-                                    return CONST_STRING;
-                                }
+/* Palabras reservadas */
 
-                            }
+WHILE_T			"while"|"WHILE"|"While"
+ENDWHILE		"ENDWHILE"|"Endwhile"|"EndWhile"|"endwhile"
+DISPLAY			"DISPLAY"|"Display"|"display"
+GET				"GET"|"Get"|"get"
+READ_T			"read"|"READ"
+FLOAT_T			"Float"|"float"|"FLOAT"|"real"|"REAL"|"Real"
+INT_T		    "Int"|"int"|"INT"|"Integer"|"INTEGER"|"integer"
+CHAR            "Char"|"char"|"CHAR"
+STRING          "STRING"|"String"|"string"
+IN_T 			"in"|"In"|"IN"
+DO_T 			"do"|"Do"|"DO"
+ELSE_T			"else"|"ELSE"|"Else"
+IF_T			"if"|"IF"|"If"
+ENDIF			"ENDIF"|"endif"|"Endif"
+DIM				"DIM"|"Dim"|"dim"
 
-{CONST_INT}                 {
-								int value = detectar_base_devolver_valor(yytext);
-								
-                                if( value > MAX_INTEGER ) {
-                                    informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
-                                } else {
-                                    yylval.strVal = strdup(yytext);
-                                    return CONST_INT;
-                                }
-                            } 
+
+/* Saltos de linea, espacios, definiciones de exp reg */
+
+whitespace      [ \t\r\v\f]
+linefeed        [\n]
+DIGITO 			[0-9]
+LETRA			[a-zA-Z]
+COMILLA_D		["]
+COMILLA_A		[“]
+COMILLA_C		[”]
+
+
+
+CONST_INT 		{DIGITO}+|"0b"([0-1])+|"0x"([0-9]|[a-f]|[A-F])+
+CONST_FLOAT 	{DIGITO}+"."{DIGITO}+
+CONST_STRING	({COMILLA_A}|{COMILLA_D}|{COMILLA_C}){1}(.)*({COMILLA_A}|{COMILLA_D}|{COMILLA_C}){1}
+ID_T			{LETRA}({LETRA}|{DIGITO}|"_")*
+
+/* Operadores */
+
+OP_DISTINTO	 	"!""="
+OP_IGUAL		"=""="
+OP_MAYORIGUAL	">""="
+OP_MAYOR		">"
+OP_MENOR		"<"
+OP_MENORIGUAL	"<""="
+OP_ASIG			":="|"="
+OP_DIVISION		"/"
+OP_SUM			"+"
+OP_MUL			"*"
+OP_MENOS		"-"
+OR_T			"OR"|"||"
+AND_T			"AND"|"&&"
+NOT_T 			"!"
+AS              "AS"|"As"|"as"
+
+
+
+/* Comentarios */
+
+COMENTARIO_A    "*""/"
+COMENTARIO_C	"/""*"
+COMENTARIO      {COMENTARIO_A}(.)*{COMENTARIO_C}
+
+
+/* Llaves, parentensis, etc */
+
+LLAVE_C			"}"
+LLAVE_A			"{"
+PARENT_C		")"
+PARENT_A		"("
+COMA			","
+SEP_LINEA		";"
+
+
+
+%%		
+{DIM}				 {return DIM;}
+{ELSE_T}			 {return ELSE_T;}
+{IF_T}				 {return IF_T;}
+{ENDIF}				 {return ENDIF;}
+{IN_T}				 {return IN_T;}
+{DO_T}				 {return DO_T;}
+{WHILE_T}			 {return WHILE_T;}
+{ENDWHILE}			 {return ENDWHILE;}
+{DISPLAY}			 {return DISPLAY;}
+{GET}				 {return GET;}
+{READ_T}			 {return READ_T;}
+{FLOAT_T}			 {return FLOAT_T;}
+{INT_T}			     {return INT_T;}
+{CHAR} 			     {return CHAR;} 
+{AS}                 {return AS;}
+{STRING}             {return STRING;}
+
+{COMENTARIO}		{;}
+{COMENTARIO_A}		{;}		
+{COMENTARIO_C}		{;}
+
+
+
+
+
+{CONST_STRING}		{
+                    if(strlen(yytext) > MAX_VALUE_STRING)
+                        {
+                         yyerror("STRING TOO LONG (MAX VALUE: 30)"); 
+                        }
+                    else
+                        {
+                            yylval.strVal = strdup(yytext);
+                            return CONST_STRING;
+                        }
+                    }
+
+{CONST_INT}			{
+						if(strlen(yytext) > MAX_CHARACTERS_INT_REAL){
+							yyerror("CONSTANTE ENTERA SUPERA EL MAXIMO DE CARACTERES PERMITIDO");
+						}
+						int value = detectar_base_devolver_valor(yytext);
+						
+						if( value > MAX_VALUE_INTEGER ) {
+							yyerror("NUMERO SUPERA EL MAXIMO PERMITIDO");
+						} else if (value < 0) {
+							yyerror("NUMERO POR DEBAJO DEL MINIMO PERMITIDO");
+						} else {
+							yylval.strVal = strdup(yytext);
+							return CONST_INT;
+						}
+                    }	
+
+{CONST_FLOAT}	    {
+                    float num = atof(strdup(yytext));
+                        if(num > MAX_VALUE_FLOAT) //MAX_VALUE_FLOAT = 2147483648, máximo valor de un número de 32 bits con signo.
+                        {
+                            yyerror("FLOAT TOO LONG - (MAX VALUE: 2.147.483.648)");
+                        }
+                    else
+                        {
+                            yylval.strVal = strdup(yytext);
+                            return CONST_FLOAT;
+                        }
+                    }
 					
+{ID_T}				{yylval.strVal = strdup(yytext); return ID_T;}
 
-{CONST_REAL}                 {  
-                                float value = atof(strdup(yytext));
-                                if( value > MAX_FLOAT ) {
-                                    informeDeError("NUMERO SUPERA EL MAXIMO PERMITIDO");
-                                } else {
-                                    yylval.strVal = strdup(yytext);
-                                    return CONST_REAL;
-                                }
-                            }   
-    
-{VARIABLE}                  {
-								if(strlen(yytext) > MAX_CHARACTERS_VAR){
-									informeDeError("NOMBRE DE VARIABLE SUPERA EL MAXIMO PERMITIDO");
-								} else {
-									yylval.strVal = strdup(yytext); 
-									return VARIABLE;	
-								}								
-							}    
-{OP_ASIG_T}                 {yylval.strVal = strdup(yytext); return OP_ASIG_T;}   
-{OP_SUM_T}                  {yylval.strVal = strdup(yytext); return OP_SUM_T;}    
-{OP_REST_T}                 {yylval.strVal = strdup(yytext); return OP_REST_T;}   
-{OP_MULT_T}                 {yylval.strVal = strdup(yytext); return OP_MULT_T;}   
-{OP_DIV_T}                  {yylval.strVal = strdup(yytext); return OP_DIV_T;}    
-{OP_MEN}                    {return OP_MEN;}      
-{OP_MAY}                    {return OP_MAY;}      
-{OP_MEN_IGU}                {return OP_MEN_IGU;}  
-{OP_MAY_IGU}                {return OP_MAY_IGU;}      
-{OP_AND}                    {return OP_AND;}      
-{OP_OR}                     {return OP_OR;}            
-{OP_COMP}                   {return OP_COMP;}
-{OP_NOT}                    {return OP_NOT;} 
-{COMA_T}                    {return COMA_T;}      
-{DOT_COM_T}                 {return DOT_COM_T;}   
-{PARENT_A}                  {return PARENT_A;}    
-{PARENT_C}                  {return PARENT_C;}    
-{WHITESPACES}               {;} 
-{BREAK_LINE}                {;}  
-.                           {informeDeError("CARACTER NO RECONOCIDO");} 
+
+{OP_DISTINTO}		{return OP_DISTINTO;}
+{OP_IGUAL}			{return OP_IGUAL;}
+{OP_MAYORIGUAL}		{return OP_MAYORIGUAL;}
+{OP_MAYOR}			{return OP_MAYOR;}
+{OP_MENOR}			{return OP_MENOR;}
+{OP_MENORIGUAL}		{return OP_MENORIGUAL;}
+{OP_DIVISION}		{return OP_DIVISION;}
+{OP_SUM}			{return OP_SUM;}
+{OP_MENOS}			{return OP_MENOS ;}
+{OP_MUL}			{return OP_MUL;}
+{OP_ASIG}			{return OP_ASIG;}
+{AND_T}				{return AND_T;}
+{OR_T}				{return OR_T;}
+{NOT_T}				{return NOT_T;}
+
+
+{LLAVE_C}			{return LLAVE_C;}
+{LLAVE_A}			{return LLAVE_A;}
+{PARENT_C}			{return PARENT_C;}
+{PARENT_A}			{return PARENT_A;}
+{COMA}				{return COMA;}
+{SEP_LINEA}			{return SEP_LINEA;}
+{linefeed}			{;} // linefeed = \n
+{whitespace}		{;}
+" "
+.					{tokenInvalido();}
 
 %%
 
 
-void informeDeError(char* msg)
+void yyerror(char* mensajeError)
 {
-    printf("%s - EN LA LINEA %d\n", msg, yylineno); 
+    printf("ERROR - %s - ON LINE %d\n", mensajeError, yylineno); //yylineno = va contando las lineas, por lo que informa la linea del error
     system("Pause");
     exit(1);
 }
 
-int yyerror(void){
-
-	printf("ERROR SINTACTICO EN LA LINEA: %d\n", yylineno);
+int tokenInvalido(void){
+	printf("ERROR - \"%s\" INVALID TOKEN ON LINE %d\n", yytext, yylineno);
 	system("Pause");
 	exit(1);
 }

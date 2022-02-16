@@ -1,169 +1,250 @@
-#include "pila.h"
-#define SUCCESS 1
-#define DUPLICATE 2
-#define NO_MEMORY 0
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
-typedef struct sNode
+#define SIN_MEM 0
+#define EXITO 1
+#define DUPLICADO 2
+
+
+typedef struct sNodo
 {
-    char name[50];
-    char dataType[50];
-    char value[50];
-    int  length;
-    struct sNode* next;
-}tNode;
+    char nombre[50];
+    char tipo[50];
+    char valor[50];
+    int  longitud;
+    struct sNodo* sig;
+}tNodo;
 
-typedef tNode* tList;
+typedef tNodo* tLista;
 
-void createList(tList *p);
-int insertOrder(tList *p, char* name, char* dataType, char* value, int length);
-int insertVariable(tList *p, char* name, char* dataType); 
-int insertString(tList *p, char* name);
-int insertNumber(tList *p, char* lex, char* value, char* type);
-void deleteTable(tList *p);
-char* deleteCharacter(char* lex);
-int validar_id (tList* tabla_p, char* lexema_p);
+void crearLista(tLista *p);
+void mostrarLista(tLista *p);
+int insertarEnOrden(tLista *p, char* nombre, char* tipo, char* valor, int longitud);
 
-void createList(tList *p)
+/* Del ID guardamos nombre y tipo de dato solamente. Su valor se establece en tiempo de ejecución */
+int insertarID(tLista *p, char* nombre, char* tipo); 
+
+
+/* Constantes. Guardamos nombre, y su valor (en el caso de los String guardamos tambien su longitud) */
+int insertarString(tLista *p, char* nombre);
+int insertarInt(tLista *p, char* lexema, char* val);
+int insertarFloat(tLista *p, char* lexema);
+
+void imprimirEncabezado(FILE *puntTabla);
+void eliminarTabla(tLista *p);
+char* eliminarComillas(char* stringRecibido);
+void vaciarLista(tLista *p);
+
+
+
+void crearLista(tLista *p)
 {
     *p = NULL;
 }
 
-int insertOrder(tList *p, char* name, char* dataType, char* value, int length)
+void mostrarLista(tLista *p)
+{
+    printf("\nContenido de la lista\n");
+    while(*p)
+    {
+        printf("%s\n",(*p)->nombre);
+        p = &(*p)->sig;
+    }
+}
+
+int insertarEnOrden(tLista *p, char* nombre, char* tipo, char* valor, int longitud)
 {
     int result = -1;
-    tNode* nue = (tNode*)malloc(sizeof(tNode));
+    tNodo* nue = (tNodo*)malloc(sizeof(tNodo));
     
     if(!nue)
-        return NO_MEMORY;
+        return SIN_MEM;
 
-    while(*p && ((result = (strcmp((*p)->name, name))) < 0))
-        p = &(*p)->next;
+    while(*p && ((result = (strcmp((*p)->nombre, nombre))) < 0)){
+    //printf("Reviso result: %d \n",result);
+    //      printf("Reviso lista: %s ------ %s\n",(*p)->nombre, nombre);
+        p = &(*p)->sig;
+    }
 
     if(result == 0)
-        return DUPLICATE;
-    strcpy(nue->name, name);
-    strcpy(nue->dataType, dataType);
-    strcpy(nue->value, value);
+        return DUPLICADO;
+    strcpy(nue->nombre, nombre);
+    strcpy(nue->tipo, tipo);
+    strcpy(nue->valor, valor);
     
-    nue->length = length;
+    nue->longitud = longitud;
 
-    nue->next = *p;
+    nue->sig = *p;
 
     *p = nue;
 
-    return SUCCESS;
+    return EXITO;
 }
 
-int insertNumber(tList *p, char* lex, char* value, char* type) 
+/* En este caso el lexema que recibimos es lo que nos da yytext */
+int insertarInt(tLista *p, char* lexema, char *val) 
 {
     int result = -1;
-    char name[100];
+    char nombreInsertar[100];
 
-    strcpy(name, "_");
-    strcat(name, lex); 
+    /* Como en la TS debemos mostrar el nombre el lexema con _ delante, se lo agregamos y así lo mandamos a la lista */
+    strcpy(nombreInsertar, "_");
+    strcat(nombreInsertar, lexema); 
 
-    result = insertOrder(p, name,type, value, 0);
+    /* El tipo no se muestra en CTES en la TS. Por eso en lugar del parámetro tipo ponemos */
+    result = insertarEnOrden(p, nombreInsertar, "Int", val, 0);
 
-    if(result == DUPLICATE){
-        //printf("Lexema %s ya se ingreso en la tabla de simbolos\n",lex);
-        return DUPLICATE;
-    }
-
-    return SUCCESS;
-}
-
-int insertString(tList *p, char* lex)
-{
-    int result = -1;
-    char name[100];
-
-    char* newName = deleteCharacter(lex);
-
-    strcpy(name, "_");
-    strcat(name, newName);
-
-    result = insertOrder(p, name, "STRING", newName, strlen(newName));
-
-    if(result == DUPLICATE){
-        // printf("Lexema %s ya se ingreso en la tabla de simbolos\n",lex);
-        return DUPLICATE;
-    }
-
-    return SUCCESS;
-}
-
-char* deleteCharacter(char* lex)
-{
-    char* cad = lex;
-    char* cadIni = cad;
-    while(*lex)
-    {
-        if(*lex != '"')
+    /* Para el caso de int, float y string, podemos tener una misma CTE y eso no significa que esté mal, solamente que se repite en el código y debemos almacenarla una sola vez */
+    if(result == DUPLICADO)
         {
-            (*cad) = (*lex);
+            printf("El lexema *%s* ya se encuentra dentro de la tabla de simbolos. No se ingresara\n", lexema);
+            return DUPLICADO;
+        }
+
+    return EXITO;
+}
+
+int insertarFloat(tLista *p, char* lexema) 
+{
+    int result = -1;
+    char nombreInsertar[100];
+
+    /* Como en la TS debemos mostrar el nombre (el lexema) con _ delante, se lo agregamos y así lo mandamos a la lista */
+    strcpy(nombreInsertar, "_");
+    strcat(nombreInsertar, lexema); 
+
+    /* El tipo no se muestra en CTES en la TS. Por eso en lugar del parámetro tipo ponemos "" */
+    result = insertarEnOrden(p, nombreInsertar, "Float" , lexema, 0);
+
+    /* Para el caso de int, float y string, podemos tener una misma CTE y eso no significa que esté mal, solamente que se repite en el código y debemos almacenarla una sola vez */
+    if(result == DUPLICADO)
+        {
+            printf("El lexema *%s* ya se encuentra dentro de la tabla de simbolos. No se ingresara\n", lexema);
+            return DUPLICADO;
+        }
+
+    return EXITO;
+}
+
+int insertarString(tLista *p, char* lexema)
+{
+    int result = -1;
+    char nombreInsertar[100];
+
+    /* El valor de un string es la misma cadena pero sin las comillas en la TS */
+    char* valorInsertar = eliminarComillas(lexema);
+
+    /* El nombre de un string es la misma cadena con un "_" delante */
+    strcpy(nombreInsertar, "_");
+    strcat(nombreInsertar, valorInsertar);
+
+    /* El tipo no se muestra en CTES en la TS. Por eso en lugar del parámetro tipo ponemos "" */
+    result = insertarEnOrden(p, nombreInsertar, "String", valorInsertar, strlen(valorInsertar));
+
+    if(result == DUPLICADO)
+        {
+            printf("El lexema *%s* ya se encuentra dentro de la tabla de simbolos. No se ingresara\n", lexema);
+            return DUPLICADO;
+        }
+
+    return EXITO;
+}
+
+char* eliminarComillas(char* stringRecibido)
+{
+    char* cad = stringRecibido;
+    char* cadInicio = cad;
+    while(*stringRecibido)
+    {
+        if(*stringRecibido != '"')
+        {
+            (*cad) = (*stringRecibido);
             cad++;
         }
-        lex++;
+        stringRecibido++;
     }
     *cad = '\0';
-    return cadIni;
+    return cadInicio;
 }
 
-int insertVariable(tList *p, char* lex, char* dataType)
+int insertarID(tLista *p, char* lexema, char* tipo)
 {
     int result = -1;
 
-    result = insertOrder(p, lex, dataType, " ", 0);
-    if(result == DUPLICATE){
-        //printf("Lexema %s ya se ingreso en la tabla de simbolos\n",lex);
-        return DUPLICATE;
-    }
+    result = insertarEnOrden(p, lexema, tipo, " ", 0);
+    if(result == DUPLICADO)
+        {
+            printf("El lexema *%s* ya se encuentra dentro de la tabla de simbolos. No se ingresara\n", lexema);
+            return DUPLICADO;
+        }
 
-    return SUCCESS;
+    return EXITO;
 }
 
-void deleteTable(tList *p)
+
+void grabarListaEnAssembler(tLista *p, FILE *pAssembler)
 {
-    FILE *pTable = fopen("ts.txt", "w+");
-    if(!pTable) {
-        //printf("No se pudo abrir el archivo ts.txt \n");
+    while(*p)
+    {
+        if((!strncmp((*p)->nombre, "_", 1)) && (strcmp((*p)->tipo, "Int") == 0)) //Es CTE Entera
+        {
+            strcat((*p)->valor, ".00");
+            fprintf(pAssembler, "%-30s%-30s%-30s%-s %-s\n", (*p)->nombre, "dd", (*p)->valor, ";Cte en formato ", (*p)->tipo);
+        }
+        else if(!strncmp((*p)->nombre, "_", 1)) // Es CTE
+            fprintf(pAssembler, "%-30s%-30s%-30s%-s %-s\n", (*p)->nombre, "dd", (*p)->valor, ";Cte en formato ", (*p)->tipo);
+        else if(strncmp((*p)->nombre, "_", 1)) //Es variable
+            fprintf(pAssembler, "%-30s%-30s%-30s%-s %-s\n", (*p)->nombre, "dd", "?", ";Variable", (*p)->tipo);
+        p = &(*p)->sig;
+    }
+}
+
+
+void eliminarTabla(tLista *p)
+{
+
+
+    FILE *puntTabla = fopen("ts.txt", "w+");
+    if(!puntTabla)
+    {
+        printf("No se pudo abrir el archivo \"ts.txt\"\n");
         return;
     }
 
-    printf("\n_______________________________TABLA DE SIMBOLOS______________________________\n");
 
-    printf("_______________________________________________________________________________\n");
-    printf("|%-25s|%-14s|%-25s|%-10s|\n", "NOMBRE", "TIPODATO", "VALOR", "LONGITUD");
-    printf("_______________________________________________________________________________\n");
 
-    fprintf(pTable,"\n______________________________TABLA DE SIMBOLOS_______________________________\n");
-    fprintf(pTable, "_______________________________________________________________________________\n");
-    fprintf(pTable, "|%-25s|%-14s|%-25s|%-10s|\n", "NOMBRE", "TIPODATO", "VALOR", "LONGITUD");
-    fprintf(pTable, "_______________________________________________________________________________\n");
+    imprimirEncabezado(puntTabla);
+
+ 
 
     while(*p)
     {
-        printf("|%-25s|%-14s|%-25s|%-10d|\n", (*p)->name, (*p)->dataType, (*p)->value, (*p)->length);
-        fprintf(pTable, "|%-25s|%-14s|%-25s|%-10d|\n", (*p)->name, (*p)->dataType, (*p)->value, (*p)->length);
-        p = &(*p)->next;
+        //printf("|%-30s|%-14s|%-30s|%-14d|\n", (*p)->nombre, (*p)->tipo, (*p)->valor, (*p)->longitud);
+        fprintf(puntTabla, "|%-30s|%-14s|%-30s|%-14d|\n", (*p)->nombre, (*p)->tipo, (*p)->valor, (*p)->longitud);
+        p = &(*p)->sig;
     }
 
-    printf("_______________________________________________________________________________\n");
-    fprintf(pTable, "_______________________________________________________________________________\n");
-    fclose(pTable);
+    fprintf(puntTabla, "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n");
+
+    vaciarLista(p);
+    fclose(puntTabla);
 }
 
+void imprimirEncabezado(FILE *puntTabla)
+{
+    fprintf(puntTabla, "_____________________________________________________________________________________________\n");
+    fprintf(puntTabla, "|%-30s|%-14s|%-30s|%-14s|\n", "NOMBRE", "TIPO DE DATO", "VALOR", "LONGITUD");
+    fprintf(puntTabla, "¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯\n");
+}
 
-///// 
-
-int validar_id (tList *p, char* lexema_p) {
-	while(*p)
+void vaciarLista(tLista *p)
+{
+    tNodo* aux;
+    while(*p)
     {
-        if(strcmp((*p)->name,lexema_p) == 0) {
-        	return 1;
-        }
-        p=&(*p)->next;
+        aux = *p;
+        *p = aux->sig;
+        free(aux);
     }
-        
-    return 0;
 }

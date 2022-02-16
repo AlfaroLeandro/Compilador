@@ -1,0 +1,79 @@
+
+					DISPLAY
+						“no es mayor que 2”
+				IF
+						2
+					==
+							2
+						+
+								2
+							*
+								5
+			IF
+					2
+				<
+					2
+		CUERPO
+			DISPLAY
+				actual es > que 2 y de 0
+	IF
+			2
+		==
+				2
+			+
+					2
+				*
+					5
+Sentencia9
+		DISPLAY
+			suma
+	Sentencia8
+			DISPLAY
+				La suma es: 
+		Sentencia7
+								actual
+							+
+								suma
+						:=
+							suma
+					SentenciaCuerpo2
+									0xFF
+								+
+										0xFF
+									*
+										contador
+							:=
+								actual
+						SentenciaCuerpo1
+									1
+								+
+									contador
+							:=
+								contador
+				WHILE
+						92
+					<=
+						92
+			Sentencia6
+							pivot
+						+
+							02.5
+					:=
+						suma
+				Sentencia5
+							0b11110
+						:=
+							contador
+					Sentencia4
+							GET
+								actual
+						Sentencia3
+									0b11110
+								:=
+									pivot
+							Sentencia2
+									DISPLAY
+										ingrese un val int: 
+								Sentencia1
+									DISPLAY
+										Prueba.txt LyC Tema 2!

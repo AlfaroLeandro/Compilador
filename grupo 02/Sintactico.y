@@ -1,344 +1,408 @@
 %{
 #include <stdio.h>
-#include "lista.h"
+#include <stdlib.h>
+#include <string.h>
 #include "y.tab.h"
+#include "Funciones.h"
 #include "miscelaneo.h"
-#define COND_AND 2
-#define COND_OR 1
-#define COND_NORMAL 0
-#define TIPO_FLOAT "FLOAT"
-#define TIPO_STRING "STRING"
-#define TIPO_INTEGER "INTEGER"
 
-FILE *yyin;
-
-tList symbolTable;
-tStack stackDataTypeDecVar;
-tStack invertStackDataType;
-tStack stackVar;
 
 extern int yylex();
-extern void yyerror();
+extern void yyerror(char *);
 extern char* yytext;
 extern int yylineno;
 
-int verifyVariable( char *dato , tList *symb);
+void generarAssembler(t_arbol* pArbol);
+
+extern FILE* yyin;
+
+void reiniciarPunteros();
+
+tLista listaSimbolos;
+tLista listaAux;
+t_cola cola;
+t_pila pilaSint;
+
+FILE *pIntermedia;
+FILE *pArbol;
+FILE *pAssembler;
+FILE *pCode;
+
+char str_cuerpo[50];
+char str_sentencias[50];
+char str_elementos[50];
+char str_contLong[50];
+
+t_NodoArbol* Ptr;
+t_NodoArbol* Sptr;
+t_NodoArbol* Gptr;
+t_NodoArbol* Aptr;
+t_NodoArbol* Eptr;
+t_NodoArbol* Tptr;
+t_NodoArbol* Fptr;
+t_NodoArbol* Cptr; //Puntero constantes string
+t_NodoArbol* Condptr;
+t_NodoArbol* Condptraux;
+t_NodoArbol* Ifptr;
+t_NodoArbol* Whileptr;
+t_NodoArbol* Cuerpoptr;
+t_NodoArbol* CuerpoWhileptr;
+t_NodoArbol* Trueptr;
+t_NodoArbol* Falseptr;
+t_NodoArbol* Dptr;
+t_NodoArbol* Getptr;
+//t_NodoArbol* Auxptr;
+t_NodoArbol* Lptr;
+t_NodoArbol* Emaxptr;
+t_NodoArbol* Eminptr;
+t_NodoArbol* Nodocond;
+t_NodoArbol* Nodocond2;
+t_NodoArbol* Nodocuerpo;
+t_NodoArbol* Nodocuerpo2;
+t_NodoArbol* Nodoif;
+t_NodoArbol* Nodoif2;
+t_NodoArbol* Nodoaux;
+t_NodoArbol* Nodoaux2;
+t_NodoArbol* Nodomin;
+t_NodoArbol* Nodomax;
+t_NodoArbol* SptrCuerpo;
+
+// Longitud //
+
+int isLong;
+int contLong;
+int esIf=0;
+int isAnd=0;
+int isOr=0;
+int contElementos = 0;
+
+int isWhile=0;
+int contCuerpo=0;
+int contSentencias=0;
 %}
 
 %union{
-    char* strVal;
+    /* Aca dentro se definen los campos de la variable yylval */
+	char* strVal; 
 }
 
-%token DIM_T
+
+/* Palabras reservadas */
+
 %token WHILE_T
+%token ENDWHILE
+%token DISPLAY
+%token GET
+%token READ_T
+%token FLOAT_T
+%token INT_T
+%token CHAR
 %token IN_T
-%token ENDWHILE_T
 %token DO_T
-%token IF_T
-%token ELSE_T
-%token ENDIF_T
-%token INT_T         
-%token REAL_T       
-%token STRING_T      
-%token GET_T        
-%token DISPLAY_T    
-%token AS_T       
-%token WHITESPACES  
-%token BREAK_LINE   
-%token CORCHETE_A 
-%token CORCHETE_C   
-%token COMA_T      
-%token DOT_COM_T 
-%token PARENT_A    
-%token PARENT_C     
-%token OP_MEN      
-%token OP_MAY       
-%token OP_MEN_IGU  
-%token OP_MAY_IGU      
-%token OP_AND      
-%token OP_OR    
-%token OP_COMP
-%token OP_NOT   
-%token LONGITUD_T
-%token <strVal> CONST_INT
-%token <strVal> CONST_REAL
-%token <strVal> VARIABLE    
-%token <strVal> CONST_STRING 
-%token <strVal> OP_ASIG_T 
-%token <strVal> OP_REST_T 
-%token <strVal> OP_SUM_T  
-%token <strVal> OP_MULT_T   
-%token <strVal> OP_DIV_T  
-%token COMENTARIO_A_T
-%token COMENTARIO_B_T
-%token COMENTARIO_C_T
-%token .
+%token AS
+%token STRING
 
-%left  OP_REST_T OP_SUM_T
-%right OP_MULT_T OP_DIV_T
+/* Saltos de linea, espacios, etc */
+
+%token whitespace
+%token linefeed
+%token DIGITO 	
+%token LETRA
+%token COMILLA_D	
+%token COMILLA_A	
+%token COMILLA_C	
+
+/* Tipos de datos, etc */
+
+%token <strVal> CONST_INT	
+%token <strVal> CONST_FLOAT
+%token OP_AVG
+%token <strVal> CONST_STRING
+%token ELSE_T			
+%token IF_T			
+%token ENDIF			
+%token DIM				
+%token <strVal> ID_T	
+
+
+/* Operadores */
+
+%left OP_SUM OP_MENOS
+%left OP_MUL OP_DIVISION
 %right MENOS_UNARIO
-%right OP_ASIG_T   
+%right OP_ASIG
 
-%%
 
-programa:   prog             {printf("\n Regla: programa --> prog \n");}
-        ;
+%token OP_DISTINTO
+%token OP_IGUAL
+%token OP_MAYORIGUAL
+%token OP_MAYOR
+%token OP_MENOR
+%token OP_MENORIGUAL
+%token OR_T		
+%token AND_T	
+%token NOT_T 
 
-prog: sentencia                 {printf("\n Regla: prog --> sentencia \n");}
-  ;
 
-sentencia: sentencia grammar DOT_COM_T  {printf("\n Regla: sentencia --> sentencia grammar DOT_COM_T	\n");}
-        | grammar DOT_COM_T             {printf("\n Regla: sentencia --> grammar DOT_COM_T	\n");}
-        ;
+/* Llaves, parentensis, etc */
 
-grammar:   dec_var                    {printf("\n Regla: grammar --> dec_var \n");}
-       |   asig                       {printf("\n Regla: grammar --> asig \n");}
-       |   display                    {printf("\n Regla: grammar --> display \n");}
-       |   get                        {printf("\n Regla: grammar --> get \n");}
-       |   while                      {printf("\n Regla: grammar --> while \n");}
-       |   if                         {printf("\n Regla: grammar --> if \n");}
-       ;
+%token LLAVE_C		
+%token LLAVE_A		
+%token PARENT_C	
+%token PARENT_A	
+%token COMA	
+%token SEP_LINEA
 
-asig: variable OP_ASIG_T expr {
-                                  printf("\n Regla: asig --> variable OP_ASIG_T exp \n");
-                              }
-    | variable OP_ASIG_T const_string_r   {
-                                              printf("\n Regla: asig --> variable OP_ASIG_T const_string_r \n");
-                                          }
-    ;
 
-variable: VARIABLE {  
-                      if( (verifyVariable($1, &symbolTable)) != 0) {
-                        printf("\n La variable %s no se declaro \n",$1);
-                        exit(1);
-                      }
-                    }
-                    ;
+
+%% 
+
+/* Seccion para declaracion de reglas gramaticales - EJEMPLO */
+
+programa_final : programa 						{ mostrarArbolDeIzqADer(&Ptr,pArbol); InOrden(&Ptr, pIntermedia); mostrarArbolDeIzqADer(&Ptr,pArbol); printf("\nLa expresion es valida\n");}
+		;
+programa: sentencia 							{Ptr=Sptr;}
+		;
+
+sentencia: sentencia grammar SEP_LINEA 			{ 
+													if(Sptr == NULL)
+													{
+														Sptr=Gptr;
+													}
+													else
+													{
+														sprintf(str_sentencias,"Sentencia%d",++contSentencias);
+														Sptr=crearNodo(str_sentencias,Sptr,Gptr);}
+													;}
+
+												
+														
+		|  grammar SEP_LINEA					{
+													Sptr=Gptr; 
+													}
+		|  sentencia grammar  					{ 
+
+													if(Sptr == NULL)
+													{
+														Sptr=Gptr;
+													}
+													else
+													{
+														sprintf(str_sentencias,"Sentencia%d",++contSentencias);
+														Sptr=crearNodo(str_sentencias,Sptr,Gptr);}
+													
+												;}
+
+		|  grammar								{
+													Sptr=Gptr;}
+													
+		|  declaracion     						{/*Sptr=crearHoja("Declaracion");*/}
+		| sentencia declaracion 			 {/*sprintf(str_sentencias,"Sentencia%d",++contSentencias);
+													Sptr=crearNodo(str_sentencias,Sptr,Gptr);*/}
+		;
+
+
+sentenciaCuerpo : sentenciaCuerpo grammar SEP_LINEA 		{ 
+													sprintf(str_cuerpo,"SentenciaCuerpo%d",++contCuerpo);
+													SptrCuerpo=crearNodo(str_cuerpo,SptrCuerpo,Gptr);
+														}
+		|  grammar SEP_LINEA					{
+													SptrCuerpo=Gptr; 
+													}
+		|  sentenciaCuerpo grammar  					{ 
+													sprintf(str_cuerpo,"SentenciaCuerpo%d",++contCuerpo);
+													SptrCuerpo=crearNodo(str_cuerpo,SptrCuerpo,Gptr);
+													
+												
+															
+												;}
+		|  grammar								{SptrCuerpo=Gptr; }
+
+
+
+
+grammar : asig 									{printf("\nRegla Asig \n"); Gptr=Aptr;}
+		| while 								{printf("\nRegla While \n"); ; Gptr=Whileptr;}
+		| display 								{printf("\nRegla Display \n") ; Gptr=crearNodo("DISPLAY",Dptr,NULL); /*InOrden(&Gptr, pIntermedia); fprintf(pIntermedia, "\n"*/;}
+		| get 									{printf("\nRegla Get \n");Gptr=crearNodo("GET",Getptr,NULL); /*InOrden(&Gptr, pIntermedia); fprintf(pIntermedia, "\n")*/;}
+		| if 									{printf("\nRegla If \n"); Gptr=Ifptr;}	
+		; 
+
+
+asig: ID_T OP_ASIG expr {Aptr=crearNodo(":=",crearHoja($1),Eptr); }
+	| ID_T OP_ASIG const_string_r   {Aptr=crearNodo(":=",crearHoja($1),Cptr);}
+	;
+
+
+while: WHILE_T cond_final sentenciaCuerpo ENDWHILE { 
+																	Whileptr=crearNodo("WHILE",Condptr,SptrCuerpo);
+																	}
+	 ;
+ 
+if: IF_T cond_final sentenciaCuerpo ENDIF {if(isAnd==1){ 
+                                                         Ifptr=crearNodo("IF",Condptraux,crearNodo("IF",Condptr,SptrCuerpo));   
+													    }else if (isOr==1){
+														  Ifptr=crearNodo("IF", Condptr, SptrCuerpo);
+														  Ifptr=crearNodo("IF",Condptraux,crearNodo("CUERPO",SptrCuerpo,Ifptr));
+														}else Ifptr=crearNodo("IF",Condptr,SptrCuerpo);}
+   | IF_T cond_final sentenciaCuerpo {Trueptr=Gptr;} ELSE_T sentenciaCuerpo ENDIF {Falseptr=Gptr;}  {printf("\nELSE\n"); Cuerpoptr=crearNodo("CUERPO",Trueptr,Falseptr); Ifptr=crearNodo("IF",Condptr,Cuerpoptr);  esIf=0;}
+   ;
+
+
+display : DISPLAY const_string_r {Dptr=Cptr;}
+	  | DISPLAY expr {Dptr=Eptr;}
+	  ;
+
+
+get : GET ID_T {Getptr = crearHoja($2);}
+	  ;
+
+
 
 const_string_r: CONST_STRING {
-		insertString(&symbolTable, $1);
-		printf("\n Regla: const_string_r --> CONST_STRING \n", $1);
+			insertarString(&listaSimbolos, $1);
+			Cptr = crearHoja($1);
 	};
 
-NUMERO: CONST_INT{	
-		char valor[100];
-		sprintf(valor,"%d",detectar_base_devolver_valor($1));
-		
-        insertNumber(&symbolTable,$1, valor ,TIPO_INTEGER);
-        printf("\n Regla: NUMERO --> CONST_INT \n", $1);
-      }
-      | CONST_REAL {
-        insertNumber(&symbolTable, $1, $1, TIPO_FLOAT);
-        printf("\n Regla: CONST_REAL --> CONST_REAL \n");
-      }
-      ;
 
-///////////// ARITMETICA /////////////
-        
-expr: expr OP_SUM_T termino         {
-                                    printf("\n Regla: expr --> expr OP_SUM_T termino \n");
-                                    }
-	|   expr OP_REST_T termino        {
-                                    printf("\n Regla: expr --> expr OP_SUM_T termino \n");
-                                    } 
-	|   termino                       {printf("\n Regla: expr --> termino \n");}
-  ;
+numero: CONST_INT
+		{
+			char valor[50];
+			sprintf(valor,"%d",detectar_base_devolver_valor($1));
+			insertarInt(&listaSimbolos, $1, valor); 
+			Fptr = crearHoja($1);
+		}
+	   | CONST_FLOAT 
+		{
+			insertarFloat(&listaSimbolos, $1); Fptr = crearHoja($1);
+		}
+	   ;
 
-termino: termino OP_MULT_T factor     {
-                                        printf("\n Regla: termino --> termino OP_MULT_T factor \n");
-                                      }
-	   |   termino OP_DIV_T factor      {
-                                       printf("\n Regla: termino --> termino OP_MULT_T factor \n");
-                                       }
-       |   '-' termino %prec MENOS_UNARIO    {printf("\n Regla: termino --> '-' termino '%'prec MENOS_UNARIO \n");}
-	   |   factor                       {printf("\n Regla: termino --> factor \n");}
-     ;
 
-                    
-factor: PARENT_A expr PARENT_C    {printf("\n Regla: factor --> PARENT_A expr PARENT_C  \n");}
-       | NUMERO                    {printf("\n Regla: factor --> NUMERO  \n");}
-	   | VARIABLE                  {
-                                  printf("\n Regla: factor --> VARIABLE  \n");
-                                  }
-      ;
+cond_final: PARENT_A cond_final AND_T cond_final  PARENT_C  
+		    | PARENT_A cond AND_T { Condptraux=Condptr;} cond  PARENT_C {isAnd=1;}
+			| PARENT_A cond OR_T { Condptraux=Condptr;} cond  PARENT_C  {isOr=1;}
+		    | PARENT_A cond PARENT_C
+		    | NOT_T  cond_final
+		    | PARENT_A cond_final PARENT_C
+		  	;
 
-///////// ENTRADA Y SALIDA ///////////////
+cond: expr OP_DISTINTO expr 				{Condptr=crearNodo("!=",Eptr,Tptr);} 
+    | expr OP_IGUAL expr 					{Condptr=crearNodo("==",Eptr,Tptr);}  
+    | expr OP_MAYOR expr 					{Condptr=crearNodo(">",Eptr,Tptr);}   
+    | expr OP_MAYORIGUAL expr 				{Condptr=crearNodo(">=",Eptr,Tptr);}  
+    | expr OP_MENOR expr 					{Condptr=crearNodo("<",Eptr,Tptr);}  
+    | expr OP_MENORIGUAL expr	 			{Condptr=crearNodo("<=",Eptr,Tptr);}  
+	; 
 
-display: DISPLAY_T const_string_r   {
-                                    printf("\n Regla: display -->  DISPLAY_T const_string_r  \n");
-                                    }
-       | DISPLAY_T expr             {
-                                    printf("\n Regla: display -->  DISPLAY_T expr   \n");
-                                    }
-       ;
+expr: expr OP_SUM termino 					{Eptr=crearNodo("+",Eptr,Tptr);}
+	| expr OP_MENOS termino 				{Eptr=crearNodo("-",Eptr,Tptr);}
+	| termino								{Eptr=Tptr;}
+	;
 
-get: GET_T VARIABLE {
-                    printf("\n Regla: get -->  GET_T VARIABLE \n");
-                    }
-                    ;
+termino : termino OP_MUL factor 			{Tptr=crearNodo("*",Tptr,Fptr);}
+		| termino OP_DIVISION factor 		{Tptr=crearNodo("/",Tptr,Fptr);}
+		| '-' termino %prec MENOS_UNARIO    {;}
+		| factor							{Tptr=Fptr;}				
+		;
 
-///////// ESTRUCTURAS DE CONTROL ///////////
+factor	: PARENT_A expr PARENT_C			{;}
+		| numero 							{;}
+		| ID_T								{Fptr = crearHoja($1); }							
+		;
 
-while: init_while cond_completa sentencia ENDWHILE_T {
-                          printf("\n Regla: while -->  init_while cond_completa sentencia ENDWHILE_T \n");
-                        }
-						;
-						
-init_while: WHILE_T {
-					printf("\n Regla: init_while -->  WHILE_T \n");
-                }
-                ;
-			
-if: condicion_if ELSE_T sentencia ENDIF_T {
-      printf("\n Regla: if --> condicion_if ELSE_T sentencia ENDIF_T  \n");
-    }
-    | condicion_if ENDIF_T {
-      printf("\n Regla: if --> condicion_if ENDIF_T \n");
-    }
-    ;
 
-condicion_if: sentencia_if cond_completa sentencia {
-		printf("\n Regla: condicion_if --> sentencia_if cond_completa sentencia  \n");
-	}
-    ;
 
-sentencia_if: IF_T {
-            printf("\n Regla: sentencia_if --> IF_T \n");
-            }
+
+
+declaracion:  DIM OP_MENOR dupla_asig OP_MAYOR  	{    
+													    char id[100];
+													    char auxString[100];
+													    char tipoVar[20];
+													    while(!pila_vacia(&pilaSint) || !cola_vacia(&cola) )
+														{
+													        desapilar(&pilaSint, id);
+													        desacolar(&cola, tipoVar);
+													        insertarID(&listaSimbolos,id,tipoVar);
+													    
+													    }
+													}
+              										;   
+
+
+dupla_asig:  ID_T COMA dupla_asig COMA tipo   {apilar(&pilaSint, $1);}
+            |ID_T OP_MAYOR AS OP_MENOR tipo   {apilar(&pilaSint, $1);}
             ;
+			
 
-cond_completa: PARENT_A cond_tipo_1 cond_completa PARENT_C  {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_1 cond_completa PARENT_C \n");}
-             | PARENT_A cond_tipo_3 cond_completa PARENT_C  {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_3 cond_completa PARENT_C \n");}
-             | PARENT_A cond_tipo_1 cond PARENT_C           {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_1 cond PARENT_C \n");}
-             | PARENT_A cond_tipo_2 cond_completa PARENT_C  {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_2 cond_completa PARENT_C \n");}
-             | PARENT_A cond_tipo_4 cond_completa PARENT_C  {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_4 cond_completa PARENT_C \n");}
-             | PARENT_A cond_tipo_2 cond PARENT_C           {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_2 cond PARENT_C  \n");}
-             | PARENT_A cond_tipo_3 cond PARENT_C           {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_3 cond PARENT_C  \n");}
-             | PARENT_A cond_tipo_4 cond PARENT_C           {printf("\n Regla: cond_completa --> PARENT_A cond_tipo_4 cond PARENT_C  \n");}
-             | PARENT_A cond PARENT_C                       {printf("\n Regla: cond_completa --> PARENT_A cond PARENT_C   \n");}
-             | OP_NOT cond_completa                         {printf("\n Regla: cond_completa --> OP_NOT cond_completa   \n");}
-             | PARENT_A cond_completa PARENT_C              {printf("\n Regla: cond_completa --> PARENT_A cond_completa PARENT_C    \n");}             
-             ;
-
-cond_tipo_1: cond_completa OP_AND {
-      printf("\n Regla: cond_tipo_1 -->  cond_completa OP_AND  \n");
-      }
+tipo: 	FLOAT_T 	{acolar(&cola, "Float");}
+      | INT_T 		{acolar(&cola, "Int");}
+      | STRING  	{acolar(&cola, "String");}
+	  | CHAR		{acolar(&cola, "Char");}
       ;
 
-cond_tipo_2: cond_completa OP_OR {
-      printf("\n Regla: cond_tipo_2 -->   cond_completa OP_OR  \n");
-     }
-     ;
-
-cond_tipo_3: cond OP_AND {
-      printf("\n Regla: cond_tipo_3 -->  cond OP_AND  \n");
-      }
-      ;
-
-cond_tipo_4: cond OP_OR {
-      printf("\n Regla: cond_tipo_4 -->  cond OP_OR   \n");
-      }
-      ;
-
-
-cond: expr OP_COMP expr    {
-      printf("\n Regla: cond --> expr OP_COMP expr   \n");
-    }
-    | expr OP_MAY_IGU expr {
-      printf("\n Regla: cond --> expr OP_MAY_IGU expr   \n");
-    }
-    | expr OP_MEN_IGU expr {
-      printf("\n Regla: cond --> expr OP_MEN_IGU expr   \n");
-    }
-    | expr OP_MEN expr     {
-      printf("\n Regla: cond --> expr OP_MEN expr   \n");
-    }
-    | expr OP_MAY expr     {
-      printf("\n Regla: cond --> expr OP_MAY expr   \n");
-    }
-    ;
-
-////////// DECLARACION DE VARIABLES //////////
-
-dec_var: DIM_T OP_MEN dupla_asig OP_MAY {
-	                                    char dataType[100];
-                                        char variable[100];
-                                        while(!emptyStack(&stackDataTypeDecVar)){
-                                          popStack(&stackDataTypeDecVar,dataType);
-                                          pushStack(&invertStackDataType,dataType);
-                                        }
-                                        while(!emptyStack(&invertStackDataType) && !emptyStack(&stackVar)){
-                                            popStack(&invertStackDataType,dataType);
-                                            popStack(&stackVar,variable);
-                                            insertVariable(&symbolTable,variable,dataType);
-                                        }
-                                         printf("\n Regla: dec_var --> DIM_T OP_MEN dupla_asig OP_MAY  \n");
-};
-
-
-dupla_asig:  vasAsig COMA_T dupla_asig COMA_T tipo             {
-                                                                printf("\n Regla: dupla_asig --> VARIABLE COMA_T dupla_asig COMA_T tipo   \n");
-                                                                }
-          |  vasAsig OP_MAY AS_T OP_MEN tipo                   {
-                                                                printf("\n Regla: dupla_asig -->  VARIABLE OP_MAY AS_T OP_MEN tipo   \n");
-                                                                }
-          ;
-
-vasAsig: VARIABLE { 
-                    if( (verifyVariable($1, &symbolTable)) == 1) {
-                      pushStack(&stackVar,$1);
-                    } else {
-                      printf("\n La variable %s ya fue declarada anteriormente \n", $1);
-                      exit(1);
-                    }
-        }
-        ;
- 
-tipo: 	INT_T 	    {pushStack(&stackDataTypeDecVar,"INTEGER");
-                    printf("\n Regla: tipo -->  INT_T   \n");
-                    }
-      | REAL_T      {pushStack(&stackDataTypeDecVar,"FLOAT");
-                    printf("\n Regla: tipo -->  REAL_T   \n");
-                    }	
-      | STRING_T  	{pushStack(&stackDataTypeDecVar,"STRING");
-                    printf("\n Regla: tipo -->  STRING_T   \n");
-                    }
-      ;
 
 %%
 
 
 int main(int argc, char* argv[])
 {
-    if((yyin = fopen(argv[1],"rt")) == NULL)
-    {
-        printf("\n No se puede abrir el archivo %s \n", argv[1]);
+
+	if((pIntermedia = fopen("Intermedia.txt", "wt")) == NULL)
+	{
+        printf("\nNo se puede abrir el archivo %s\n", "Intermedia.txt");
     }
 
-    printf("\n Comienzo de la compilacion \n\n");
+    if((yyin = fopen(argv[1],"rt")) == NULL)
+    {
+        printf("\nNo se puede abrir el archivo %s\n", argv[1]);
+    }
 
-    createList(&symbolTable);
-    createStack(&stackVar);
-    createStack(&stackDataTypeDecVar);
-    createStack(&invertStackDataType);
+    crearLista(&listaSimbolos);
+	crearLista(&listaAux);
+	crear_pila(&pilaSint);
+	crear_cola(&cola);
 	
-
     yyparse();
 
-    deleteTable(&symbolTable);
-    
-    printf("\n Compilacion exitosa \n");
+	eliminarTabla(&listaSimbolos);
+
+    printf("\nCOMPILACION EXITOSA!\n");
+	reiniciarPunteros();
+	
     fclose(yyin);
+	fclose(pIntermedia);
+    
     return 0;
 }
 
-int verifyVariable( char *dato , tList *symb){
 
-    while(*symb) {
-      if(strcmp((*symb)->name, dato)==0)
-        return 0;
-      symb = &(*symb)->next;
-    }
-
-    return 1;
+void reiniciarPunteros(){
+Sptr = NULL;
+Gptr = NULL;
+Aptr = NULL;
+Eptr = NULL;
+Tptr = NULL;
+Fptr = NULL;
+Condptr = NULL;
+Ifptr = NULL;
+Whileptr = NULL;
+Cuerpoptr = NULL;
+CuerpoWhileptr = NULL;
+Trueptr = NULL;
+Falseptr = NULL;
+ Lptr = NULL;
+ Emaxptr = NULL;
+ Eminptr = NULL;
+ Nodocond = NULL;
+ Nodocond2 = NULL;
+ Nodocuerpo = NULL;
+ Nodocuerpo2 = NULL;
+ Nodoif = NULL;
+ Nodoif2 = NULL;
+ Nodoaux = NULL;
+  Nodoaux2 = NULL;
+ Nodomin = NULL;
+ Nodomax = NULL;
+																						
 }
