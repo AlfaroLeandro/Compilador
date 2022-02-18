@@ -11,8 +11,6 @@ Terminals unused in grammar
    COMILLA_A
    COMILLA_C
    OP_AVG
-   LLAVE_C
-   LLAVE_A
 
 
 Gramática
@@ -156,68 +154,66 @@ OP_MENORIGUAL (297) 44
 OR_T (298) 35
 AND_T (299) 31 33
 NOT_T (300) 37
-LLAVE_C (301)
-LLAVE_A (302)
-PARENT_C (303) 31 33 35 36 38 52
-PARENT_A (304) 31 33 35 36 38 52
-COMA (305) 56
-SEP_LINEA (306) 3 4 9 10
+PARENT_C (301) 31 33 35 36 38 52
+PARENT_A (302) 31 33 35 36 38 52
+COMA (303) 56
+SEP_LINEA (304) 3 4 9 10
 
 
 No terminales con las reglas donde aparecen
 
-$accept (53)
+$accept (51)
     en la izquierda: 0
-programa_final (54)
+programa_final (52)
     en la izquierda: 1, en la derecha: 0
-programa (55)
+programa (53)
     en la izquierda: 2, en la derecha: 1
-sentencia (56)
+sentencia (54)
     en la izquierda: 3 4 5 6 7 8, en la derecha: 2 3 5 8
-sentenciaCuerpo (57)
+sentenciaCuerpo (55)
     en la izquierda: 9 10 11 12, en la derecha: 9 11 20 21 24
-grammar (58)
+grammar (56)
     en la izquierda: 13 14 15 16 17, en la derecha: 3 4 5 6 9 10 11
     12
-asig (59)
+asig (57)
     en la izquierda: 18 19, en la derecha: 13
-while (60)
+while (58)
     en la izquierda: 20, en la derecha: 14
-if (61)
+if (59)
     en la izquierda: 21 24, en la derecha: 17
-$@1 (62)
+$@1 (60)
     en la izquierda: 22, en la derecha: 24
-$@2 (63)
+$@2 (61)
     en la izquierda: 23, en la derecha: 24
-display (64)
+display (62)
     en la izquierda: 25 26, en la derecha: 15
-get (65)
+get (63)
     en la izquierda: 27, en la derecha: 16
-const_string_r (66)
+const_string_r (64)
     en la izquierda: 28, en la derecha: 19 25
-numero (67)
+numero (65)
     en la izquierda: 29 30, en la derecha: 53
-cond_final (68)
+cond_final (66)
     en la izquierda: 31 33 35 36 37 38, en la derecha: 20 21 24 31
     37 38
-$@3 (69)
+$@3 (67)
     en la izquierda: 32, en la derecha: 33
-$@4 (70)
+$@4 (68)
     en la izquierda: 34, en la derecha: 35
-cond (71)
+cond (69)
     en la izquierda: 39 40 41 42 43 44, en la derecha: 33 35 36
-expr (72)
+expr (70)
     en la izquierda: 45 46 47, en la derecha: 18 26 39 40 41 42 43
     44 45 46 52
-termino (73)
+termino (71)
     en la izquierda: 48 49 50 51, en la derecha: 45 46 47 48 49 50
-factor (74)
+factor (72)
     en la izquierda: 52 53 54, en la derecha: 48 49 51
-declaracion (75)
+declaracion (73)
     en la izquierda: 55, en la derecha: 7 8
-dupla_asig (76)
+dupla_asig (74)
     en la izquierda: 56 57, en la derecha: 55 56
-tipo (77)
+tipo (75)
     en la izquierda: 58 59 60 61, en la derecha: 56 57
 
 

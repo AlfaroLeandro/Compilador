@@ -82,12 +82,10 @@
      OR_T = 298,
      AND_T = 299,
      NOT_T = 300,
-     LLAVE_C = 301,
-     LLAVE_A = 302,
-     PARENT_C = 303,
-     PARENT_A = 304,
-     COMA = 305,
-     SEP_LINEA = 306
+     PARENT_C = 301,
+     PARENT_A = 302,
+     COMA = 303,
+     SEP_LINEA = 304
    };
 #endif
 /* Tokens.  */
@@ -134,12 +132,10 @@
 #define OR_T 298
 #define AND_T 299
 #define NOT_T 300
-#define LLAVE_C 301
-#define LLAVE_A 302
-#define PARENT_C 303
-#define PARENT_A 304
-#define COMA 305
-#define SEP_LINEA 306
+#define PARENT_C 301
+#define PARENT_A 302
+#define COMA 303
+#define SEP_LINEA 304
 
 
 
@@ -149,7 +145,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 84 "Sintactico.y"
+#line 77 "Sintactico.y"
 
     /* Aca dentro se definen los campos de la variable yylval */
 	char* strVal; 
@@ -157,7 +153,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 161 "y.tab.h"
+#line 157 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

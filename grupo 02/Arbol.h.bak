@@ -10,6 +10,16 @@
 #define EXITO       1
 #define DUPLICADO   2 
 
+//typedef char* t_info;
+
+/*
+typedef struct
+{
+    char NyA[50];
+    int Dni;
+    float Prom;
+}t_alumnos;*/
+
 typedef struct s_NodoArbol
 {
     struct s_NodoArbol *izq;
