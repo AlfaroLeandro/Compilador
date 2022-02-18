@@ -39,97 +39,103 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     DIM_T = 258,
-     WHILE_T = 259,
-     IN_T = 260,
-     ENDWHILE_T = 261,
-     DO_T = 262,
-     IF_T = 263,
-     ELSE_T = 264,
-     ENDIF_T = 265,
-     INT_T = 266,
-     REAL_T = 267,
-     STRING_T = 268,
-     GET_T = 269,
-     DISPLAY_T = 270,
-     AS_T = 271,
-     WHITESPACES = 272,
-     BREAK_LINE = 273,
-     CORCHETE_A = 274,
-     CORCHETE_C = 275,
-     COMA_T = 276,
-     DOT_COM_T = 277,
-     PARENT_A = 278,
-     PARENT_C = 279,
-     OP_MEN = 280,
-     OP_MAY = 281,
-     OP_MEN_IGU = 282,
-     OP_MAY_IGU = 283,
-     OP_AND = 284,
-     OP_OR = 285,
-     OP_COMP = 286,
-     OP_NOT = 287,
-     LONGITUD_T = 288,
-     CONST_INT = 289,
-     CONST_REAL = 290,
-     VARIABLE = 291,
-     CONST_STRING = 292,
-     OP_ASIG_T = 293,
-     OP_REST_T = 294,
-     OP_SUM_T = 295,
-     OP_MULT_T = 296,
-     OP_DIV_T = 297,
-     COMENTARIO_A_T = 298,
-     COMENTARIO_B_T = 299,
-     COMENTARIO_C_T = 300,
-     MENOS_UNARIO = 302
+     WHILE_T = 258,
+     ENDWHILE = 259,
+     DISPLAY = 260,
+     GET = 261,
+     READ_T = 262,
+     FLOAT_T = 263,
+     INT_T = 264,
+     CHAR = 265,
+     IN_T = 266,
+     DO_T = 267,
+     AS = 268,
+     STRING = 269,
+     whitespace = 270,
+     linefeed = 271,
+     DIGITO = 272,
+     LETRA = 273,
+     COMILLA_D = 274,
+     COMILLA_A = 275,
+     COMILLA_C = 276,
+     CONST_INT = 277,
+     CONST_FLOAT = 278,
+     OP_AVG = 279,
+     CONST_STRING = 280,
+     ELSE_T = 281,
+     IF_T = 282,
+     ENDIF = 283,
+     DIM = 284,
+     ID_T = 285,
+     OP_MENOS = 286,
+     OP_SUM = 287,
+     OP_DIVISION = 288,
+     OP_MUL = 289,
+     MENOS_UNARIO = 290,
+     OP_ASIG = 291,
+     OP_DISTINTO = 292,
+     OP_IGUAL = 293,
+     OP_MAYORIGUAL = 294,
+     OP_MAYOR = 295,
+     OP_MENOR = 296,
+     OP_MENORIGUAL = 297,
+     OR_T = 298,
+     AND_T = 299,
+     NOT_T = 300,
+     PARENT_C = 301,
+     PARENT_A = 302,
+     COMA = 303,
+     SEP_LINEA = 304
    };
 #endif
 /* Tokens.  */
-#define DIM_T 258
-#define WHILE_T 259
-#define IN_T 260
-#define ENDWHILE_T 261
-#define DO_T 262
-#define IF_T 263
-#define ELSE_T 264
-#define ENDIF_T 265
-#define INT_T 266
-#define REAL_T 267
-#define STRING_T 268
-#define GET_T 269
-#define DISPLAY_T 270
-#define AS_T 271
-#define WHITESPACES 272
-#define BREAK_LINE 273
-#define CORCHETE_A 274
-#define CORCHETE_C 275
-#define COMA_T 276
-#define DOT_COM_T 277
-#define PARENT_A 278
-#define PARENT_C 279
-#define OP_MEN 280
-#define OP_MAY 281
-#define OP_MEN_IGU 282
-#define OP_MAY_IGU 283
-#define OP_AND 284
-#define OP_OR 285
-#define OP_COMP 286
-#define OP_NOT 287
-#define LONGITUD_T 288
-#define CONST_INT 289
-#define CONST_REAL 290
-#define VARIABLE 291
-#define CONST_STRING 292
-#define OP_ASIG_T 293
-#define OP_REST_T 294
-#define OP_SUM_T 295
-#define OP_MULT_T 296
-#define OP_DIV_T 297
-#define COMENTARIO_A_T 298
-#define COMENTARIO_B_T 299
-#define COMENTARIO_C_T 300
-#define MENOS_UNARIO 302
+#define WHILE_T 258
+#define ENDWHILE 259
+#define DISPLAY 260
+#define GET 261
+#define READ_T 262
+#define FLOAT_T 263
+#define INT_T 264
+#define CHAR 265
+#define IN_T 266
+#define DO_T 267
+#define AS 268
+#define STRING 269
+#define whitespace 270
+#define linefeed 271
+#define DIGITO 272
+#define LETRA 273
+#define COMILLA_D 274
+#define COMILLA_A 275
+#define COMILLA_C 276
+#define CONST_INT 277
+#define CONST_FLOAT 278
+#define OP_AVG 279
+#define CONST_STRING 280
+#define ELSE_T 281
+#define IF_T 282
+#define ENDIF 283
+#define DIM 284
+#define ID_T 285
+#define OP_MENOS 286
+#define OP_SUM 287
+#define OP_DIVISION 288
+#define OP_MUL 289
+#define MENOS_UNARIO 290
+#define OP_ASIG 291
+#define OP_DISTINTO 292
+#define OP_IGUAL 293
+#define OP_MAYORIGUAL 294
+#define OP_MAYOR 295
+#define OP_MENOR 296
+#define OP_MENORIGUAL 297
+#define OR_T 298
+#define AND_T 299
+#define NOT_T 300
+#define PARENT_C 301
+#define PARENT_A 302
+#define COMA 303
+#define SEP_LINEA 304
 
 
 
@@ -139,14 +145,15 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 28 "Sintactico.y"
+#line 77 "Sintactico.y"
 
-    char* strVal;
+    /* Aca dentro se definen los campos de la variable yylval */
+	char* strVal; 
 
 
 
 /* Line 1676 of yacc.c  */
-#line 150 "y.tab.h"
+#line 157 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

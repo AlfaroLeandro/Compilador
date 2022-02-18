@@ -137,8 +137,10 @@ int contSentencias=0;
 %token NOT_T 
 
 
-/* parentensis, coma, etc */
+/* Llaves, parentensis, etc */
 
+%token LLAVE_C		
+%token LLAVE_A		
 %token PARENT_C	
 %token PARENT_A	
 %token COMA	

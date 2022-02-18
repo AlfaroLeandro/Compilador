@@ -90,6 +90,8 @@ COMENTARIO      {COMENTARIO_A}(.)*{COMENTARIO_C}
 
 /* Llaves, parentensis, etc */
 
+LLAVE_C			"}"
+LLAVE_A			"{"
 PARENT_C		")"
 PARENT_A		"("
 COMA			","
@@ -183,6 +185,8 @@ SEP_LINEA		";"
 {NOT_T}				{return NOT_T;}
 
 
+{LLAVE_C}			{return LLAVE_C;}
+{LLAVE_A}			{return LLAVE_A;}
 {PARENT_C}			{return PARENT_C;}
 {PARENT_A}			{return PARENT_A;}
 {COMA}				{return COMA;}

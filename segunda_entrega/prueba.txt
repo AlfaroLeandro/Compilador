@@ -1,8 +1,8 @@
-DIM < pivot, contador, promedio, actual, suma> AS < integer, integer, real, real, real >;
+DIM < pivot, contador, promedio, actual, suma> AS < integer, integer, real, real, real >
 DISPLAY "Prueba.txt LyC Tema 2!";
 DISPLAY "ingrese un val int: ";
 
-pivot := a - 0b11110;
+pivot := 0b11110;
 
 GET actual;
 contador := 0b11110;
@@ -16,10 +16,10 @@ endwhile;
 DISPLAY "La suma es: ";
 DISPLAY suma;
 
-if (actual > 2 && !(actual == 0))
-	DISPLAY "actual es > que 2 y != de 0";
+if (actual > 2 && actual == 0)
+	DISPLAY "actual es > que 2 y de 0";
 else
-	if (actual < 2)
+	if (actual < 2 || a==5*2+2)
 	DISPLAY “no es mayor que 2”;
 	endif;
 endif;
