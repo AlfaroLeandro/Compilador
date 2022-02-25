@@ -13,7 +13,7 @@ ________________________________________________________________________________
 |_La suma es:                  |String        |La suma es:                   |12            |
 |_Prueba.txt LyC Tema 2!       |String        |Prueba.txt LyC Tema 2!        |22            |
 |_actual es > que 2 y de 0     |String        |actual es > que 2 y de 0      |24            |
-|_ingrese un val int:          |String        |ingrese un val int:           |20            |
+|_ingrese un val2 int:         |String        |ingrese un val2 int:          |21            |
 |_“no es mayor que 2”      |String        |“no es mayor que 2”       |23            |
 |actual                        |Float         |                              |0             |
 |contador                      |Int           |                              |0             |

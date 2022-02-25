@@ -1,6 +1,6 @@
 DIM < pivot, contador, promedio, actual, suma> AS < integer, integer, real, real, real >
 DISPLAY "Prueba.txt LyC Tema 2!";
-DISPLAY "ingrese un val int: ";
+DISPLAY "ingrese un val2 int: ";
 
 pivot := 0b11110;
 

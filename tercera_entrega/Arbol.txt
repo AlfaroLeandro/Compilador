@@ -73,7 +73,7 @@ Sentencia9
 									pivot
 							Sentencia2
 									DISPLAY
-										ingrese un val int: 
+										ingrese un val2 int: 
 								Sentencia1
 									DISPLAY
 										Prueba.txt LyC Tema 2!
