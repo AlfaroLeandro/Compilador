@@ -4,13 +4,14 @@
 #include <string.h>
 #include "y.tab.h"
 #include "Funciones.h"
-#include "miscelaneo.h"
 
 
 extern int yylex();
 extern void yyerror(char *);
 extern char* yytext;
 extern int yylineno;
+
+void generarAssembler(t_arbol* pArbol);
 
 extern FILE* yyin;
 
@@ -29,6 +30,7 @@ FILE *pCode;
 char str_cuerpo[50];
 char str_sentencias[50];
 char str_elementos[50];
+char str_contLong[50];
 
 t_NodoArbol* Ptr;
 t_NodoArbol* Sptr;
@@ -50,16 +52,12 @@ t_NodoArbol* Dptr;
 t_NodoArbol* Getptr;
 //t_NodoArbol* Auxptr;
 t_NodoArbol* Lptr;
-t_NodoArbol* Emaxptr;
-t_NodoArbol* Eminptr;
 t_NodoArbol* Nodocond;
 t_NodoArbol* Nodocond2;
 t_NodoArbol* Nodocuerpo;
 t_NodoArbol* Nodocuerpo2;
 t_NodoArbol* Nodoif;
 t_NodoArbol* Nodoif2;
-t_NodoArbol* Nodoaux;
-t_NodoArbol* Nodoaux2;
 t_NodoArbol* SptrCuerpo;
 
 // Longitud //
@@ -115,7 +113,7 @@ int contSentencias=0;
 %token IF_T			
 %token ENDIF			
 %token DIM				
-%token <strVal> ID_T	
+%token <strVal> ID_T		
 
 
 /* Operadores */
@@ -137,7 +135,7 @@ int contSentencias=0;
 %token NOT_T 
 
 
-/* parentensis, coma, etc */
+/* Llaves, parentensis, etc */
 
 %token PARENT_C	
 %token PARENT_A	
@@ -150,7 +148,7 @@ int contSentencias=0;
 
 /* Seccion para declaracion de reglas gramaticales - EJEMPLO */
 
-programa_final : programa 						{ mostrarArbolDeIzqADer(&Ptr,pArbol); InOrden(&Ptr, pIntermedia); mostrarArbolDeIzqADer(&Ptr,pArbol); printf("\nLa expresion es valida\n");}
+programa_final : programa 						{ printf("Start assembler \n"); mostrarArbolDeIzqADer(&Ptr,pArbol); InOrden(&Ptr, pIntermedia); mostrarArbolDeIzqADer(&Ptr,pArbol); generarAssembler(&Ptr);  printf("Traduccion assembler \n"); printf("\nLa expresion es valida\n");}
 		;
 programa: sentencia 							{Ptr=Sptr;}
 		;
@@ -219,6 +217,7 @@ grammar : asig 									{printf("\nRegla Asig \n"); Gptr=Aptr;}
 		| if 									{printf("\nRegla If \n"); Gptr=Ifptr;}	
 		; 
 
+//InOrden(&Ifptr, pIntermedia); fprintf(pIntermedia, "\n");
 
 asig: ID_T OP_ASIG expr {Aptr=crearNodo(":=",crearHoja($1),Eptr); }
 	| ID_T OP_ASIG const_string_r   {Aptr=crearNodo(":=",crearHoja($1),Cptr);}
@@ -270,7 +269,8 @@ numero: CONST_INT
 	   ;
 
 
-cond_final: PARENT_A cond_final AND_T cond_final  PARENT_C  
+    
+cond_final: PARENT_A cond_final AND_T cond_final  PARENT_C
 		    | PARENT_A cond AND_T { Condptraux=Condptr;} cond  PARENT_C {isAnd=1;}
 			| PARENT_A cond OR_T { Condptraux=Condptr;} cond  PARENT_C  {isOr=1;}
 		    | PARENT_A cond PARENT_C
@@ -278,12 +278,15 @@ cond_final: PARENT_A cond_final AND_T cond_final  PARENT_C
 		    | PARENT_A cond_final PARENT_C
 		  	;
 
-cond: expr OP_DISTINTO expr 				{Condptr=crearNodo("!=",Eptr,Tptr);} 
-    | expr OP_IGUAL expr 					{Condptr=crearNodo("==",Eptr,Tptr);}  
-    | expr OP_MAYOR expr 					{Condptr=crearNodo(">",Eptr,Tptr);}   
-    | expr OP_MAYORIGUAL expr 				{Condptr=crearNodo(">=",Eptr,Tptr);}  
-    | expr OP_MENOR expr 					{Condptr=crearNodo("<",Eptr,Tptr);}  
-    | expr OP_MENORIGUAL expr	 			{Condptr=crearNodo("<=",Eptr,Tptr);}  
+cond: expr OP_DISTINTO termino 				{Condptr=crearNodo("!=",Eptr,Tptr);} 
+    | expr OP_IGUAL termino 				{Condptr=crearNodo("==",Eptr,Tptr);}  
+    | expr OP_MAYOR termino 				{Condptr=crearNodo(">",Eptr,Tptr);}   
+    | expr OP_MAYORIGUAL termino 			{Condptr=crearNodo(">=",Eptr,Tptr);}  
+    | expr OP_MENOR termino 				{Condptr=crearNodo("<",Eptr,Tptr);}  
+    | expr OP_MENORIGUAL termino 			{Condptr=crearNodo("<=",Eptr,Tptr);}  
+    | expr OR_T termino 					{Condptr=crearNodo("||",Eptr,Tptr);}  
+    | expr AND_T termino 					{Condptr=crearNodo("&&",Eptr,Tptr);}  
+    | expr NOT_T termino 					{Condptr=crearNodo("!",Eptr,Tptr);} 
 	; 
 
 expr: expr OP_SUM termino 					{Eptr=crearNodo("+",Eptr,Tptr);}
@@ -367,6 +370,46 @@ int main(int argc, char* argv[])
     return 0;
 }
 
+void generarAssembler(t_arbol* pArbol)
+{
+	char Linea[300];
+
+	pCode = fopen("Code.asm", "wt");
+
+	pAssembler = fopen("Final.asm", "wt");
+
+
+
+	while(recorrerArbol(pArbol,pCode, &listaAux) != pArbol){
+		//printf("recorrearArbol generar assembler: %s\n", (*pArbol)->info);
+	}
+ 
+	fclose(pCode);
+
+	pCode = fopen("Code.asm", "rt");
+
+	fprintf(pAssembler, "include macros2.asm\ninclude number.asm\n.MODEL LARGE	; Modelo de Memoria\n.386	        ; Tipo de Procesador\n.STACK 200h		; Bytes en el Stack\n\n.DATA \n\n");
+
+	grabarListaEnAssembler(&listaSimbolos, pAssembler);
+
+	grabarListaEnAssembler(&listaAux, pAssembler);
+
+	fprintf(pAssembler, "\n\n.CODE\n\nmov AX,@DATA    ; Inicializa el segmento de datos\nmov DS,AX\nmov es,ax ;\n\n");
+
+	while(fgets(Linea, sizeof(Linea), pCode))
+	{
+		fprintf(pAssembler, Linea);
+	}
+
+	fprintf(pAssembler, "\n\n\nmov ax,4c00h	; Indica que debe finalizar la ejecución\nint 21h\n\nEnd");
+
+	fclose(pCode);
+
+	remove("Code.asm");
+
+	fclose(pAssembler);
+}
+
 
 void reiniciarPunteros(){
 Sptr = NULL;
@@ -382,15 +425,11 @@ Cuerpoptr = NULL;
 CuerpoWhileptr = NULL;
 Trueptr = NULL;
 Falseptr = NULL;
- Lptr = NULL;
- Emaxptr = NULL;
- Eminptr = NULL;
- Nodocond = NULL;
- Nodocond2 = NULL;
- Nodocuerpo = NULL;
- Nodocuerpo2 = NULL;
- Nodoif = NULL;
- Nodoif2 = NULL;
- Nodoaux = NULL;
-  Nodoaux2 = NULL;																				
+Lptr = NULL;
+Nodocond = NULL;
+Nodocond2 = NULL;
+Nodocuerpo = NULL;
+Nodocuerpo2 = NULL;
+Nodoif = NULL;
+Nodoif2 = NULL;																	
 }

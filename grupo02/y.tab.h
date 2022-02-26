@@ -145,7 +145,7 @@ typedef union YYSTYPE
 {
 
 /* Line 1676 of yacc.c  */
-#line 77 "Sintactico.y"
+#line 75 "Sintactico.y"
 
     /* Aca dentro se definen los campos de la variable yylval */
 	char* strVal; 

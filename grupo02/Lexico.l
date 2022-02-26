@@ -4,19 +4,27 @@
 #include <string.h>
 #include <limits.h>
 #include <math.h>
-#include "miscelaneo.h"
 #include "y.tab.h"
 
-#define MAX_CHARACTERS 32
+#define MAX_VALUE_STRING 32
 #define MAX_CHARACTERS_INT_REAL 30
-#define MAX_VALUE_STRING 30
 #define MAX_VALUE_INTEGER 65535
 #define MAX_VALUE_FLOAT INT_MAX
+
+#define BASE_BINARIA 2
+#define BASE_HEXADECIMAL 16
+#define VALOR_MIN_LETRA 10
+
+#define ES_CARACTER_NUMERO(C) 	   ((C>='0' && C<='9')? 1:0)
+#define CARACTER_NUM_A_ENTERO(C)   (C-'0')
+#define CARACTER_LETRA_A_ENTERO(C) (C<='Z'? (C-'A'):(C-'a'))
+
+int base_a_decimal(char* numero, int longitud, int base);
+int detectar_base_devolver_valor(char* numero);
 
 FILE *yyin;
 FILE *archSal;
 
-int tokenInvalido(void);
 int errorLexico(void);
 void yyerror(char* mensaje);
 %}
@@ -32,12 +40,13 @@ ENDWHILE		"ENDWHILE"|"Endwhile"|"EndWhile"|"endwhile"
 DISPLAY			"DISPLAY"|"Display"|"display"
 GET				"GET"|"Get"|"get"
 READ_T			"read"|"READ"
-FLOAT_T			"Float"|"float"|"FLOAT"|"real"|"REAL"|"Real"
+FLOAT_T			"Float"|"float"|"FLOAT"
 INT_T		    "Int"|"int"|"INT"|"Integer"|"INTEGER"|"integer"
 CHAR            "Char"|"char"|"CHAR"
 STRING          "STRING"|"String"|"string"
 IN_T 			"in"|"In"|"IN"
 DO_T 			"do"|"Do"|"DO"
+OP_AVG			"avg"|"AVG"
 ELSE_T			"else"|"ELSE"|"Else"
 IF_T			"if"|"IF"|"If"
 ENDIF			"ENDIF"|"endif"|"Endif"
@@ -90,8 +99,6 @@ COMENTARIO      {COMENTARIO_A}(.)*{COMENTARIO_C}
 
 /* Llaves, parentensis, etc */
 
-LLAVE_C			"}"
-LLAVE_A			"{"
 PARENT_C		")"
 PARENT_A		"("
 COMA			","
@@ -128,6 +135,7 @@ SEP_LINEA		";"
 {CONST_STRING}		{
                     if(strlen(yytext) > MAX_VALUE_STRING)
                         {
+							
                          yyerror("STRING TOO LONG (MAX VALUE: 30)"); 
                         }
                     else
@@ -138,6 +146,8 @@ SEP_LINEA		";"
                     }
 
 {CONST_INT}			{
+						
+						
 						if(strlen(yytext) > MAX_CHARACTERS_INT_REAL){
 							yyerror("CONSTANTE ENTERA SUPERA EL MAXIMO DE CARACTERES PERMITIDO");
 						}
@@ -154,6 +164,7 @@ SEP_LINEA		";"
                     }	
 
 {CONST_FLOAT}	    {
+	
                     float num = atof(strdup(yytext));
                         if(num > MAX_VALUE_FLOAT) //MAX_VALUE_FLOAT = 2147483648, máximo valor de un número de 32 bits con signo.
                         {
@@ -178,6 +189,7 @@ SEP_LINEA		";"
 {OP_DIVISION}		{return OP_DIVISION;}
 {OP_SUM}			{return OP_SUM;}
 {OP_MENOS}			{return OP_MENOS ;}
+{OP_AVG}			{return OP_AVG;}
 {OP_MUL}			{return OP_MUL;}
 {OP_ASIG}			{return OP_ASIG;}
 {AND_T}				{return AND_T;}
@@ -185,8 +197,6 @@ SEP_LINEA		";"
 {NOT_T}				{return NOT_T;}
 
 
-{LLAVE_C}			{return LLAVE_C;}
-{LLAVE_A}			{return LLAVE_A;}
 {PARENT_C}			{return PARENT_C;}
 {PARENT_A}			{return PARENT_A;}
 {COMA}				{return COMA;}
@@ -210,4 +220,39 @@ int tokenInvalido(void){
 	printf("ERROR - \"%s\" INVALID TOKEN ON LINE %d\n", yytext, yylineno);
 	system("Pause");
 	exit(1);
+}
+
+int detectar_base_devolver_valor(char* numero)
+{
+	int value;
+	
+	if(strlen(numero)>1) //PREGUNTO SI ES UN NUMERO DE UN SOLO CARACTER
+	{
+		if(*(numero + 1) == 'x')
+			value = base_a_decimal(numero+2,strlen(numero+2),BASE_HEXADECIMAL);
+		else if(*(numero + 1) == 'b')
+			value = base_a_decimal(numero+2,strlen(numero+2),BASE_BINARIA);
+		else
+			value = atoi(strdup(numero));
+	}
+	else
+		value = atoi(strdup(numero));
+	
+	return value;
+}
+
+int base_a_decimal(char* numero, int longitud, int base)
+{
+	int i,
+		numero_decimal = 0;
+	for(i = 0; i<=longitud-1; i++)
+	{
+		if(ES_CARACTER_NUMERO(*numero))
+			numero_decimal += CARACTER_NUM_A_ENTERO(*numero)*pow((double)base, (double)(longitud-1-i));
+		else
+			numero_decimal += (CARACTER_LETRA_A_ENTERO(*numero)+VALOR_MIN_LETRA)*pow((double)base, (double)(longitud-1-i));
+		numero++;
+	}
+	
+	return numero_decimal;
 }
