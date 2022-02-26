@@ -1,79 +1,46 @@
 
-					DISPLAY
-						“no es mayor que 2”
-				IF
-						2
-					==
-							2
-						+
-								2
-							*
-								5
-			IF
-					2
-				<
-					2
-		CUERPO
-			DISPLAY
-				actual es > que 2 y de 0
-	IF
-			2
-		==
-				2
-			+
-					2
-				*
-					5
-Sentencia9
+	DISPLAY
+		cadena
+Sentencia6
 		DISPLAY
-			suma
-	Sentencia8
-			DISPLAY
-				La suma es: 
-		Sentencia7
-								actual
-							+
-								suma
-						:=
-							suma
-					SentenciaCuerpo2
-									0xFF
-								+
-										0xFF
-									*
-										contador
-							:=
-								actual
-						SentenciaCuerpo1
-									1
-								+
-									contador
-							:=
-								contador
-				WHILE
-						92
-					<=
-						92
-			Sentencia6
-							pivot
-						+
-							02.5
+			Lenguajes y Compiladores
+	Sentencia5
+						b
 					:=
-						suma
-				Sentencia5
-							0b11110
+						var1
+				CUERPO
+						a
+					:=
+						var1
+			IF
+						3
+					*
+						b
+				<=
+					a
+		Sentencia4
+						30
+					:=
+						var2
+				IF
+						b
+					>
+						a
+			Sentencia3
+							cte2
+						+
+								cte1
+							*
+								id2
+					:=
+						id1
+				Sentencia2
+								0xab7
+							*
+								c
 						:=
-							contador
-					Sentencia4
-							GET
-								actual
-						Sentencia3
-									0b11110
-								:=
-									pivot
-							Sentencia2
-									DISPLAY
-										ingrese un val2 int: 
-								Sentencia1
-									DISPLAY
-										Prueba.txt LyC Tema 2!
+							a
+					Sentencia1
+							0b00010
+						:=
+							a

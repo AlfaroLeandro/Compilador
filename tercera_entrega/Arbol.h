@@ -10,6 +10,16 @@
 #define EXITO       1
 #define DUPLICADO   2 
 
+//typedef char* t_info;
+
+/*
+typedef struct
+{
+    char NyA[50];
+    int Dni;
+    float Prom;
+}t_alumnos;*/
+
 typedef struct s_NodoArbol
 {
     struct s_NodoArbol *izq;
@@ -279,8 +289,7 @@ void traduccionAssembler(t_arbol* pArbol, FILE* pAssembler, tLista* listaAux){
         int tam=strlen("Sentencia");
         strncpy( cadena, (*pArbol)->info, tam);
         cadena[tam]='\0';
-       if(strcmp(cadena, "Sentencia")!=0 && strcmp(cadena, "NODOAUX")!=0 && strcmp(cadena, "MAX")!=0 && strcmp(cadena, "MIN")!=0 
-         && strcmp(cadena, "EQUMAX")!=0 && strcmp(cadena, "EQUMIN")!=0 && strcmp(cadena, "EQUAUX")!=0 && strcmp(cadena, "LONGITUD")!=0  ){
+       if(strcmp(cadena, "Sentencia")!=0 && strcmp(cadena, "NODOAUX")!=0 ){
 
             
             if(strcmp((*pArbol)->info,":=")!=0)//si no son iguales

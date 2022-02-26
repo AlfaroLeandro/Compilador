@@ -2,7 +2,7 @@ DIM <x,y,a,cadena> AS <Int,Int,Int,String>
 
 */Asignaciones/*
 a=0b00010;
-a=c*0xab7;
+a=c*7;
 
 id1 := id2 * cte1 + cte2;
 
