@@ -60,32 +60,31 @@
      COMILLA_C = 276,
      CONST_INT = 277,
      CONST_FLOAT = 278,
-     OP_AVG = 279,
-     CONST_STRING = 280,
-     ELSE_T = 281,
-     IF_T = 282,
-     ENDIF = 283,
-     DIM = 284,
-     ID_T = 285,
-     OP_MENOS = 286,
-     OP_SUM = 287,
-     OP_DIVISION = 288,
-     OP_MUL = 289,
-     MENOS_UNARIO = 290,
-     OP_ASIG = 291,
-     OP_DISTINTO = 292,
-     OP_IGUAL = 293,
-     OP_MAYORIGUAL = 294,
-     OP_MAYOR = 295,
-     OP_MENOR = 296,
-     OP_MENORIGUAL = 297,
-     OR_T = 298,
-     AND_T = 299,
-     NOT_T = 300,
-     PARENT_C = 301,
-     PARENT_A = 302,
-     COMA = 303,
-     SEP_LINEA = 304
+     CONST_STRING = 279,
+     ELSE_T = 280,
+     IF_T = 281,
+     ENDIF = 282,
+     DIM = 283,
+     ID_T = 284,
+     OP_MENOS = 285,
+     OP_SUM = 286,
+     OP_DIVISION = 287,
+     OP_MUL = 288,
+     MENOS_UNARIO = 289,
+     OP_ASIG = 290,
+     OP_DISTINTO = 291,
+     OP_IGUAL = 292,
+     OP_MAYORIGUAL = 293,
+     OP_MAYOR = 294,
+     OP_MENOR = 295,
+     OP_MENORIGUAL = 296,
+     OR_T = 297,
+     AND_T = 298,
+     NOT_T = 299,
+     PARENT_C = 300,
+     PARENT_A = 301,
+     COMA = 302,
+     SEP_LINEA = 303
    };
 #endif
 /* Tokens.  */
@@ -110,32 +109,31 @@
 #define COMILLA_C 276
 #define CONST_INT 277
 #define CONST_FLOAT 278
-#define OP_AVG 279
-#define CONST_STRING 280
-#define ELSE_T 281
-#define IF_T 282
-#define ENDIF 283
-#define DIM 284
-#define ID_T 285
-#define OP_MENOS 286
-#define OP_SUM 287
-#define OP_DIVISION 288
-#define OP_MUL 289
-#define MENOS_UNARIO 290
-#define OP_ASIG 291
-#define OP_DISTINTO 292
-#define OP_IGUAL 293
-#define OP_MAYORIGUAL 294
-#define OP_MAYOR 295
-#define OP_MENOR 296
-#define OP_MENORIGUAL 297
-#define OR_T 298
-#define AND_T 299
-#define NOT_T 300
-#define PARENT_C 301
-#define PARENT_A 302
-#define COMA 303
-#define SEP_LINEA 304
+#define CONST_STRING 279
+#define ELSE_T 280
+#define IF_T 281
+#define ENDIF 282
+#define DIM 283
+#define ID_T 284
+#define OP_MENOS 285
+#define OP_SUM 286
+#define OP_DIVISION 287
+#define OP_MUL 288
+#define MENOS_UNARIO 289
+#define OP_ASIG 290
+#define OP_DISTINTO 291
+#define OP_IGUAL 292
+#define OP_MAYORIGUAL 293
+#define OP_MAYOR 294
+#define OP_MENOR 295
+#define OP_MENORIGUAL 296
+#define OR_T 297
+#define AND_T 298
+#define NOT_T 299
+#define PARENT_C 300
+#define PARENT_A 301
+#define COMA 302
+#define SEP_LINEA 303
 
 
 
@@ -153,7 +151,7 @@ typedef union YYSTYPE
 
 
 /* Line 1676 of yacc.c  */
-#line 157 "y.tab.h"
+#line 155 "y.tab.h"
 } YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */

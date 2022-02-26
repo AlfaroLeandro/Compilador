@@ -46,7 +46,6 @@ CHAR            "Char"|"char"|"CHAR"
 STRING          "STRING"|"String"|"string"
 IN_T 			"in"|"In"|"IN"
 DO_T 			"do"|"Do"|"DO"
-OP_AVG			"avg"|"AVG"
 ELSE_T			"else"|"ELSE"|"Else"
 IF_T			"if"|"IF"|"If"
 ENDIF			"ENDIF"|"endif"|"Endif"
@@ -189,7 +188,6 @@ SEP_LINEA		";"
 {OP_DIVISION}		{return OP_DIVISION;}
 {OP_SUM}			{return OP_SUM;}
 {OP_MENOS}			{return OP_MENOS ;}
-{OP_AVG}			{return OP_AVG;}
 {OP_MUL}			{return OP_MUL;}
 {OP_ASIG}			{return OP_ASIG;}
 {AND_T}				{return AND_T;}

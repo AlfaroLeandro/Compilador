@@ -107,7 +107,6 @@ int contSentencias=0;
 
 %token <strVal> CONST_INT	
 %token <strVal> CONST_FLOAT
-%token OP_AVG
 %token <strVal> CONST_STRING
 %token ELSE_T			
 %token IF_T			

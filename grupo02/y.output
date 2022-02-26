@@ -10,7 +10,6 @@ Terminals unused in grammar
    COMILLA_D
    COMILLA_A
    COMILLA_C
-   OP_AVG
 
 
 Gramática
@@ -135,90 +134,89 @@ COMILLA_A (275)
 COMILLA_C (276)
 CONST_INT (277) 29
 CONST_FLOAT (278) 30
-OP_AVG (279)
-CONST_STRING (280) 28
-ELSE_T (281) 24
-IF_T (282) 21 24
-ENDIF (283) 21 24
-DIM (284) 58
-ID_T (285) 18 19 27 57 59 60
-OP_MENOS (286) 49
-OP_SUM (287) 48
-OP_DIVISION (288) 52
-OP_MUL (289) 51
-MENOS_UNARIO (290)
-OP_ASIG (291) 18 19
-OP_DISTINTO (292) 39
-OP_IGUAL (293) 40
-OP_MAYORIGUAL (294) 42
-OP_MAYOR (295) 41 58 60
-OP_MENOR (296) 43 58 60
-OP_MENORIGUAL (297) 44
-OR_T (298) 35 45
-AND_T (299) 31 33 46
-NOT_T (300) 37 47
-PARENT_C (301) 31 33 35 36 38 55
-PARENT_A (302) 31 33 35 36 38 55
-COMA (303) 59
-SEP_LINEA (304) 3 4 9 10
+CONST_STRING (279) 28
+ELSE_T (280) 24
+IF_T (281) 21 24
+ENDIF (282) 21 24
+DIM (283) 58
+ID_T (284) 18 19 27 57 59 60
+OP_MENOS (285) 49
+OP_SUM (286) 48
+OP_DIVISION (287) 52
+OP_MUL (288) 51
+MENOS_UNARIO (289)
+OP_ASIG (290) 18 19
+OP_DISTINTO (291) 39
+OP_IGUAL (292) 40
+OP_MAYORIGUAL (293) 42
+OP_MAYOR (294) 41 58 60
+OP_MENOR (295) 43 58 60
+OP_MENORIGUAL (296) 44
+OR_T (297) 35 45
+AND_T (298) 31 33 46
+NOT_T (299) 37 47
+PARENT_C (300) 31 33 35 36 38 55
+PARENT_A (301) 31 33 35 36 38 55
+COMA (302) 59
+SEP_LINEA (303) 3 4 9 10
 
 
 No terminales con las reglas donde aparecen
 
-$accept (51)
+$accept (50)
     en la izquierda: 0
-programa_final (52)
+programa_final (51)
     en la izquierda: 1, en la derecha: 0
-programa (53)
+programa (52)
     en la izquierda: 2, en la derecha: 1
-sentencia (54)
+sentencia (53)
     en la izquierda: 3 4 5 6 7 8, en la derecha: 2 3 5 8
-sentenciaCuerpo (55)
+sentenciaCuerpo (54)
     en la izquierda: 9 10 11 12, en la derecha: 9 11 20 21 24
-grammar (56)
+grammar (55)
     en la izquierda: 13 14 15 16 17, en la derecha: 3 4 5 6 9 10 11
     12
-asig (57)
+asig (56)
     en la izquierda: 18 19, en la derecha: 13
-while (58)
+while (57)
     en la izquierda: 20, en la derecha: 14
-if (59)
+if (58)
     en la izquierda: 21 24, en la derecha: 17
-$@1 (60)
+$@1 (59)
     en la izquierda: 22, en la derecha: 24
-$@2 (61)
+$@2 (60)
     en la izquierda: 23, en la derecha: 24
-display (62)
+display (61)
     en la izquierda: 25 26, en la derecha: 15
-get (63)
+get (62)
     en la izquierda: 27, en la derecha: 16
-const_string_r (64)
+const_string_r (63)
     en la izquierda: 28, en la derecha: 19 25
-numero (65)
+numero (64)
     en la izquierda: 29 30, en la derecha: 56
-cond_final (66)
+cond_final (65)
     en la izquierda: 31 33 35 36 37 38, en la derecha: 20 21 24 31
     37 38
-$@3 (67)
+$@3 (66)
     en la izquierda: 32, en la derecha: 33
-$@4 (68)
+$@4 (67)
     en la izquierda: 34, en la derecha: 35
-cond (69)
+cond (68)
     en la izquierda: 39 40 41 42 43 44 45 46 47, en la derecha: 33
     35 36
-expr (70)
+expr (69)
     en la izquierda: 48 49 50, en la derecha: 18 26 39 40 41 42 43
     44 45 46 47 48 49 55
-termino (71)
+termino (70)
     en la izquierda: 51 52 53 54, en la derecha: 39 40 41 42 43 44
     45 46 47 48 49 50 51 52 53
-factor (72)
+factor (71)
     en la izquierda: 55 56 57, en la derecha: 51 52 54
-declaracion (73)
+declaracion (72)
     en la izquierda: 58, en la derecha: 7 8
-dupla_asig (74)
+dupla_asig (73)
     en la izquierda: 59 60, en la derecha: 58 59
-tipo (75)
+tipo (74)
     en la izquierda: 61 62 63 64, en la derecha: 59 60
 
 
