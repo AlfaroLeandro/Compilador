@@ -1,10 +1,10 @@
 
 	DISPLAY
 		cadena
-Sentencia6
+Sentencia10
 		DISPLAY
 			Lenguajes y Compiladores
-	Sentencia5
+	Sentencia9
 						b
 					:=
 						var1
@@ -18,29 +18,56 @@ Sentencia6
 						b
 				<=
 					a
-		Sentencia4
-						30
-					:=
-						var2
+		Sentencia8
+							30
+						:=
+							var2
+					IF
+							5
+						==
+							4
 				IF
 						b
 					>
 						a
-			Sentencia3
-							cte2
-						+
-								cte1
-							*
-								id2
-					:=
-						id1
-				Sentencia2
-								0xab7
-							*
-								c
-						:=
+			Sentencia7
+							DISPLAY
+								if loco
+						IF
+								id1
+							==
+								a
+					WHILE
+							id1
+						==
 							a
-					Sentencia1
-							0b00010
+				Sentencia6
+								cte2
+							+
+									cte1
+								*
+									id2
 						:=
-							a
+							id1
+					Sentencia5
+								1
+							:=
+								cte2
+						Sentencia4
+									1
+								:=
+									cte1
+							Sentencia3
+										1
+									:=
+										id2
+								Sentencia2
+												0xab7
+											*
+												c
+										:=
+											a
+									Sentencia1
+											0b00010
+										:=
+											a

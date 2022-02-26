@@ -99,8 +99,6 @@ COMENTARIO      {COMENTARIO_A}(.)*{COMENTARIO_C}
 
 /* Llaves, parentensis, etc */
 
-LLAVE_C			"}"
-LLAVE_A			"{"
 PARENT_C		")"
 PARENT_A		"("
 COMA			","
@@ -109,26 +107,26 @@ SEP_LINEA		";"
 
 
 %%		
-{DIM}				 {return DIM;printf("%s", yytext);}
-{ELSE_T}			 {return ELSE_T;printf("%s", yytext);}
-{IF_T}				 {return IF_T;printf("%s", yytext);}
-{ENDIF}				 {return ENDIF;printf("%s", yytext);}
-{IN_T}				 {return IN_T;printf("%s", yytext);}
-{DO_T}				 {return DO_T;printf("%s", yytext);}
-{WHILE_T}			 {return WHILE_T;printf("%s", yytext);}
-{ENDWHILE}			 {return ENDWHILE;printf("%s", yytext);}
-{DISPLAY}			 {return DISPLAY;printf("%s", yytext);}
-{GET}				 {return GET;printf("%s", yytext);}
-{READ_T}			 {return READ_T;printf("%s", yytext);}
-{FLOAT_T}			 {return FLOAT_T;printf("%s", yytext);}
-{INT_T}			     {return INT_T;printf("%s", yytext);}
-{CHAR} 			     {return CHAR;printf("%s", yytext);} 
-{AS}                 {return AS;printf("%s", yytext);}
-{STRING}             {return STRING;printf("%s", yytext);}
+{DIM}				 {return DIM;}
+{ELSE_T}			 {return ELSE_T;}
+{IF_T}				 {return IF_T;}
+{ENDIF}				 {return ENDIF;}
+{IN_T}				 {return IN_T;}
+{DO_T}				 {return DO_T;}
+{WHILE_T}			 {return WHILE_T;}
+{ENDWHILE}			 {return ENDWHILE;}
+{DISPLAY}			 {return DISPLAY;}
+{GET}				 {return GET;}
+{READ_T}			 {return READ_T;}
+{FLOAT_T}			 {return FLOAT_T;}
+{INT_T}			     {return INT_T;}
+{CHAR} 			     {return CHAR;} 
+{AS}                 {return AS;}
+{STRING}             {return STRING;}
 
-{COMENTARIO}		{;printf("%s", yytext);}
-{COMENTARIO_A}		{;printf("%s", yytext);}		
-{COMENTARIO_C}		{printf("%s", yytext);;}
+{COMENTARIO}		{;}
+{COMENTARIO_A}		{;}		
+{COMENTARIO_C}		{;}
 
 
 
@@ -137,7 +135,7 @@ SEP_LINEA		";"
 {CONST_STRING}		{
                     if(strlen(yytext) > MAX_VALUE_STRING)
                         {
-							printf("%s", yytext);
+							
                          yyerror("STRING TOO LONG (MAX VALUE: 30)"); 
                         }
                     else
@@ -148,7 +146,7 @@ SEP_LINEA		";"
                     }
 
 {CONST_INT}			{
-						printf("%s", yytext);
+						
 						
 						if(strlen(yytext) > MAX_CHARACTERS_INT_REAL){
 							yyerror("CONSTANTE ENTERA SUPERA EL MAXIMO DE CARACTERES PERMITIDO");
@@ -166,7 +164,7 @@ SEP_LINEA		";"
                     }	
 
 {CONST_FLOAT}	    {
-	printf("%s", yytext);
+	
                     float num = atof(strdup(yytext));
                         if(num > MAX_VALUE_FLOAT) //MAX_VALUE_FLOAT = 2147483648, máximo valor de un número de 32 bits con signo.
                         {
@@ -182,31 +180,29 @@ SEP_LINEA		";"
 {ID_T}				{yylval.strVal = strdup(yytext); return ID_T;}
 
 
-{OP_DISTINTO}		{return OP_DISTINTO;printf("%s", yytext);}
-{OP_IGUAL}			{return OP_IGUAL;printf("%s", yytext);}
-{OP_MAYORIGUAL}		{return OP_MAYORIGUAL;printf("%s", yytext);}
-{OP_MAYOR}			{return OP_MAYOR;printf("%s", yytext);}
-{OP_MENOR}			{return OP_MENOR;printf("%s", yytext);}
-{OP_MENORIGUAL}		{return OP_MENORIGUAL;printf("%s", yytext);}
-{OP_DIVISION}		{return OP_DIVISION;printf("%s", yytext);}
-{OP_SUM}			{return OP_SUM;printf("%s", yytext);}
-{OP_MENOS}			{return OP_MENOS ;printf("%s", yytext);}
-{OP_AVG}			{return OP_AVG;printf("%s", yytext);}
-{OP_MUL}			{return OP_MUL;printf("%s", yytext);}
-{OP_ASIG}			{return OP_ASIG;printf("%s", yytext);}
-{AND_T}				{return AND_T;printf("%s", yytext);}
-{OR_T}				{return OR_T;printf("%s", yytext);}
-{NOT_T}				{return NOT_T;printf("%s", yytext);}
+{OP_DISTINTO}		{return OP_DISTINTO;}
+{OP_IGUAL}			{return OP_IGUAL;}
+{OP_MAYORIGUAL}		{return OP_MAYORIGUAL;}
+{OP_MAYOR}			{return OP_MAYOR;}
+{OP_MENOR}			{return OP_MENOR;}
+{OP_MENORIGUAL}		{return OP_MENORIGUAL;}
+{OP_DIVISION}		{return OP_DIVISION;}
+{OP_SUM}			{return OP_SUM;}
+{OP_MENOS}			{return OP_MENOS ;}
+{OP_AVG}			{return OP_AVG;}
+{OP_MUL}			{return OP_MUL;}
+{OP_ASIG}			{return OP_ASIG;}
+{AND_T}				{return AND_T;}
+{OR_T}				{return OR_T;}
+{NOT_T}				{return NOT_T;}
 
 
-{LLAVE_C}			{return LLAVE_C;printf("%s", yytext);}
-{LLAVE_A}			{return LLAVE_A;printf("%s", yytext);}
-{PARENT_C}			{return PARENT_C;printf("%s", yytext);}
-{PARENT_A}			{return PARENT_A;printf("%s", yytext);}
-{COMA}				{return COMA;printf("%s", yytext);}
-{SEP_LINEA}			{return SEP_LINEA;printf("%s", yytext);}
-{linefeed}			{printf("%s", yytext);;} // linefeed = \n
-{whitespace}		{printf("%s", yytext);;}
+{PARENT_C}			{return PARENT_C;}
+{PARENT_A}			{return PARENT_A;}
+{COMA}				{return COMA;}
+{SEP_LINEA}			{return SEP_LINEA;}
+{linefeed}			{;} // linefeed = \n
+{whitespace}		{;}
 " "
 .					{tokenInvalido();}
 
@@ -215,7 +211,6 @@ SEP_LINEA		";"
 
 void yyerror(char* mensajeError)
 {
-	printf("%s aosugdiasgdliasgdlhv", mensajeError);
     printf("ERROR - %s - ON LINE %d\n", mensajeError, yylineno); //yylineno = va contando las lineas, por lo que informa la linea del error
     system("Pause");
     exit(1);

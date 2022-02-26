@@ -52,37 +52,16 @@ t_NodoArbol* Dptr;
 t_NodoArbol* Getptr;
 //t_NodoArbol* Auxptr;
 t_NodoArbol* Lptr;
-t_NodoArbol* Emaxptr;
-t_NodoArbol* Eminptr;
-t_NodoArbol* Equmax;
-t_NodoArbol* Equaux;
-t_NodoArbol* Equaux2;
 t_NodoArbol* Nodocond;
 t_NodoArbol* Nodocond2;
 t_NodoArbol* Nodocuerpo;
 t_NodoArbol* Nodocuerpo2;
 t_NodoArbol* Nodoif;
 t_NodoArbol* Nodoif2;
-t_NodoArbol* Equmin;
-t_NodoArbol* Nodoaux;
-t_NodoArbol* Nodoaux2;
-t_NodoArbol* Nodomin;
-t_NodoArbol* Nodomax;
-t_NodoArbol* Longptr;
 t_NodoArbol* SptrCuerpo;
-
-// Equmax y Equmin //
-int min;
-int aux;
-int max;
-
-int isEqumax;
-int isEqumin;
 
 // Longitud //
 
-int isLong;
-int contLong;
 int esIf=0;
 int isAnd=0;
 int isOr=0;
@@ -158,8 +137,6 @@ int contSentencias=0;
 
 /* Llaves, parentensis, etc */
 
-%token LLAVE_C		
-%token LLAVE_A		
 %token PARENT_C	
 %token PARENT_A	
 %token COMA	
@@ -247,18 +224,18 @@ asig: ID_T OP_ASIG expr {Aptr=crearNodo(":=",crearHoja($1),Eptr); }
 	;
 
 
-while: WHILE_T cond_final LLAVE_A sentenciaCuerpo LLAVE_C { 
+while: WHILE_T cond_final sentenciaCuerpo ENDWHILE { 
 																	Whileptr=crearNodo("WHILE",Condptr,SptrCuerpo);
 																	}
 	 ;
  
-if: IF_T cond_final   LLAVE_A  sentenciaCuerpo LLAVE_C {if(isAnd==1){ 
+if: IF_T cond_final sentenciaCuerpo ENDIF {if(isAnd==1){ 
                                                          Ifptr=crearNodo("IF",Condptraux,crearNodo("IF",Condptr,SptrCuerpo));   
 													    }else if (isOr==1){
 														  Ifptr=crearNodo("IF", Condptr, SptrCuerpo);
 														  Ifptr=crearNodo("IF",Condptraux,crearNodo("CUERPO",SptrCuerpo,Ifptr));
 														}else Ifptr=crearNodo("IF",Condptr,SptrCuerpo);}
-   | IF_T cond_final  LLAVE_A  sentenciaCuerpo  LLAVE_C {Trueptr=Gptr;} ELSE_T LLAVE_A sentenciaCuerpo LLAVE_C {Falseptr=Gptr;}  {printf("\nELSE\n"); Cuerpoptr=crearNodo("CUERPO",Trueptr,Falseptr); Ifptr=crearNodo("IF",Condptr,Cuerpoptr);  esIf=0;}
+   | IF_T cond_final sentenciaCuerpo {Trueptr=Gptr;} ELSE_T sentenciaCuerpo ENDIF {Falseptr=Gptr;}  {printf("\nELSE\n"); Cuerpoptr=crearNodo("CUERPO",Trueptr,Falseptr); Ifptr=crearNodo("IF",Condptr,Cuerpoptr);  esIf=0;}
    ;
 
 
@@ -448,23 +425,11 @@ Cuerpoptr = NULL;
 CuerpoWhileptr = NULL;
 Trueptr = NULL;
 Falseptr = NULL;
- Lptr = NULL;
- Emaxptr = NULL;
- Eminptr = NULL;
- Equmax = NULL;
- Equaux = NULL;
- Equaux2 = NULL;
- Nodocond = NULL;
- Nodocond2 = NULL;
- Nodocuerpo = NULL;
- Nodocuerpo2 = NULL;
- Nodoif = NULL;
- Nodoif2 = NULL;
- Equmin = NULL;
- Nodoaux = NULL;
-  Nodoaux2 = NULL;
- Nodomin = NULL;
- Nodomax = NULL;
- Longptr = NULL;
-																						
+Lptr = NULL;
+Nodocond = NULL;
+Nodocond2 = NULL;
+Nodocuerpo = NULL;
+Nodocuerpo2 = NULL;
+Nodoif = NULL;
+Nodoif2 = NULL;																	
 }

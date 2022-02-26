@@ -8,12 +8,19 @@ include number.asm
 
 _0b00010                      dd                            2.00                          ;Cte en formato  Int
 _0xab7                        dd                            2743.00                       ;Cte en formato  Int
+_1                            dd                            1.00                          ;Cte en formato  Int
 _3                            dd                            3.00                          ;Cte en formato  Int
 _30                           dd                            30.00                         ;Cte en formato  Int
+_4                            dd                            4.00                          ;Cte en formato  Int
+_5                            dd                            5.00                          ;Cte en formato  Int
 _Lenguajes y Compiladores     dd                            Lenguajes y Compiladores      ;Cte en formato  String
+_if loco                      dd                            if loco                       ;Cte en formato  String
 a                             dd                            ?                             ;Variable Int
+c                             dd                            ?                             ;Variable Int
 cadena                        dd                            ?                             ;Variable String
-x                             dd                            ?                             ;Variable Int
+var1                          dd                            ?                             ;Variable Int
+var2                          dd                            ?                             ;Variable Int
+x                             dd                            ?                             ;Variable Float
 y                             dd                            ?                             ;Variable Int
 @Aux1                         dd                            ?                             ;Variable Float
 @Aux2                         dd                            ?                             ;Variable Float
@@ -38,6 +45,15 @@ FFREE
 FLD @Aux1
 FSTP a
 FFREE
+FLD 1
+FSTP id2
+FFREE
+FLD 1
+FSTP cte1
+FFREE
+FLD 1
+FSTP cte2
+FFREE
 FLD id2
 FLD cte1
 FMUL 
@@ -51,15 +67,33 @@ FFREE
 FLD @Aux3
 FSTP id1
 FFREE
+principiowhile
+FLD a
+FCOMP id1
+FSTSW ax
+SAHF
+JNE saltoelse2
+displayString if loco
+saltoelse2
+FFREE
+JMP principiowhile
+saltoelse
 FLD a
 FCOMP b
 FSTSW ax
 SAHF
-JNA saltoelse1
+JNA saltoelse4
+FLD 4
+FCOMP 5
+FSTSW ax
+SAHF
+JNE saltoelse4
 FLD 30
 FSTP var2
 FFREE
-saltoelse1
+saltoelse4
+FFREE
+saltoelse5
 FFREE
 FLD b
 FLD 3
@@ -70,12 +104,12 @@ FLD a
 FCOMP @Aux4
 FSTSW ax
 SAHF
-JNBE saltoelse2
+JNBE saltoelse6
 FLD a
 FSTP var1
 FFREE
 JMP fin_if1
-saltoelse2
+saltoelse6
 FLD b
 FSTP var1
 FFREE
