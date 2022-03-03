@@ -287,7 +287,7 @@ void traduccionAssembler(t_arbol* pArbol, FILE* pAssembler, tLista* listaAux){
         }
 		
 		if (strcmp((*pArbol)->info, "GET")==0 ){
-            fprintf(pAssembler,"getString %s\n",(*pArbol)->izq->info);
+            fprintf(pAssembler,"displayString %s\n",(*pArbol)->izq->info);
             free((*pArbol)->izq);
             (*pArbol)->izq = NULL;
              return;

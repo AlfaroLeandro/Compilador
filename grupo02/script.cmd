@@ -5,3 +5,4 @@ pause
 gcc lex.yy.c y.tab.c -o Tercera
 pause
 Tercera  prueba.txt
+pause

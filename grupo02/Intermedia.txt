@@ -1,1 +1,1 @@
- a   :=   0b00010   Sentencia1   a   :=   c   *   0xab7   Sentencia2   id2   :=   1   Sentencia3   cte1   :=   1   Sentencia4   cte2   :=   1   Sentencia5   id1   :=   id2   *   cte1   +   cte2   Sentencia6   a   ==   id1   WHILE   a   ==   id1   IF   if loco   DISPLAY   Sentencia7   a   >   b   IF   4   ==   5   IF   var2   :=   30   Sentencia8   a   <=   b   *   3   IF   var1   :=   a   CUERPO   var1   :=   b   Sentencia9   Lenguajes y Compiladores   DISPLAY   Sentencia10   cadena   DISPLAY  
+ c   :=   1   Sentencia1   c   GET  
