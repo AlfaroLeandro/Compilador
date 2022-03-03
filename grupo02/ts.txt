@@ -11,6 +11,7 @@ ________________________________________________________________________________
 |_LyC                          |String        |LyC                           |3             |
 |_hola                         |String        |hola                          |4             |
 |_if                           |String        |if                            |2             |
+|_num                          |String        |num                           |4             |
 |a                             |Int           |                              |0             |
 |c                             |Int           |                              |0             |
 |cadena                        |String        |                              |0             |

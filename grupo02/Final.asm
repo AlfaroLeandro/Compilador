@@ -16,6 +16,7 @@ _5                            dd                            5.00                
 _LyC                          dd                             "LyC"                          ;Cte en formato                String
 _hola                         dd                             "hola"                          ;Cte en formato                String
 _if                           dd                             "if"                          ;Cte en formato                String
+_num_                         dd                             "num "                          ;Cte en formato                String
 a                             dd                            ?                             ;Variable Int
 c                             dd                            ?                             ;Variable Int
 cadena                        dd                            ?                             ;Variable String
@@ -68,6 +69,7 @@ FFREE
 FLD @Aux3
 FSTP x
 FFREE
+displayString _num_
 getString c
 FLD _hola
 FSTP cadena

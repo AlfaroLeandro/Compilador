@@ -1,10 +1,10 @@
 
 	DISPLAY
 		cadena
-Sentencia12
+Sentencia13
 		DISPLAY
 			LyC
-	Sentencia11
+	Sentencia12
 						x
 					:=
 						var1
@@ -18,7 +18,7 @@ Sentencia12
 						var1
 				<=
 					a
-		Sentencia10
+		Sentencia11
 							30
 						:=
 							y
@@ -30,7 +30,7 @@ Sentencia12
 						x
 					>
 						a
-			Sentencia9
+			Sentencia10
 							DISPLAY
 								if
 						IF
@@ -41,40 +41,43 @@ Sentencia12
 							var1
 						==
 							a
-				Sentencia8
+				Sentencia9
 							hola
 						:=
 							cadena
-					Sentencia7
+					Sentencia8
 							GET
 								c
-						Sentencia6
-										var2
-									+
-											var1
-										*
+						Sentencia7
+								DISPLAY
+									num 
+							Sentencia6
 											var2
-								:=
-									x
-							Sentencia5
-										1
+										+
+												var1
+											*
+												var2
 									:=
 										x
-								Sentencia4
+								Sentencia5
 											1
 										:=
-											var2
-									Sentencia3
+											x
+									Sentencia4
 												1
 											:=
-												var1
-										Sentencia2
-														0xab7
-													*
-														c
+												var2
+										Sentencia3
+													1
 												:=
-													a
-											Sentencia1
-													0b00010
-												:=
-													a
+													var1
+											Sentencia2
+															0xab7
+														*
+															c
+													:=
+														a
+												Sentencia1
+														0b00010
+													:=
+														a
