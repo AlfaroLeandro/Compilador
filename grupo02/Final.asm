@@ -6,7 +6,7 @@ include number.asm
 
 .DATA 
 
-_1                            dd                            1.00                          ;Cte en formato  Int
+_0xf00                        dd                            3840.00                       ;Cte en formato  Int
 a                             dd                            ?                             ;Variable Int
 c                             dd                            ?                             ;Variable Int
 cadena                        dd                            ?                             ;Variable String
@@ -22,7 +22,7 @@ mov AX,@DATA    ; Inicializa el segmento de datos
 mov DS,AX
 mov es,ax ;
 
-FLD _1
+FLD _0xf00
 FSTP c
 FFREE
 getString c

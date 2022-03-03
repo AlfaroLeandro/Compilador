@@ -227,6 +227,9 @@ int esHoja(t_arbol* pNodoArbol){
 
 int es_const(char* ptr_cad) {
 	
+	if(strlen(ptr_cad)>1 && *ptr_cad == '0' && ( *(ptr_cad+1) == 'b' || *(ptr_cad+1) == 'x'))
+		return 1;
+	
 	while(*ptr_cad) {
 		if((*ptr_cad < '0' || *ptr_cad > '9') && *ptr_cad != '.')
 			return 0;

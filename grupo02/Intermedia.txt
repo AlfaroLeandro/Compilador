@@ -1,1 +1,1 @@
- c   :=   1   Sentencia1   c   GET  
+ c   :=   0xf00   Sentencia1   c   GET  

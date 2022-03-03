@@ -2,6 +2,6 @@
 	GET
 		c
 Sentencia1
-		1
+		0xf00
 	:=
 		c
