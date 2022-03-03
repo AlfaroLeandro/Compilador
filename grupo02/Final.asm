@@ -22,7 +22,7 @@ mov AX,@DATA    ; Inicializa el segmento de datos
 mov DS,AX
 mov es,ax ;
 
-FLD 1
+FLD _1
 FSTP c
 FFREE
 getString c

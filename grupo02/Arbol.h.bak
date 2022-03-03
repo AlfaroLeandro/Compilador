@@ -41,6 +41,7 @@ void VaciarArbol(t_arbol *pa);
 t_arbol* recorrerArbol(t_arbol* pArbol, FILE* pAssembler, tLista* listaAux);
 void traduccionAssembler(t_arbol* pArbol, FILE* pAssembler, tLista* listaAux);
 int esHoja(t_arbol* pArbol);
+int es_const(char* ptr_cad);
 
 int contAux=0;
 char str_Aux[20];
@@ -224,6 +225,17 @@ int esHoja(t_arbol* pNodoArbol){
         return 0;
 }
 
+int es_const(char* ptr_cad) {
+	
+	while(*ptr_cad) {
+		if((*ptr_cad < '0' || *ptr_cad > '9') && *ptr_cad != '.')
+			return 0;
+		ptr_cad++;
+	}
+	
+	return 1;
+}
+
 void traduccionAssembler(t_arbol* pArbol, FILE* pAssembler, tLista* listaAux){
        if(!*pArbol)
         return;
@@ -287,7 +299,7 @@ void traduccionAssembler(t_arbol* pArbol, FILE* pAssembler, tLista* listaAux){
         }
 		
 		if (strcmp((*pArbol)->info, "GET")==0 ){
-            fprintf(pAssembler,"displayString %s\n",(*pArbol)->izq->info);
+            fprintf(pAssembler,"getString %s\n",(*pArbol)->izq->info);
             free((*pArbol)->izq);
             (*pArbol)->izq = NULL;
              return;
@@ -301,7 +313,7 @@ void traduccionAssembler(t_arbol* pArbol, FILE* pAssembler, tLista* listaAux){
 
             
             if(strcmp((*pArbol)->info,":=")!=0)//si no son iguales
-                fprintf(pAssembler,"FLD %s\n",((*pArbol)->izq)->info);
+                fprintf(pAssembler,"FLD %s%s\n",es_const(((*pArbol)->izq)->info)? "_":"",((*pArbol)->izq)->info);
             fprintf(pAssembler,"FLD %s\n",((*pArbol)->der)->info);
         
             if(strcmp((*pArbol)->info, "+")==0)
@@ -363,6 +375,5 @@ t_arbol* recorrerArbol(t_arbol* pArbol, FILE* pAssembler, tLista* listaAux){
     }
     
 }
-
 
 #endif // ARBOL_H_INCLUDED
