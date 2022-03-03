@@ -15,7 +15,7 @@ Sentencia12
 			IF
 						3
 					*
-						b
+						var1
 				<=
 					a
 		Sentencia10

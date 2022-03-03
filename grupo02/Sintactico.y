@@ -248,6 +248,7 @@ get : GET ID_T {Getptr = crearHoja($2);}
 
 const_string_r: CONST_STRING {
 			insertarString(&listaSimbolos, $1);
+			guardar_string($1);
 			Cptr = crearHoja($1);
 	};
 

@@ -147,7 +147,7 @@ int contSentencias=0;
 
 /* Seccion para declaracion de reglas gramaticales - EJEMPLO */
 
-programa_final : programa 						{ printf("Start assembler \n"); mostrarArbolDeIzqADer(&Ptr,pArbol); InOrden(&Ptr, pIntermedia); /*generarAssembler(&Ptr);*/  printf("Traduccion assembler \n"); printf("\nLa expresion es valida\n");}
+programa_final : programa 						{ printf("Start assembler \n"); mostrarArbolDeIzqADer(&Ptr,pArbol); InOrden(&Ptr, pIntermedia); generarAssembler(&Ptr);  printf("Traduccion assembler \n"); printf("\nLa expresion es valida\n");}
 		;
 programa: sentencia 							{Ptr=Sptr;}
 		;

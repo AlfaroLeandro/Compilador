@@ -69,7 +69,7 @@ FLD @Aux3
 FSTP x
 FFREE
 getString c
-FLD hola
+FLD _hola
 FSTP cadena
 FFREE
 principiowhile:
@@ -78,7 +78,7 @@ FCOMP var1
 FSTSW ax
 SAHF
 JNE saltoelse2
-displayString if
+displayString _if
 saltoelse2:
 FFREE
 JMP principiowhile
@@ -88,8 +88,8 @@ FCOMP x
 FSTSW ax
 SAHF
 JNA saltoelse4
-FLD 4
-FCOMP 5
+FLD _4
+FCOMP _5
 FSTSW ax
 SAHF
 JNE saltoelse4
@@ -100,7 +100,7 @@ saltoelse4:
 FFREE
 saltoelse5:
 FFREE
-FLD b
+FLD var1
 FLD _3
 FMUL 
 FSTP @Aux4
@@ -119,7 +119,7 @@ FLD x
 FSTP var1
 FFREE
 fin_if1:
-displayString LyC
+displayString _LyC
 displayString cadena
 
 

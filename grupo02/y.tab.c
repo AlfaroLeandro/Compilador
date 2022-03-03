@@ -611,10 +611,10 @@ static const yytype_uint16 yyrline[] =
        0,   150,   150,   152,   155,   168,   171,   184,   187,   188,
      193,   197,   200,   207,   212,   213,   214,   215,   216,   219,
      220,   224,   229,   235,   235,   235,   239,   240,   244,   249,
-     255,   262,   270,   271,   271,   272,   272,   273,   274,   275,
-     278,   279,   280,   281,   282,   283,   284,   285,   286,   289,
-     290,   291,   294,   295,   296,   297,   300,   301,   302,   309,
-     324,   325,   329,   330,   331,   332
+     256,   263,   271,   272,   272,   273,   273,   274,   275,   276,
+     279,   280,   281,   282,   283,   284,   285,   286,   287,   290,
+     291,   292,   295,   296,   297,   298,   301,   302,   303,   310,
+     325,   326,   330,   331,   332,   333
 };
 #endif
 
@@ -1835,6 +1835,7 @@ yyreduce:
 #line 249 "Sintactico.y"
     {
 			insertarString(&listaSimbolos, (yyvsp[(1) - (1)].strVal));
+			guardar_string((yyvsp[(1) - (1)].strVal));
 			Cptr = crearHoja((yyvsp[(1) - (1)].strVal));
 	}
     break;
@@ -1842,7 +1843,7 @@ yyreduce:
   case 30:
 
 /* Line 1455 of yacc.c  */
-#line 256 "Sintactico.y"
+#line 257 "Sintactico.y"
     {
 			char valor[50];
 			sprintf(valor,"%d",detectar_base_devolver_valor((yyvsp[(1) - (1)].strVal)));
@@ -1854,7 +1855,7 @@ yyreduce:
   case 31:
 
 /* Line 1455 of yacc.c  */
-#line 263 "Sintactico.y"
+#line 264 "Sintactico.y"
     {
 			insertarFloat(&listaSimbolos, (yyvsp[(1) - (1)].strVal)); Fptr = crearHoja((yyvsp[(1) - (1)].strVal));
 		}
@@ -1863,168 +1864,168 @@ yyreduce:
   case 33:
 
 /* Line 1455 of yacc.c  */
-#line 271 "Sintactico.y"
+#line 272 "Sintactico.y"
     { Condptraux=Condptr;}
     break;
 
   case 34:
 
 /* Line 1455 of yacc.c  */
-#line 271 "Sintactico.y"
+#line 272 "Sintactico.y"
     {isAnd=1;}
     break;
 
   case 35:
 
 /* Line 1455 of yacc.c  */
-#line 272 "Sintactico.y"
+#line 273 "Sintactico.y"
     { Condptraux=Condptr;}
     break;
 
   case 36:
 
 /* Line 1455 of yacc.c  */
-#line 272 "Sintactico.y"
+#line 273 "Sintactico.y"
     {isOr=1;}
     break;
 
   case 40:
 
 /* Line 1455 of yacc.c  */
-#line 278 "Sintactico.y"
+#line 279 "Sintactico.y"
     {Condptr=crearNodo("!=",Eptr,Tptr);}
     break;
 
   case 41:
 
 /* Line 1455 of yacc.c  */
-#line 279 "Sintactico.y"
+#line 280 "Sintactico.y"
     {Condptr=crearNodo("==",Eptr,Tptr);}
     break;
 
   case 42:
 
 /* Line 1455 of yacc.c  */
-#line 280 "Sintactico.y"
+#line 281 "Sintactico.y"
     {Condptr=crearNodo(">",Eptr,Tptr);}
     break;
 
   case 43:
 
 /* Line 1455 of yacc.c  */
-#line 281 "Sintactico.y"
+#line 282 "Sintactico.y"
     {Condptr=crearNodo(">=",Eptr,Tptr);}
     break;
 
   case 44:
 
 /* Line 1455 of yacc.c  */
-#line 282 "Sintactico.y"
+#line 283 "Sintactico.y"
     {Condptr=crearNodo("<",Eptr,Tptr);}
     break;
 
   case 45:
 
 /* Line 1455 of yacc.c  */
-#line 283 "Sintactico.y"
+#line 284 "Sintactico.y"
     {Condptr=crearNodo("<=",Eptr,Tptr);}
     break;
 
   case 46:
 
 /* Line 1455 of yacc.c  */
-#line 284 "Sintactico.y"
+#line 285 "Sintactico.y"
     {Condptr=crearNodo("||",Eptr,Tptr);}
     break;
 
   case 47:
 
 /* Line 1455 of yacc.c  */
-#line 285 "Sintactico.y"
+#line 286 "Sintactico.y"
     {Condptr=crearNodo("&&",Eptr,Tptr);}
     break;
 
   case 48:
 
 /* Line 1455 of yacc.c  */
-#line 286 "Sintactico.y"
+#line 287 "Sintactico.y"
     {Condptr=crearNodo("!",Eptr,Tptr);}
     break;
 
   case 49:
 
 /* Line 1455 of yacc.c  */
-#line 289 "Sintactico.y"
+#line 290 "Sintactico.y"
     {Eptr=crearNodo("+",Eptr,Tptr);}
     break;
 
   case 50:
 
 /* Line 1455 of yacc.c  */
-#line 290 "Sintactico.y"
+#line 291 "Sintactico.y"
     {Eptr=crearNodo("-",Eptr,Tptr);}
     break;
 
   case 51:
 
 /* Line 1455 of yacc.c  */
-#line 291 "Sintactico.y"
+#line 292 "Sintactico.y"
     {Eptr=Tptr;}
     break;
 
   case 52:
 
 /* Line 1455 of yacc.c  */
-#line 294 "Sintactico.y"
+#line 295 "Sintactico.y"
     {Tptr=crearNodo("*",Tptr,Fptr);}
     break;
 
   case 53:
 
 /* Line 1455 of yacc.c  */
-#line 295 "Sintactico.y"
+#line 296 "Sintactico.y"
     {Tptr=crearNodo("/",Tptr,Fptr);}
     break;
 
   case 54:
 
 /* Line 1455 of yacc.c  */
-#line 296 "Sintactico.y"
+#line 297 "Sintactico.y"
     {;}
     break;
 
   case 55:
 
 /* Line 1455 of yacc.c  */
-#line 297 "Sintactico.y"
+#line 298 "Sintactico.y"
     {Tptr=Fptr;}
     break;
 
   case 56:
 
 /* Line 1455 of yacc.c  */
-#line 300 "Sintactico.y"
+#line 301 "Sintactico.y"
     {;}
     break;
 
   case 57:
 
 /* Line 1455 of yacc.c  */
-#line 301 "Sintactico.y"
+#line 302 "Sintactico.y"
     {;}
     break;
 
   case 58:
 
 /* Line 1455 of yacc.c  */
-#line 302 "Sintactico.y"
+#line 303 "Sintactico.y"
     {Fptr = crearHoja((yyvsp[(1) - (1)].strVal)); }
     break;
 
   case 59:
 
 /* Line 1455 of yacc.c  */
-#line 309 "Sintactico.y"
+#line 310 "Sintactico.y"
     {    
 													    char id[100];
 													    char auxString[100];
@@ -2042,49 +2043,49 @@ yyreduce:
   case 60:
 
 /* Line 1455 of yacc.c  */
-#line 324 "Sintactico.y"
+#line 325 "Sintactico.y"
     {apilar(&pilaSint, (yyvsp[(1) - (5)].strVal));}
     break;
 
   case 61:
 
 /* Line 1455 of yacc.c  */
-#line 325 "Sintactico.y"
+#line 326 "Sintactico.y"
     {apilar(&pilaSint, (yyvsp[(1) - (5)].strVal));}
     break;
 
   case 62:
 
 /* Line 1455 of yacc.c  */
-#line 329 "Sintactico.y"
+#line 330 "Sintactico.y"
     {acolar(&cola, "Float");}
     break;
 
   case 63:
 
 /* Line 1455 of yacc.c  */
-#line 330 "Sintactico.y"
+#line 331 "Sintactico.y"
     {acolar(&cola, "Int");}
     break;
 
   case 64:
 
 /* Line 1455 of yacc.c  */
-#line 331 "Sintactico.y"
+#line 332 "Sintactico.y"
     {acolar(&cola, "String");}
     break;
 
   case 65:
 
 /* Line 1455 of yacc.c  */
-#line 332 "Sintactico.y"
+#line 333 "Sintactico.y"
     {acolar(&cola, "Char");}
     break;
 
 
 
 /* Line 1455 of yacc.c  */
-#line 2088 "y.tab.c"
+#line 2089 "y.tab.c"
       default: break;
     }
   YY_SYMBOL_PRINT ("-> $$ =", yyr1[yyn], &yyval, &yyloc);
@@ -2296,7 +2297,7 @@ yyreturn:
 
 
 /* Line 1675 of yacc.c  */
-#line 336 "Sintactico.y"
+#line 337 "Sintactico.y"
 
 
 
