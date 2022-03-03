@@ -1,1 +1,1 @@
- c   :=   0xf00   Sentencia1   c   GET  
+ a   :=   0b00010   Sentencia1   a   :=   c   *   0xab7   Sentencia2   var1   :=   1   Sentencia3   var2   :=   1   Sentencia4   x   :=   1   Sentencia5   x   :=   var2   *   var1   +   var2   Sentencia6   c   GET   Sentencia7   cadena   :=   hola   Sentencia8   a   ==   var1   WHILE   a   ==   var1   IF   if   DISPLAY   Sentencia9   a   >   x   IF   4   ==   5   IF   y   :=   30   Sentencia10   a   <=   b   *   3   IF   var1   :=   a   CUERPO   var1   :=   x   Sentencia11   LyC   DISPLAY   Sentencia12   cadena   DISPLAY  

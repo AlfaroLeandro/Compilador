@@ -196,7 +196,7 @@ void grabarListaEnAssembler(tLista *p, FILE *pAssembler)
         }
         else if(!strncmp((*p)->nombre, "_", 1)) { // Es CTE
             if(strcmp((*p)->tipo,"String") == 0)
-				fprintf(pAssembler, "%-30s%-30s \"%4s\"%-26s%-30s %-s\n", str_replace((*p)->nombre," ","_"), "dd", (*p)->valor, "", ";Cte en formato ", (*p)->tipo);
+				fprintf(pAssembler, "%-30s%-30s \"%4s\"%-26s%-30s %-s\n", str_replace((*p)->nombre," ","_"), "dd", (*p)->valor, ";Cte en formato ", (*p)->tipo);
 			else
 				fprintf(pAssembler, "%-30s%-30s%-30s%-s %-s\n", str_replace((*p)->nombre," ","_"), "dd", (*p)->valor, ";Cte en formato ", (*p)->tipo);
 		}

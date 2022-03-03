@@ -141,7 +141,7 @@ void traduccionIf(t_arbol* pArbol,FILE* pAssembler, char* salto){
      if(!*pArbol)
         return;
     if(contCuerp==0){
-    fprintf(pAssembler,"%s\n",salto);
+    fprintf(pAssembler,"%s:\n",salto);
     fprintf(pAssembler,"FFREE\n"); 
     
     }
@@ -179,12 +179,12 @@ void traduccionCuerpoIf(t_arbol* pArbol,FILE* pAssembler, char* salto){
          char salto2[5]="JMP";
          sprintf(str_FinIf, "fin_if%d", contFinIf);
          fprintf(pAssembler,"%s %s\n",salto2, str_FinIf);
-         fprintf(pAssembler,"%s\n",salto);
+         fprintf(pAssembler,"%s:\n",salto);
          return;
      }
      else  if(contCuerp==2){
          sprintf(str_FinIf, "fin_if%d", contFinIf);
-         fprintf(pAssembler,"%s\n", str_FinIf);
+         fprintf(pAssembler,"%s:\n", str_FinIf);
          contFinIf++;
          free((*pArbol)->izq);
          free((*pArbol)->der);
@@ -199,12 +199,12 @@ void traduccionWhile(t_arbol* pArbol,FILE* pAssembler, char* salto){
      if(!*pArbol)
         return;
      if(contWhile==1){
-         fprintf(pAssembler,"%s\n","principiowhile");
+         fprintf(pAssembler,"%s:\n","principiowhile");
          return;
      }
      else  if(contWhile==2){
          fprintf(pAssembler,"JMP principiowhile\n");
-         fprintf(pAssembler,"saltoelse\n");
+         fprintf(pAssembler,"saltoelse:\n");
          free((*pArbol)->izq);
          free((*pArbol)->der);
 
