@@ -13,9 +13,9 @@ _3                            dd                            3.00                
 _30                           dd                            30.00                         ;Cte en formato  Int
 _4                            dd                            4.00                          ;Cte en formato  Int
 _5                            dd                            5.00                          ;Cte en formato  Int
-_LyC                          dd                             " LyC"                          ;Cte en formato                String
+_LyC                          dd                             "LyC"                          ;Cte en formato                String
 _hola                         dd                             "hola"                          ;Cte en formato                String
-_if                           dd                             "  if"                          ;Cte en formato                String
+_if                           dd                             "if"                          ;Cte en formato                String
 a                             dd                            ?                             ;Variable Int
 c                             dd                            ?                             ;Variable Int
 cadena                        dd                            ?                             ;Variable String
