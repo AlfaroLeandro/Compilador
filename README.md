@@ -1,5 +1,4 @@
 # Compilador
-Construcción de un compilador.
 
 ## OBJETIVO: 
 
