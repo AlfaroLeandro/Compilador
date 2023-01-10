@@ -1,14 +1,12 @@
 # Compilador
 Construcción de un compilador.
 
-OBJETIVO: 
+## OBJETIVO: 
 
 1.Realizar un analizador sintáctico utilizando las herramientas FLEX y BISON. El programa
 ejecutable deberá mostrar por pantalla las reglas sintácticas que va analizando el parser en base a un archivo
 de entrada (prueba.txt). Las impresiones deben ser claras. Las reglas que no realizan ninguna acción no deben
 generar salida.
-
-
 
 2.Realizar un generador de código intermedio utilizando el archivo BISON generado en la primera
 entrega. El programa ejecutable deberá procesar el archivo de entrada (prueba.txt) y devolver el código
@@ -18,17 +16,18 @@ intermedio del mismo junto con la tabla de símbolos.
 ejecutable deberá procesar el archivo de entrada (prueba.txt), compilarlo y ejecutarlo.
 
 
-##TEMAS COMUNES
-ITERACIONES
+## TEMAS COMUNES
+
+### ITERACIONES
 Implementación de ciclo WHILE
 
-DECISIONES
+### DECISIONES
 Implementación de IF
 
-ASIGNACIONES
+### ASIGNACIONES
 Asignaciones simples A:=B
 
-TIPO DE DATOS
+### TIPO DE DATOS
 Constantes numéricas
 ▪ reales (32 bits)
 ▪ enteras (16 bits)
@@ -43,7 +42,7 @@ Ejemplo:
 b = “@sdADaSjfla%dfg”
 b = “asldk fh sjf”
 
-VARIABLES
+### VARIABLES
 Variables numéricas
 Estas variables reciben valores numéricos tales como constantes numéricas, variables numéricas u
 operaciones que arrojen un valor numérico, del lado derecho de una asignación.
@@ -53,7 +52,7 @@ Las variables no guardan su valor en tabla de símbolos.
 Las asignaciones deben ser permitidas, solo en los casos en los que los tipos son
 compatibles, caso contrario deberá desplegarse un error.
 
-COMENTARIOS
+### COMENTARIOS
 Deberán estar delimitados por “-/” y “/-“ y podrán estar anidados en un solo nivel.
 Ejemplo1:
 -/ Realizo una selección /-
@@ -61,7 +60,7 @@ IF (a <= 30)
   b = ”correcto” -/ asignación string /- 
 ENDIF
 
-ENTRADA Y SALIDA
+### ENTRADA Y SALIDA
 Las salidas y entradas por teclado se implementarán como se muestra en el siguiente ejemplo:
 
 Ejemplo:
@@ -69,12 +68,12 @@ WRITE “ewr” -/ donde “ewr” debe ser una cte string /-
 READ base -/ donde base es una variable /-
 WRITE var1 -/ donde var1 es una vble numérica definida previamente /-
 
-CONDICIONES
+### CONDICIONES
 Las condiciones para un constructor de ciclos o de selección pueden ser simples ( a < b ) o múltiples.
 Las condiciones múltiples pueden ser hasta dos condiciones simples ligadas a través del operador lógico
 (AND, OR) o una condición simple con el operador lógico NOT
 
-DECLARACIONES
+### DECLARACIONES
 Todas las variables deberán ser declaradas de la siguiente manera:
 DECVAR
   Línea_de_Declaración_de_Tipos (1)
@@ -93,7 +92,7 @@ DECVAR
 ENDDEC
 
 
-##Se incluye:
+## Se incluye:
 
 ▪ El archivo flex que se llamará Lexico.l
 
